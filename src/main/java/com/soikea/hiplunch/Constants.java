@@ -18,13 +18,13 @@ public class Constants {
 //	public static final String HIP_API_KEY = "UBZKUrMSMlSv4PjCfJceixwOkR2sdByirfaRNtco"; //Soikea -room
 
 	public static final String HIP_FROM = "LunchBot";
-	public static final String HIP_MESSAGE_FORMAT = "html";
+	public static final HipchatEnums.Format HIP_MESSAGE_FORMAT = HipchatEnums.Format.html;
 	public static final boolean HIP_NOTIFY = false;
-	public static final String HIP_COLOR = "green";
+	public static final HipchatEnums.Color HIP_COLOR = HipchatEnums.Color.green;
 	public static final String HIP_APIURL_PREFIX = "https://api.hipchat.com/v2/";
 	public static final String HIP_APIURL_METHOD = "room/" + HIP_ROOM + "/notification";
 	public static final String HIP_APIURL_PARAMS = "?auth_token=" + HIP_API_KEY;
 	public static final String HIP_HEADER_MIME = "application/json";
 
-
+	public static final String[] HIGHLIGHTS = {"pekoni", "olut", "kalja"};
 }

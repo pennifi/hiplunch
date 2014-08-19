@@ -8,10 +8,13 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class HipchatMessage {
 
 	private String from = Constants.HIP_FROM;
-	private String format = Constants.HIP_MESSAGE_FORMAT;
+	private HipchatEnums.Format format = Constants.HIP_MESSAGE_FORMAT;
 	private boolean notify = Constants.HIP_NOTIFY;
-	private String color = Constants.HIP_COLOR;
-	private String message = "";
+	private HipchatEnums.Color color = Constants.HIP_COLOR;
+	private String message = "Default message: Not initialized.";
+
+	public HipchatMessage() {
+	}
 
 	public HipchatMessage(String message) {
 		this.message = message;
@@ -27,11 +30,11 @@ public class HipchatMessage {
 	}
 
 	@JsonProperty(value = "message_format")
-	public String getFormat() {
+	public HipchatEnums.Format getFormat() {
 		return format;
 	}
 
-	public void setFormat(String format) {
+	public void setFormat(HipchatEnums.Format format) {
 		this.format = format;
 	}
 
@@ -45,11 +48,11 @@ public class HipchatMessage {
 	}
 
 	@JsonProperty(value = "color")
-	public String getColor() {
+	public HipchatEnums.Color getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
+	public void setColor(HipchatEnums.Color color) {
 		this.color = color;
 	}
 
