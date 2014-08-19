@@ -8,6 +8,6 @@ A simple Java app for parsing RSS or JSON sources for lunch menus and posting th
 
 ## Usage ##
 
-clone repo
-run 'mvn clean install'
-run 'java -jar target/hiplunch-1.0-SNAPSHOT-jar-with-dependencies.jar'
+- clone repo
+- run 'mvn clean install'
+- run 'java -jar target/hiplunch-1.0-SNAPSHOT-jar-with-dependencies.jar'
