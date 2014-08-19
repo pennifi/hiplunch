@@ -1,7 +1,5 @@
 package com.soikea.hiplunch;
 
-
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -85,24 +83,23 @@ public class HipChatter {
 
 	private String createAuthJsonString() {
 		return "{"
-				+ "auth_token=" + API_KEY
-				+ ", grant_type=" + "client_credentials"
-				+ ", scope=" + "send_notification"
-
-				+ '}';
+				+ "'auth_token': '" + API_KEY
+				+ "', 'grant_type': '" + "client_credentials"
+				+ "', 'scope': '" + "send_notification"
+				+ "'}";
 
 	}
 
 	private String createMessageJsonString(String message) {
 
 		return "{"
-				+ "auth_token=" + API_KEY
-				+ ", from=" + FROM
-				+ ", message_format=" + MESSAGE_FORMAT
-				+ ", notify=" + NOTIFY
-				+ ", color=" + COLOR
-				+ ", message=" + message
-				+ "}";
+				+ "'auth_token': '" + API_KEY
+				+ "', 'from': '" + FROM
+				+ "', 'message_format': '" + MESSAGE_FORMAT
+				+ "', 'notify': '" + NOTIFY
+				+ "', 'color': '" + COLOR
+				+ "', 'message': '" + message
+				+ "'}";
 
 	}
 
