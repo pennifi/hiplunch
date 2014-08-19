@@ -26,15 +26,11 @@ public class Hiplunch {
 		return stringBuffer.toString();
 	}
 
-
 	public static void main( String[] args ) {
 
-//		System.out.println(getSodexo());
-//		System.out.println(getWilhelmiina());
-//		System.out.println(getPiato());
-
 		HipChatter hipChatter = new HipChatter();
-		hipChatter.sendMessage(getSodexo());
-		hipChatter.sendMessage(getWilhelmiina());
+		hipChatter.sendMessage(new HipchatMessage(getSodexo()));
+		hipChatter.sendMessage(new HipchatMessage(getWilhelmiina()));
+//		hipChatter.sendMessage(new HipchatMessage(getPiato()));
     }
 }
