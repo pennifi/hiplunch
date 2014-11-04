@@ -9,6 +9,7 @@ Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsin
 - tests...
 - cleaner course parsing
 - course tags and formatting (VH, L, G...)
+- Piato paistopiste
 
 
 ## Usage ##
