@@ -9,19 +9,20 @@ public class Hiplunch {
 	private static SodexoProvider sodexoProvider = new SodexoProvider();
 
 	private static HipchatMessage getSodexoMessage() {
-		HipchatMessage hipchatMessage = new HipchatMessage(Constants.PREFIX_SODEXO + ": " + sodexoProvider.processFeed());
+		HipchatMessage hipchatMessage = new HipchatMessage("<a href=\""+Constants.MESSAGE_URL_SODEXO+"\">"+Constants.PREFIX_SODEXO + "</a>: " + sodexoProvider.processFeed());
 		checkForHighlights(hipchatMessage);
 		return hipchatMessage;
 	}
 
 	private static HipchatMessage getWilhelmiinaMessage() {
-		HipchatMessage hipchatMessage = new HipchatMessage(Constants.PREFIX_WILHELMIINA + ": " + sonaattiProvider.processFeed(Constants.PREFIX_WILHELMIINA));
+		HipchatMessage hipchatMessage = new HipchatMessage("<a href=\""+Constants.MESSAGE_URL_WILHELMIINA+"\">"+Constants.PREFIX_WILHELMIINA + "</a>: " + sonaattiProvider.processFeed(Constants.PREFIX_WILHELMIINA));
 		checkForHighlights(hipchatMessage);
 		return hipchatMessage;
 	}
 
 	private static HipchatMessage getPiatoMessage() {
-		HipchatMessage hipchatMessage = new HipchatMessage(Constants.PREFIX_PIATO + ": " + sonaattiProvider.processFeed(Constants.PREFIX_PIATO));
+		HipchatMessage hipchatMessage = new HipchatMessage("<a href=\""+Constants.MESSAGE_URL_PIATO+"\">"+Constants.PREFIX_PIATO + "</a>: " + sonaattiProvider.processFeed(Constants.PREFIX_PIATO, true));
+
 		checkForHighlights(hipchatMessage);
 		return hipchatMessage;
 	}
@@ -43,6 +44,10 @@ public class Hiplunch {
 		HipChatter hipChatter = new HipChatter();
 		hipChatter.sendMessage(getSodexoMessage());
 		hipChatter.sendMessage(getWilhelmiinaMessage());
-//		hipChatter.sendMessage(getPiatoMessage());
+		hipChatter.sendMessage(getPiatoMessage());
+
+//		System.out.println(getSodexoMessage().getMessage());
+//		System.out.println(getWilhelmiinaMessage().getMessage());
+//		System.out.println(getPiatoMessage().getMessage());
     }
 }

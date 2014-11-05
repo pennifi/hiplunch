@@ -40,7 +40,7 @@ public class SodexoProvider {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		try {
-			JSONObject json = new JSONObject(getUrlContent(getUrlSodexo()));
+			JSONObject json = new JSONObject(ContentUtil.getJSONContent(getUrlSodexo()));
 
 			JSONArray array = json.getJSONArray("courses");
 
@@ -59,21 +59,5 @@ public class SodexoProvider {
 		return null;
 	}
 
-	private String getUrlContent(String urlString) {
-		try {
-			URL url = new URL(urlString);
-			URLConnection conn = url.openConnection();
 
-			BufferedReader br = new BufferedReader(
-					new InputStreamReader(conn.getInputStream()));
-
-			return br.readLine();
-
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 }

@@ -13,8 +13,7 @@ public class HipchatMessage {
 	private HipchatEnums.Color color = Constants.HIP_COLOR;
 	private String message = "Default message: Not initialized.";
 
-	public HipchatMessage() {
-	}
+	public HipchatMessage() {}
 
 	public HipchatMessage(String message) {
 		this.message = message;
