@@ -37,7 +37,11 @@ public class SonaattiProvider {
 		}
 
 		if (includeGrill) {
-			stringBuffer.append(processGrill());
+			try {
+				stringBuffer.append(processGrill());
+			} catch (Exception e) {
+				stringBuffer.append(". Error parsing Grill, check site.");
+			}
 		}
 
 
@@ -84,8 +88,9 @@ public class SonaattiProvider {
 
 			String cleaned = stringBuffer.toString();
 			cleaned = cleaned.trim();
-			cleaned = cleaned.replace("PAISTOPISTEELTÄ ", ", <a><i>Paistopisteeltä:</i></a> ");
-			cleaned = cleaned.replaceAll("\n", "");
+			cleaned = cleaned.replaceAll("\n", " ");
+			cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", ", <a><i>Paistopisteeltä:</i></a> ");
+			cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d ", ", <i>Paistopisteeltä:</i> ");
 			cleaned = cleaned.split("[#\\(\\d]")[0];
 
 			return cleaned;
