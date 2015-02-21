@@ -20,7 +20,7 @@ public class Constants {
 	public static final String HIP_ROOM = "263211"; //Soikea
 	public static final String HIP_API_KEY = "UBZKUrMSMlSv4PjCfJceixwOkR2sdByirfaRNtco"; //Soikea -room
 
-	public static final String GRILL_API = "https://www.kimonolabs.com/api/e6rwhgda?apikey=88YhRC4s1GBK2FlBN32W9xOksgo01sHs";
+	public static final String GRILL_API = "https://www.kimonolabs.com/api/json/ondemand/e6rwhgda?apikey=88YhRC4s1GBK2FlBN32W9xOksgo01sHs";
 
 	public static final String HIP_FROM = "LunchBot";
 	public static final HipchatEnums.Format HIP_MESSAGE_FORMAT = HipchatEnums.Format.html;
