@@ -89,6 +89,7 @@ public class SonaattiProvider {
 			String cleaned = stringBuffer.toString();
 			cleaned = cleaned.trim();
 			cleaned = cleaned.replaceAll("\n", " ");
+
 			cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", ", <a><i>Paistopisteeltä:</i></a> ");
 			cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d ", ", <i>Paistopisteeltä:</i> ");
 			cleaned = cleaned.split("[#\\(\\d]")[0];
