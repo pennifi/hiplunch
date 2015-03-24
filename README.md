@@ -6,6 +6,7 @@ Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsin
 
 ## TODO: ##
 
+- move hipchat channel key and id to external config
 - tests...
 - course tags and formatting (VH, L, G...)?
 - clean up code
