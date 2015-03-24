@@ -51,8 +51,5 @@ public class Hiplunch {
         hipChatter.sendMessage(getWilhelmiinaMessage());
         hipChatter.sendMessage(getPiatoMessage());
 
-        //		System.out.println(getSodexoMessage().getMessage());
-        //		System.out.println(getWilhelmiinaMessage().getMessage());
-        //		System.out.println(getPiatoMessage().getMessage());
     }
 }

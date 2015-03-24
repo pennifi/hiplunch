@@ -1,10 +1,13 @@
 package com.soikea.hiplunch;
 
+
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -12,14 +15,17 @@ import java.util.List;
  * Created by penni on 18/08/14.
  */
 public class SonaattiProvider {
+    static final Logger log = LoggerFactory.getLogger(SonaattiProvider.class);
 
-	private SyndFeed feed = null;
+    public static final String GRILL_SEPARATOR = "<a><i>Paistopisteeltä:</i></a> ";
+
+    private SyndFeed feed = null;
 
 	public SonaattiProvider() {
 		try {
 			feed = ContentUtil.getRSSFeedForUrl(Constants.URL_SONAATTI);
 		} catch (Exception e) {
-			System.out.println("Error getting feed");
+			log.error("Error getting feed.");
 		}
 	}
 
@@ -30,27 +36,34 @@ public class SonaattiProvider {
 	public String processFeed(String prefix, boolean includeGrill) {
 		StringBuffer stringBuffer = new StringBuffer();
 
-		for (SyndEntry entry : (List<SyndEntry>) feed.getEntries()) {
-			if (entry.getTitle().startsWith(prefix)) {
-				stringBuffer.append(cleanUpSonaattiFeed(entry.getDescription().getValue()));
-			}
-		}
+        stringBuffer.append(getSonaattiFeed(prefix));
 
 		if (includeGrill) {
-			try {
-				stringBuffer.append(processGrill());
-			} catch (Exception e) {
-				stringBuffer.append(". Error parsing Grill, check site.");
-			}
-		}
+            stringBuffer.append(" "+ processGrill());
+        }
 
-
-		if (stringBuffer.length() == 0) {
-			return Constants.ERROR_NOT_AVAILABLE;
-		} else {
-			return stringBuffer.toString();
-		}
+		return stringBuffer.toString();
 	}
+
+    public String getSonaattiFeed(String prefix) {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        for (SyndEntry entry : (List<SyndEntry>) feed.getEntries()) {
+            if (entry.getTitle().startsWith(prefix)) {
+                String sonaattifeedResult = cleanUpSonaattiFeed(entry.getDescription().getValue());
+
+                if (sonaattifeedResult.isEmpty() || sonaattifeedResult.length() < 10) {
+                    stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
+                } else {
+                    stringBuffer.append(sonaattifeedResult);
+                }
+            }
+        }
+        if (stringBuffer.length() < 10) {
+            stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
+        }
+        return stringBuffer.toString();
+    }
 
 	private String cleanUpSonaattiFeed(String value) {
 		StringBuffer stringBuffer = new StringBuffer();
@@ -60,17 +73,16 @@ public class SonaattiProvider {
 		String[] array = value.split("\\),");
 
 		for (int i = 0; i < array.length; i++) {
-
 			stringBuffer.append(array[i].split("[#\\(\\d]")[0].trim());
 			if (i < array.length - 1) {
 				stringBuffer.append(", ");
 			}
 		}
-		return stringBuffer.toString();
+		return stringBuffer.toString().trim();
 	}
 
 
-	private String processGrill() {
+	public String processGrill() {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		try {
@@ -85,21 +97,32 @@ public class SonaattiProvider {
 					stringBuffer.append("");
 				}
 			}
-
-			String cleaned = stringBuffer.toString();
-			cleaned = cleaned.trim();
-			cleaned = cleaned.replaceAll("\n", " ");
-
-			cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", ", <a><i>Paistopisteeltä:</i></a> ");
-			cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d ", ", <i>Paistopisteeltä:</i> ");
-			cleaned = cleaned.split("[#\\(\\d]")[0];
-
-			return cleaned;
+			return cleanGrillResult(stringBuffer.toString());
 
 		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
+			log.error("Unable to process grill. " + e.getMessage(), e);
+            return GRILL_SEPARATOR + " " + Constants.ERROR_NOT_AVAILABLE;
+        }
+
 	}
+
+    public String cleanGrillResult(String raw) {
+
+        String cleaned = raw.trim();
+        cleaned = cleaned.replaceAll("\n", " ");
+
+        cleaned = cleaned.replaceAll("Paistopiste palvelee ma-pe klo .*\\d*", "");
+        log.debug(cleaned);
+        cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", GRILL_SEPARATOR);
+        log.debug(cleaned);
+        cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d* ", GRILL_SEPARATOR);
+        log.debug(cleaned);
+        cleaned = cleaned.replaceAll(" \\([A-Z0-9,\\s]*\\) \\d*,\\d*\\s?€ / \\d*,\\d*\\s?€", ".");
+        log.debug(cleaned);
+        cleaned = cleaned.replaceAll("  ", " ");
+        log.debug(cleaned);
+
+        return cleaned.trim();
+    }
 
 }
