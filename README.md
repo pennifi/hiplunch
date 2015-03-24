@@ -7,10 +7,7 @@ Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsin
 ## TODO: ##
 
 - tests...
-- cleaner course parsing
-- course tags and formatting (VH, L, G...)
-
-- logging
+- course tags and formatting (VH, L, G...)?
 - clean up code
 
 ## Usage ##
@@ -19,4 +16,4 @@ Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsin
 - check Constants for api key and room id
 - check constants for hilights
 - run 'mvn clean install'
-- run 'java -jar target/hiplunch-1.0-SNAPSHOT-jar-with-dependencies.jar'
+- run 'java -jar target/hiplunch-1.0-jar-with-dependencies.jar'
