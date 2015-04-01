@@ -60,10 +60,20 @@ public class SonaattiProvider {
             }
         }
         if (stringBuffer.length() < 10) {
-            stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
+			if (prefix.equals(Constants.PREFIX_PIATO)) {
+				String backup = getBackupPiatoFeed();
+				stringBuffer.append(backup);
+			}
+			if (stringBuffer.length() < 10) {
+				stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
+			}
         }
         return stringBuffer.toString();
     }
+
+	private String getBackupPiatoFeed() {
+		return cleanBackupPiatoString(getGrillApiString("Huomio"));
+	}
 
 	private String cleanUpSonaattiFeed(String value) {
 		StringBuffer stringBuffer = new StringBuffer();
@@ -83,46 +93,72 @@ public class SonaattiProvider {
 
 
 	public String processGrill() {
+		return cleanGrillResult(getGrillApiString("paistopiste"));
+
+	}
+
+	public String getGrillApiString(String key) {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		try {
+
 			JSONObject json = new JSONObject(ContentUtil.getJSONContent(Constants.GRILL_API));
 
 			JSONArray results = json.getJSONObject("results").getJSONArray("collection1");
 
 			for (int i = 0; i < results.length(); i++) {
 				JSONObject course = results.getJSONObject(i);
-				stringBuffer.append(course.getString("paistopiste"));
+				stringBuffer.append(course.getString(key));
 				if (i < results.length() - 1) {
 					stringBuffer.append("");
 				}
 			}
-			return cleanGrillResult(stringBuffer.toString());
-
 		} catch (JSONException e) {
 			log.error("Unable to process grill. " + e.getMessage(), e);
-            return GRILL_SEPARATOR + " " + Constants.ERROR_NOT_AVAILABLE;
-        }
+			return GRILL_SEPARATOR + " " + Constants.ERROR_NOT_AVAILABLE;
+		}
+		return stringBuffer.toString();
 
 	}
 
     public String cleanGrillResult(String raw) {
 
         String cleaned = raw.trim();
-        cleaned = cleaned.replaceAll("\n", " ");
 
-        cleaned = cleaned.replaceAll("Paistopiste palvelee ma-pe klo .*\\d*", "");
-        log.debug(cleaned);
-        cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", GRILL_SEPARATOR);
-        log.debug(cleaned);
-        cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d* ", GRILL_SEPARATOR);
-        log.debug(cleaned);
-        cleaned = cleaned.replaceAll(" \\([A-Z0-9,\\s]*\\) \\d*,\\d*\\s?€ / \\d*,\\d*\\s?€", ".");
-        log.debug(cleaned);
-        cleaned = cleaned.replaceAll("  ", " ");
-        log.debug(cleaned);
+        if (raw.contains("tauolla") || raw.contains("suljettu")) {
 
+			cleaned = raw.replaceAll("\n", "---").split("---")[0];
+			cleaned = GRILL_SEPARATOR + "Suljettu. (" + cleaned + "...)";
+			log.debug(cleaned);
+		} else {
+
+			cleaned = cleaned.replaceAll("\n", " ");
+
+			cleaned = cleaned.replaceAll("Paistopiste palvelee ma-pe klo .*\\d*", "");
+			log.debug(cleaned);
+			cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", GRILL_SEPARATOR);
+			cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d* ", GRILL_SEPARATOR);
+			log.debug(cleaned);
+			cleaned = cleaned.replaceAll(" \\([A-Z0-9,\\s]*\\) \\d*,\\d*\\s?€ / \\d*,\\d*\\s?€", ".");
+			cleaned = cleaned.replaceAll("  ", " ");
+			log.debug(cleaned);
+		}
         return cleaned.trim();
     }
+
+	public String cleanBackupPiatoString(String raw) {
+		//Nettisivuillamme on ongelmia, pahoittelemme !\nLounaalla on tänään ti 31.3.\nJauhelihalasagnettea (L) \nBroileri-kookoskermakastiketta (L,G)\nJauhelihakeittoa (M,G)\nKikherne-bataattipataa (M,G)
+		String cleaned = raw.trim();
+		cleaned = cleaned.replaceAll("\n", " ");
+
+		cleaned = cleaned.replaceAll("Nettisivuillamme on ongelmia, pahoittelemme ! Lounaalla on tänään", "");
+		log.debug(cleaned);
+		cleaned = cleaned.replaceAll(" \\([A-Z0-9,\\s]*\\)", ".");
+		log.debug(cleaned);
+		cleaned = cleaned.replaceAll("  ", " ");
+		log.debug(cleaned);
+
+		return cleaned.trim();
+	}
 
 }
