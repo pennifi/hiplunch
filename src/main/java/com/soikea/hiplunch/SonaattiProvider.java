@@ -125,7 +125,7 @@ public class SonaattiProvider {
 
         String cleaned = raw.trim();
 
-        if (raw.contains("tauolla") || raw.contains("suljettu")) {
+        if (raw.contains("tauolla") || raw.contains("suljettu") || raw.contains("seuraavan kerran")) {
 
 			cleaned = raw.replaceAll("\n", "---").split("---")[0];
 			cleaned = GRILL_SEPARATOR + "Suljettu. (" + cleaned + "...)";
@@ -154,6 +154,8 @@ public class SonaattiProvider {
 		cleaned = cleaned.replaceAll("Nettisivuillamme on ongelmia, pahoittelemme ! Lounaalla on tänään", "");
 		log.debug(cleaned);
 		cleaned = cleaned.replaceAll(" \\([A-Z0-9,\\s]*\\)", ".");
+		log.debug(cleaned);
+		cleaned = cleaned.replaceAll("\\d*,\\d*\\s? / \\d*,\\d*\\s?", "");
 		log.debug(cleaned);
 		cleaned = cleaned.replaceAll("  ", " ");
 		log.debug(cleaned);
