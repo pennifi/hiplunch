@@ -1,18 +1,16 @@
 package com.soikea.hiplunch;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
  */
-public class HiplunchTest extends TestCase {
+public class HiplunchTest {
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp() {
+    @Test
+    public void sanityCheck() {
         assertTrue(true);
     }
 }

@@ -21,11 +21,16 @@ public class SonaattiProvider {
 
     private SyndFeed feed = null;
 
+	private List<SyndEntry> entryList;
+
 	public SonaattiProvider() {
 		try {
 			feed = ContentUtil.getRSSFeedForUrl(Constants.URL_SONAATTI);
+			if (feed != null) {
+				entryList = (List<SyndEntry>) feed.getEntries();
+			}
 		} catch (Exception e) {
-			log.error("Error getting feed.");
+			log.error("Error getting feed.", e);
 		}
 	}
 
@@ -36,7 +41,20 @@ public class SonaattiProvider {
 	public String processFeed(String prefix, boolean includeGrill) {
 		StringBuffer stringBuffer = new StringBuffer();
 
-        stringBuffer.append(getSonaattiFeed(prefix));
+		String sonaattiRssFeedResult = getSonaattiFeedFromRSS(prefix);
+
+		if (sonaattiRssFeedResult.length() < 10) {
+			log.debug("Using backup source for " + prefix + ".");
+			stringBuffer.append(getSonaattiFeedFromKimonoAPI(prefix));
+
+			if (stringBuffer.length() < 10) {
+				log.debug("Backup source for " + prefix + " failed also.");
+				stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
+			}
+
+		} else {
+			stringBuffer.append(sonaattiRssFeedResult);
+		}
 
 		if (includeGrill) {
             stringBuffer.append(" "+ processGrill());
@@ -45,55 +63,70 @@ public class SonaattiProvider {
 		return stringBuffer.toString();
 	}
 
-    public String getSonaattiFeed(String prefix) {
+    public String getSonaattiFeedFromRSS(String prefix) {
         StringBuffer stringBuffer = new StringBuffer();
+		if (entryList != null) {
+			for (SyndEntry entry : entryList) {
+				if (entry.getTitle().startsWith(prefix)) {
+					String sonaattifeedResult = cleanUpSonaattiFeed(entry.getDescription().getValue());
 
-        for (SyndEntry entry : (List<SyndEntry>) feed.getEntries()) {
-            if (entry.getTitle().startsWith(prefix)) {
-                String sonaattifeedResult = cleanUpSonaattiFeed(entry.getDescription().getValue());
-
-                if (sonaattifeedResult.isEmpty() || sonaattifeedResult.length() < 10) {
-                    stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
-                } else {
-                    stringBuffer.append(sonaattifeedResult);
-                }
-            }
-        }
-        if (stringBuffer.length() < 10) {
-			if (prefix.equals(Constants.PREFIX_PIATO)) {
-				String backup = getBackupPiatoFeed();
-				stringBuffer.append(backup);
+					if (sonaattifeedResult.isEmpty() || sonaattifeedResult.length() < 10) {
+						stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
+					} else {
+						stringBuffer.append(sonaattifeedResult);
+					}
+				}
 			}
-			if (stringBuffer.length() < 10) {
-				stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
-			}
-        }
+		}
         return stringBuffer.toString();
     }
 
-	private String getBackupPiatoFeed() {
-		return cleanBackupPiatoString(getGrillApiString("Huomio"));
-	}
+	private String getSonaattiFeedFromKimonoAPI(String prefix) {
 
-	private String cleanUpSonaattiFeed(String value) {
 		StringBuffer stringBuffer = new StringBuffer();
-
-		value = value.trim();
-		value = value.split("\n")[0]; // remove all after row change
-		String[] array = value.split("\\),");
-
-		for (int i = 0; i < array.length; i++) {
-			stringBuffer.append(array[i].split("[#\\(\\d]")[0].trim());
-			if (i < array.length - 1) {
-				stringBuffer.append(", ");
-			}
+		String kimonoUrl = "";
+		if (prefix.equals(Constants.PREFIX_PIATO)) {
+			kimonoUrl = Constants.KIMONO_API_PIATO;
+ 		} else if (prefix.equals(Constants.PREFIX_WILHELMIINA)) {
+			kimonoUrl = Constants.KIMONO_API_WILHELMIINA;
 		}
-		return stringBuffer.toString().trim();
+
+		try {
+			JSONArray results = getKimonoApiResult(kimonoUrl, "results", "menu");
+
+			for (int i = 0; i < results.length(); i++) {
+				JSONObject course = results.getJSONObject(i);
+				stringBuffer.append(course.getString("course"));
+				if (i < results.length() - 1) {
+					stringBuffer.append(", ");
+				} else {
+					stringBuffer.append(".");
+				}
+			}
+		} catch (JSONException e) {
+			log.error(" ", e);
+		}
+
+		return stringBuffer.toString();
+
 	}
+
 
 
 	public String processGrill() {
-		return cleanGrillResult(getGrillApiString("paistopiste"));
+		return cleanGrillResult(getGrillApiString("grill"));
+	}
+
+	public JSONArray getKimonoApiResult(String url, String key, String subkey) {
+		JSONArray results = null;
+
+		try {
+			JSONObject json = new JSONObject(ContentUtil.getJSONContent(url));
+			results = json.getJSONObject(key).getJSONArray(subkey);
+		} catch (JSONException e) {
+			log.error("Unable to get Kimono result for "+url+" . " + e.getMessage(), e);
+		}
+		return results;
 
 	}
 
@@ -101,10 +134,7 @@ public class SonaattiProvider {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		try {
-
-			JSONObject json = new JSONObject(ContentUtil.getJSONContent(Constants.GRILL_API));
-
-			JSONArray results = json.getJSONObject("results").getJSONArray("collection1");
+			JSONArray results = getKimonoApiResult(Constants.KIMONO_API_PIATO, "results", "special");
 
 			for (int i = 0; i < results.length(); i++) {
 				JSONObject course = results.getJSONObject(i);
@@ -114,11 +144,11 @@ public class SonaattiProvider {
 				}
 			}
 		} catch (JSONException e) {
-			log.error("Unable to process grill. " + e.getMessage(), e);
 			return GRILL_SEPARATOR + " " + Constants.ERROR_NOT_AVAILABLE;
-		}
-		return stringBuffer.toString();
 
+		}
+
+		return stringBuffer.toString();
 	}
 
     public String cleanGrillResult(String raw) {
@@ -138,29 +168,32 @@ public class SonaattiProvider {
 			log.debug(cleaned);
 			cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", GRILL_SEPARATOR);
 			cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d* ", GRILL_SEPARATOR);
+			cleaned = cleaned.replaceAll("Paistopisteeltä : ", GRILL_SEPARATOR);
 			log.debug(cleaned);
-			cleaned = cleaned.replaceAll(" \\([A-Z0-9,\\s]*\\) \\d*,\\d*\\s?€ / \\d*,\\d*\\s?€", ".");
+			cleaned = cleaned.replaceAll("\\s?\\([A-Z0-9,\\s]*\\)\\s?\\d*,\\d*\\s?€\\s?/\\s?\\d*,\\d*\\s?€", ".");
 			cleaned = cleaned.replaceAll("  ", " ");
 			log.debug(cleaned);
 		}
         return cleaned.trim();
     }
 
-	public String cleanBackupPiatoString(String raw) {
-		//Nettisivuillamme on ongelmia, pahoittelemme !\nLounaalla on tänään ti 31.3.\nJauhelihalasagnettea (L) \nBroileri-kookoskermakastiketta (L,G)\nJauhelihakeittoa (M,G)\nKikherne-bataattipataa (M,G)
-		String cleaned = raw.trim();
-		cleaned = cleaned.replaceAll("\n", " ");
+	private String cleanUpSonaattiFeed(String value) {
+		StringBuffer stringBuffer = new StringBuffer();
 
-		cleaned = cleaned.replaceAll("Nettisivuillamme on ongelmia, pahoittelemme ! Lounaalla on tänään", "");
-		log.debug(cleaned);
-		cleaned = cleaned.replaceAll(" \\([A-Z0-9,\\s]*\\)", ".");
-		log.debug(cleaned);
-		cleaned = cleaned.replaceAll("\\d*,\\d*\\s? / \\d*,\\d*\\s?", "");
-		log.debug(cleaned);
-		cleaned = cleaned.replaceAll("  ", " ");
-		log.debug(cleaned);
+		value = value.trim();
+		value = value.split("\n")[0]; // remove all after row change
+		String[] array = value.split("\\),");
 
-		return cleaned.trim();
+		for (int i = 0; i < array.length; i++) {
+			stringBuffer.append(array[i].split("[#\\(\\d]")[0].trim());
+			if (i < array.length - 1) {
+				stringBuffer.append(", ");
+			}
+		}
+		return stringBuffer.toString().trim();
 	}
+
+
+
 
 }

@@ -12,7 +12,8 @@ public class Constants {
 
     public static final String PREFIX_PIATO = "Piato";
 	public static final String MESSAGE_URL_PIATO = "http://www.sonaatti.fi/piato/";
-    public static final String GRILL_API = "https://www.kimonolabs.com/api/json/ondemand/e6rwhgda?apikey=88YhRC4s1GBK2FlBN32W9xOksgo01sHs";
+    public static final String KIMONO_API_PIATO = "https://www.kimonolabs.com/api/json/e6rwhgda?apikey=88YhRC4s1GBK2FlBN32W9xOksgo01sHs";
+	public static final String KIMONO_API_WILHELMIINA = "https://www.kimonolabs.com/api/json/2n104pnw?apikey=88YhRC4s1GBK2FlBN32W9xOksgo01sHs";
 
     public static final String URL_SODEXO = "http://www.sodexo.fi/ruokalistat/output/daily_json/66/";
 	public static final String PREFIX_SODEXO = "Sodexo";

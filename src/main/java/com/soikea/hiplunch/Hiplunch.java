@@ -48,8 +48,8 @@ public class Hiplunch {
 
         HipChatter hipChatter = new HipChatter();
         hipChatter.sendMessage(getSodexoMessage());
-        hipChatter.sendMessage(getWilhelmiinaMessage());
-        hipChatter.sendMessage(getPiatoMessage());
+//        hipChatter.sendMessage(getWilhelmiinaMessage());
+//        hipChatter.sendMessage(getPiatoMessage());
 
     }
 }

@@ -1,17 +1,23 @@
 package com.soikea.hiplunch;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 24.3.2015.
  */
-public class SonaattiProviderTest extends TestCase {
+public class SonaattiProviderTest {
     static final Logger log = LoggerFactory.getLogger(SonaattiProviderTest.class);
 
     SonaattiProvider sonaattiProvider = new SonaattiProvider();
 
+
+    @Test
     public void testGrillParsing() {
         String raw = "Paistopisteellä viikolla 12\nSalaatti annos: Ma-Ke \nPaistettua lohta (VL,G) 4,95 € / 10,00 €\nTo-Pe (VL,G) 4,95 € / 10,00 €\nBroilerinfilettä \nPaistopiste palvelee ma-pe klo 11.00-14.00";
         String raw2 = "Paistopisteellä viikolla 10\nKebab annos (L,M,G) 4,95 € / 10,00 €\nJättikatkarawokkia (L, M) 4,95€ / 9,40€\nPaistopiste palvelee ma-pe klo 11.00-14.30";
@@ -27,18 +33,25 @@ public class SonaattiProviderTest extends TestCase {
 
     }
 
+
+
+    @Test
     public void testGrillApi() {
         String grillString = sonaattiProvider.processGrill();
         log.debug(grillString);
         assertTrue(grillString.startsWith(SonaattiProvider.GRILL_SEPARATOR));
     }
 
+
+    @Test
     public void testWilhelmiinaFeed() {
         String wString = sonaattiProvider.processFeed(Constants.PREFIX_WILHELMIINA);
         log.debug(wString);
         assertNotNull(wString);
     }
 
+
+    @Test
     public void testPiatoFeed() {
         String pString = sonaattiProvider.processFeed(Constants.PREFIX_PIATO);
         log.debug(pString);
