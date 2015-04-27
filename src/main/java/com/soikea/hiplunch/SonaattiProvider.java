@@ -94,7 +94,7 @@ public class SonaattiProvider {
 		try {
 			JSONArray results = getKimonoApiResult(kimonoUrl, "results", "menu");
 
-			for (int i = 0; i < results.length(); i++) {
+				for (int i = 0; i < results.length(); i++) {
 				JSONObject course = results.getJSONObject(i);
 				stringBuffer.append(course.getString("course"));
 				if (i < results.length() - 1) {
@@ -103,8 +103,10 @@ public class SonaattiProvider {
 					stringBuffer.append(".");
 				}
 			}
+
 		} catch (JSONException e) {
 			log.error(" ", e);
+			return "";
 		}
 
 		return stringBuffer.toString();
@@ -117,14 +119,14 @@ public class SonaattiProvider {
 		return cleanGrillResult(getGrillApiString("grill"));
 	}
 
-	public JSONArray getKimonoApiResult(String url, String key, String subkey) {
+	public JSONArray getKimonoApiResult(String url, String key, String subkey) throws JSONException{
 		JSONArray results = null;
 
 		try {
 			JSONObject json = new JSONObject(ContentUtil.getJSONContent(url));
 			results = json.getJSONObject(key).getJSONArray(subkey);
 		} catch (JSONException e) {
-			log.error("Unable to get Kimono result for "+url+" . " + e.getMessage(), e);
+			throw new JSONException("Unable to get Kimono result for "+url+" . " + e.getMessage());
 		}
 		return results;
 
@@ -145,7 +147,6 @@ public class SonaattiProvider {
 			}
 		} catch (JSONException e) {
 			return GRILL_SEPARATOR + " " + Constants.ERROR_NOT_AVAILABLE;
-
 		}
 
 		return stringBuffer.toString();
@@ -164,11 +165,11 @@ public class SonaattiProvider {
 
 			cleaned = cleaned.replaceAll("\n", " ");
 
-			cleaned = cleaned.replaceAll("Paistopiste palvelee ma-pe klo .*\\d*", "");
+			cleaned = cleaned.replaceAll("[\\.,\\s]*[Pp]aistopiste palvelee [a-z]*\\s?-\\s?[a-z]* klo .*\\d*", "");
 			log.debug(cleaned);
 			cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", GRILL_SEPARATOR);
 			cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d* ", GRILL_SEPARATOR);
-			cleaned = cleaned.replaceAll("Paistopisteeltä : ", GRILL_SEPARATOR);
+			cleaned = cleaned.replaceAll("Paistopisteeltä\\s?: ", GRILL_SEPARATOR);
 			log.debug(cleaned);
 			cleaned = cleaned.replaceAll("\\s?\\([A-Z0-9,\\s]*\\)\\s?\\d*,\\d*\\s?€\\s?/\\s?\\d*,\\d*\\s?€", ".");
 			cleaned = cleaned.replaceAll("  ", " ");
