@@ -12,8 +12,11 @@ public class Constants {
 
     public static final String PREFIX_PIATO = "Piato";
 	public static final String MESSAGE_URL_PIATO = "http://www.sonaatti.fi/piato/";
-    public static final String KIMONO_API_PIATO = "https://www.kimonolabs.com/api/json/e6rwhgda?apikey=88YhRC4s1GBK2FlBN32W9xOksgo01sHs";
-	public static final String KIMONO_API_WILHELMIINA = "https://www.kimonolabs.com/api/json/2n104pnw?apikey=88YhRC4s1GBK2FlBN32W9xOksgo01sHs";
+	public static final String KIMONO_APIKEY = "88YhRC4s1GBK2FlBN32W9xOksgo01sHs";
+	public static final String KIMONO_API_PIATO = "e6rwhgda";
+	public static final String KIMONO_API_WILHELMIINA = "2n104pnw";
+	public static final String KIMONO_URL_PIATO = "https://www.kimonolabs.com/api/json/ondemand/"+ KIMONO_API_PIATO +"?apikey=" + KIMONO_APIKEY;
+	public static final String KIMONO_URL_WILHELMIINA = "https://www.kimonolabs.com/api/json/ondemand/"+ KIMONO_API_WILHELMIINA +"?apikey=" + KIMONO_APIKEY;
 
     public static final String URL_SODEXO = "http://www.sodexo.fi/ruokalistat/output/daily_json/66/";
 	public static final String PREFIX_SODEXO = "Sodexo";
@@ -21,8 +24,6 @@ public class Constants {
 
     public static final String ERROR_NOT_AVAILABLE = "Tietoja ei saatavilla.";
 
-//	public static final String HIP_ROOM = "748322"; //Bottitesti
-//	public static final String HIP_API_KEY = "kVrbFSVQXkjV4nY2rhMnpEM2SgO5NVV5YTxi5xPX"; //Bottitesti
 	public static final String HIP_ROOM = "263211"; //Soikea
 	public static final String HIP_API_KEY = "UBZKUrMSMlSv4PjCfJceixwOkR2sdByirfaRNtco"; //Soikea -room
 

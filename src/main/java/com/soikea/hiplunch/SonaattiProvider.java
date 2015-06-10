@@ -86,9 +86,9 @@ public class SonaattiProvider {
 		StringBuffer stringBuffer = new StringBuffer();
 		String kimonoUrl = "";
 		if (prefix.equals(Constants.PREFIX_PIATO)) {
-			kimonoUrl = Constants.KIMONO_API_PIATO;
+			kimonoUrl = Constants.KIMONO_URL_PIATO;
  		} else if (prefix.equals(Constants.PREFIX_WILHELMIINA)) {
-			kimonoUrl = Constants.KIMONO_API_WILHELMIINA;
+			kimonoUrl = Constants.KIMONO_URL_WILHELMIINA;
 		}
 
 		try {
@@ -136,7 +136,7 @@ public class SonaattiProvider {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		try {
-			JSONArray results = getKimonoApiResult(Constants.KIMONO_API_PIATO, "results", "special");
+			JSONArray results = getKimonoApiResult(Constants.KIMONO_URL_PIATO, "results", "special");
 
 			for (int i = 0; i < results.length(); i++) {
 				JSONObject course = results.getJSONObject(i);
