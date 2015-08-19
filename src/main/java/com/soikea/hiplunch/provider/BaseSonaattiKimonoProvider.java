@@ -2,6 +2,8 @@ package com.soikea.hiplunch.provider;
 
 import com.soikea.hiplunch.Constants;
 import com.soikea.hiplunch.ContentUtil;
+import com.soikea.hiplunch.Highlighter;
+import com.soikea.hiplunch.domain.HipchatMessage;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import org.codehaus.jettison.json.JSONArray;
@@ -13,16 +15,25 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Created by penni on 18/08/14.
+ * @author Mika Pennanen, Soikea Solutions Oy, 18/08/14.
  */
-public class SonaattiProvider {
-    static final Logger log = LoggerFactory.getLogger(SonaattiProvider.class);
+public abstract class BaseSonaattiKimonoProvider extends BaseKimonoProvider {
+    static final Logger log = LoggerFactory.getLogger(BaseSonaattiKimonoProvider.class);
 
 	private List<SyndEntry> entryList;
 
-	public SonaattiProvider() {
+    private final String URL_SONAATTI = "http://www.sonaatti.fi/rssfeed/";
+
+    public HipchatMessage processMessage() {
+		HipchatMessage hipchatMessage = new HipchatMessage(
+			"<a href=\"" + getMessageUrl() + "\">" + getPrefix() + "</a>: " + processFeed());
+		Highlighter.checkForHighlights(hipchatMessage);
+		return hipchatMessage;
+	}
+
+    public BaseSonaattiKimonoProvider() {
 		try {
-			SyndFeed feed = ContentUtil.getRSSFeedForUrl(Constants.URL_SONAATTI);
+			SyndFeed feed = ContentUtil.getRSSFeedForUrl(URL_SONAATTI);
 			if (feed != null) {
 				entryList = (List<SyndEntry>) feed.getEntries();
 			}
@@ -31,21 +42,17 @@ public class SonaattiProvider {
 		}
 	}
 
-	public String processFeed(String prefix) {
-		return processFeed(prefix, false);
-	}
-
-	public String processFeed(String prefix, boolean includeGrill) {
+	public String processFeed() {
 		StringBuilder stringBuffer = new StringBuilder();
 
-		String sonaattiRssFeedResult = getSonaattiFeedFromRSS(prefix);
+		String sonaattiRssFeedResult = getSonaattiFeedFromRSS(getPrefix());
 
 		if (sonaattiRssFeedResult.length() < 10) {
-			log.debug("Using backup source for " + prefix + ".");
-			stringBuffer.append(getSonaattiFeedFromKimonoAPI(prefix));
+			log.debug("Using backup source for " + getPrefix() + ".");
+			stringBuffer.append(getSonaattiFeedFromKimonoAPI(getPrefix()));
 
 			if (stringBuffer.length() < 10) {
-				log.debug("Backup source for " + prefix + " failed also.");
+				log.debug("Backup source for " + getPrefix() + " failed also.");
 				stringBuffer.append(Constants.ERROR_NOT_AVAILABLE);
 			}
 
@@ -53,7 +60,7 @@ public class SonaattiProvider {
 			stringBuffer.append(sonaattiRssFeedResult);
 		}
 
-		if (includeGrill) {
+		if (hasGrill()) {
             stringBuffer.append(" ").append(processGrill());
         }
 
@@ -65,12 +72,12 @@ public class SonaattiProvider {
 		if (entryList != null) {
 			for (SyndEntry entry : entryList) {
 				if (entry.getTitle().startsWith(prefix)) {
-					String sonaattifeedResult = cleanUpSonaattiFeed(entry.getDescription().getValue());
+					String sonaattiFeedResult = cleanUpSonaattiFeed(entry.getDescription().getValue());
 
-					if (sonaattifeedResult.isEmpty() || sonaattifeedResult.length() < 10) {
+					if (sonaattiFeedResult.isEmpty() || sonaattiFeedResult.length() < 10) {
 						stringBuilder.append(Constants.ERROR_NOT_AVAILABLE);
 					} else {
-						stringBuilder.append(sonaattifeedResult);
+						stringBuilder.append(sonaattiFeedResult);
 					}
 				}
 			}
@@ -81,15 +88,9 @@ public class SonaattiProvider {
 	private String getSonaattiFeedFromKimonoAPI(String prefix) {
 
 		StringBuilder stringBuilder = new StringBuilder();
-		String kimonoUrl = "";
-		if (prefix.equals(Constants.PREFIX_PIATO)) {
-			kimonoUrl = Constants.KIMONO_URL_PIATO;
- 		} else if (prefix.equals(Constants.PREFIX_WILHELMIINA)) {
-			kimonoUrl = Constants.KIMONO_URL_WILHELMIINA;
-		}
 
 		try {
-			JSONArray results = getKimonoApiResult(kimonoUrl, "results", "menu");
+			JSONArray results = getKimonoApiResult(KIMONO_URL, "results", "menu");
 
 				for (int i = 0; i < results.length(); i++) {
 				JSONObject course = results.getJSONObject(i);
@@ -110,14 +111,12 @@ public class SonaattiProvider {
 
 	}
 
-
-
 	public String processGrill() {
 		return cleanGrillResult(getGrillApiString("grill"));
 	}
 
 	public JSONArray getKimonoApiResult(String url, String key, String subkey) throws JSONException{
-		JSONArray results = null;
+		JSONArray results;
 
 		try {
 			JSONObject json = new JSONObject(ContentUtil.getJSONContent(url));
@@ -126,14 +125,13 @@ public class SonaattiProvider {
 			throw new JSONException("Unable to get Kimono result for "+url+" . " + e.getMessage());
 		}
 		return results;
-
 	}
 
 	public String getGrillApiString(String key) {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		try {
-			JSONArray results = getKimonoApiResult(Constants.KIMONO_URL_PIATO, "results", "special");
+			JSONArray results = getKimonoApiResult(KIMONO_URL, "results", "special");
 
 			for (int i = 0; i < results.length(); i++) {
 				JSONObject course = results.getJSONObject(i);
@@ -169,7 +167,7 @@ public class SonaattiProvider {
 			cleaned = cleaned.replaceAll("Paistopisteeltä\\s?: ", Constants.GRILL_SEPARATOR);
 			log.debug(cleaned);
 			cleaned = cleaned.replaceAll("\\s?\\([A-Z0-9,\\s]*\\)\\s?\\d*,\\d*\\s?€\\s?/\\s?\\d*,\\d*\\s?€", ".");
-			cleaned = cleaned.replaceAll("  ", " ");
+			cleaned = cleaned.replaceAll("\\s\\s?", " ");
 			log.debug(cleaned);
 		}
         return cleaned.trim();
@@ -191,7 +189,7 @@ public class SonaattiProvider {
 		return stringBuilder.toString().trim();
 	}
 
-
+    protected abstract Boolean hasGrill();
 
 
 }

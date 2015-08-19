@@ -12,10 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by penni on 18/08/14.
+ * @author Mika Pennanen, Soikea Solutions Oy, 18/08/14.
  */
 public class HipChatter {
 	static final Logger log = LoggerFactory.getLogger(HipChatter.class);
+
+	public static final String HIP_APIURL_PREFIX = "https://api.hipchat.com/v2/";
+	public static final String HIP_APIURL_METHOD = "room/" + Constants.HIP_ROOM + "/notification";
+	public static final String HIP_APIURL_PARAMS = "?auth_token=" + Constants.HIP_API_KEY;
+	public static final String HIP_HEADER_MIME = "application/json";
 
 	public void sendMessage(HipchatMessage hipchatMessage) {
 
@@ -30,13 +35,13 @@ public class HipChatter {
 			ObjectMapper mapper = new ObjectMapper();
 
 			WebResource webResource = client
-					.resource(Constants.HIP_APIURL_PREFIX
-							+ Constants.HIP_APIURL_METHOD
-							+ Constants.HIP_APIURL_PARAMS);
+					.resource(HIP_APIURL_PREFIX
+							+ HIP_APIURL_METHOD
+							+ HIP_APIURL_PARAMS);
 
 			ClientResponse response = webResource
-					.accept(Constants.HIP_HEADER_MIME)
-					.type(Constants.HIP_HEADER_MIME)
+					.accept(HIP_HEADER_MIME)
+					.type(HIP_HEADER_MIME)
 					.post(ClientResponse.class, mapper.writeValueAsString(hipchatMessage));
 
 			log.debug(webResource.toString());

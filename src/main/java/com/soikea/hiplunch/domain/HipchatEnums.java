@@ -1,7 +1,7 @@
 package com.soikea.hiplunch.domain;
 
 /**
- * Created by penni on 19/08/14.
+ * @author Mika Pennanen, Soikea Solutions Oy, 19/08/14.
  */
 public class HipchatEnums {
 

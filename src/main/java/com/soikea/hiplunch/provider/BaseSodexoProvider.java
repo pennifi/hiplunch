@@ -1,6 +1,5 @@
 package com.soikea.hiplunch.provider;
 
-import com.soikea.hiplunch.Constants;
 import com.soikea.hiplunch.ContentUtil;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -12,17 +11,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by penni on 19/08/14.
+ * @author Mika Pennanen, Soikea Solutions Oy, 19/08/14.
  */
-public class SodexoProvider {
-    static final Logger log = LoggerFactory.getLogger(SodexoProvider.class);
+public abstract class BaseSodexoProvider extends BaseProvider {
+    static final Logger log = LoggerFactory.getLogger(BaseSodexoProvider.class);
 
     static final SimpleDateFormat SODEXO_URL_DATEFORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
-	public String getUrlSodexo() {
+	protected abstract String getSodexoId();
+
+	public final String SODEXO_BASEURL = "http://www.sodexo.fi/ruokalistat/output/daily_json/"+getSodexoId()+"/";
+
+	public String getUrl() {
 		StringBuffer stringBuffer = new StringBuffer();
 
-		stringBuffer.append(Constants.URL_SODEXO);
+		stringBuffer.append(SODEXO_BASEURL);
         stringBuffer.append(SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime()));
 		stringBuffer.append("/fi");
 
@@ -33,7 +36,7 @@ public class SodexoProvider {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		try {
-			JSONObject json = new JSONObject(ContentUtil.getJSONContent(getUrlSodexo()));
+			JSONObject json = new JSONObject(ContentUtil.getJSONContent(getUrl()));
 
 			JSONArray array = json.getJSONArray("courses");
 

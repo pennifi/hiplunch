@@ -1,17 +1,16 @@
 package com.soikea.hiplunch.domain;
 
-import com.soikea.hiplunch.Constants;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
- * Created by penni on 19/08/14.
+ * @author Mika Pennanen, Soikea Solutions Oy, 19/08/14.
  */
 public class HipchatMessage {
 
-	private String from = Constants.HIP_FROM;
-	private HipchatEnums.Format format = Constants.HIP_MESSAGE_FORMAT;
-	private boolean notify = Constants.HIP_NOTIFY;
-	private HipchatEnums.Color color = Constants.HIP_COLOR;
+	private String from = "LunchBot";
+	private HipchatEnums.Format format = HipchatEnums.Format.html;
+	private boolean notify = false;
+	private HipchatEnums.Color color = HipchatEnums.Color.green;
 	private String message = "Default message: Not initialized.";
 
 	public HipchatMessage() {}
