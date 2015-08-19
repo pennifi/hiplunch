@@ -1,5 +1,7 @@
-package com.soikea.hiplunch;
+package com.soikea.hiplunch.provider;
 
+import com.soikea.hiplunch.Constants;
+import com.soikea.hiplunch.ContentUtil;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;

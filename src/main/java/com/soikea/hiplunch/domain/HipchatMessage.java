@@ -1,5 +1,6 @@
-package com.soikea.hiplunch;
+package com.soikea.hiplunch.domain;
 
+import com.soikea.hiplunch.Constants;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**

@@ -3,6 +3,8 @@ package com.soikea.hiplunch;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,25 +17,25 @@ import java.net.URLConnection;
  * @author Mika Pennanen, Soikea Solutions Oy, 04/11/14.
  */
 public class ContentUtil {
+	static final Logger log = LoggerFactory.getLogger(ContentUtil.class);
 
 	public static SyndFeed getRSSFeedForUrl(String url) {
 		try {
 			URL feedUrl = new URL(url);
 
 			SyndFeedInput input = new SyndFeedInput();
-			SyndFeed feed = input.build(new XmlReader(feedUrl));
 
-			return feed;
+			return input.build(new XmlReader(feedUrl));
 
 		} catch (Exception e) {
-			System.out.println("ERROR: " + e.getMessage());
+			log.error("Error getting rss feed: " + e.getMessage(), e);
 		}
 		return null;
 	}
 
 
 	public static String getJSONContent(String urlString) {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuffer = new StringBuilder();
 
 		try {
 
@@ -51,9 +53,9 @@ public class ContentUtil {
 			return stringBuffer.toString();
 
 		} catch (MalformedURLException e) {
-			System.out.println("ERROR: " + e.getMessage());
+			log.error("Error getting json content: " + e.getMessage(), e);
 		} catch (IOException e) {
-			System.out.println("ERROR: " + e.getMessage());
+			log.error("Error getting json content: " + e.getMessage(), e);
 		}
 		return null;
 	}

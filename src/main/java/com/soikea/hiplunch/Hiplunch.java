@@ -1,5 +1,10 @@
 package com.soikea.hiplunch;
 
+import com.soikea.hiplunch.domain.HipchatEnums;
+import com.soikea.hiplunch.domain.HipchatMessage;
+import com.soikea.hiplunch.provider.SodexoProvider;
+import com.soikea.hiplunch.provider.SonaattiProvider;
+
 /**
  * Created by penni on 19/08/14.
  */
@@ -8,7 +13,7 @@ public class Hiplunch {
     private static SonaattiProvider sonaattiProvider = new SonaattiProvider();
     private static SodexoProvider sodexoProvider = new SodexoProvider();
 
-    private static HipchatMessage getSodexoMessage() {
+    public static HipchatMessage getSodexoMessage() {
         HipchatMessage hipchatMessage = new HipchatMessage(
                 "<a href=\"" + Constants.MESSAGE_URL_SODEXO + "\">" + Constants.PREFIX_SODEXO + "</a>: "
                         + sodexoProvider.processFeed());
@@ -16,7 +21,7 @@ public class Hiplunch {
         return hipchatMessage;
     }
 
-    private static HipchatMessage getWilhelmiinaMessage() {
+    public static HipchatMessage getWilhelmiinaMessage() {
         HipchatMessage hipchatMessage = new HipchatMessage(
                 "<a href=\"" + Constants.MESSAGE_URL_WILHELMIINA + "\">" + Constants.PREFIX_WILHELMIINA + "</a>: "
                         + sonaattiProvider.processFeed(Constants.PREFIX_WILHELMIINA));
@@ -24,7 +29,7 @@ public class Hiplunch {
         return hipchatMessage;
     }
 
-    private static HipchatMessage getPiatoMessage() {
+    public static HipchatMessage getPiatoMessage() {
         HipchatMessage hipchatMessage = new HipchatMessage(
                 "<a href=\"" + Constants.MESSAGE_URL_PIATO + "\">" + Constants.PREFIX_PIATO + "</a>: "
                         + sonaattiProvider.processFeed(Constants.PREFIX_PIATO, true));

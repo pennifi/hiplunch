@@ -1,12 +1,10 @@
-package com.soikea.hiplunch;
+package com.soikea.hiplunch.provider;
 
+import com.soikea.hiplunch.Constants;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 24.3.2015.
@@ -27,9 +25,11 @@ public class SonaattiProviderTest {
         String parsed2 = sonaattiProvider.cleanGrillResult(raw2);
         String parsed3 = sonaattiProvider.cleanGrillResult(raw3);
 
-        assertEquals(SonaattiProvider.GRILL_SEPARATOR + "Salaatti annos: Ma-Ke Paistettua lohta. To-Pe. Broilerinfilettä", parsed);
-        assertEquals(SonaattiProvider.GRILL_SEPARATOR + "Kebab annos. Jättikatkarawokkia.", parsed2);
-        assertEquals(SonaattiProvider.GRILL_SEPARATOR + "Suljettu. (Paistopiste on pääsiäistauolla!...)", parsed3);
+        Assert
+            .assertEquals(Constants.GRILL_SEPARATOR + "Salaatti annos: Ma-Ke Paistettua lohta. To-Pe. Broilerinfilettä",
+                parsed);
+        Assert.assertEquals(Constants.GRILL_SEPARATOR + "Kebab annos. Jättikatkarawokkia.", parsed2);
+        Assert.assertEquals(Constants.GRILL_SEPARATOR + "Suljettu. (Paistopiste on pääsiäistauolla!...)", parsed3);
 
     }
 
@@ -39,7 +39,7 @@ public class SonaattiProviderTest {
     public void testGrillApi() {
         String grillString = sonaattiProvider.processGrill();
         log.debug(grillString);
-        assertTrue(grillString.startsWith(SonaattiProvider.GRILL_SEPARATOR));
+        Assert.assertTrue(grillString.startsWith(Constants.GRILL_SEPARATOR));
     }
 
 
@@ -47,7 +47,7 @@ public class SonaattiProviderTest {
     public void testWilhelmiinaFeed() {
         String wString = sonaattiProvider.processFeed(Constants.PREFIX_WILHELMIINA);
         log.debug(wString);
-        assertNotNull(wString);
+        Assert.assertNotNull(wString);
     }
 
 
@@ -55,6 +55,6 @@ public class SonaattiProviderTest {
     public void testPiatoFeed() {
         String pString = sonaattiProvider.processFeed(Constants.PREFIX_PIATO);
         log.debug(pString);
-        assertNotNull(pString);
+        Assert.assertNotNull(pString);
     }
 }

@@ -1,4 +1,4 @@
-package com.soikea.hiplunch;
+package com.soikea.hiplunch.domain;
 
 /**
  * Created by penni on 19/08/14.
