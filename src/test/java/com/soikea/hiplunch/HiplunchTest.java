@@ -1,13 +1,14 @@
 package com.soikea.hiplunch;
 
-import com.soikea.hiplunch.provider.impl.MattilanniemiProvider;
-import com.soikea.hiplunch.provider.impl.PiatoProvider;
-import com.soikea.hiplunch.provider.impl.WilhelmiinaProvider;
+import com.soikea.hiplunch.provider.BaseProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,16 +25,16 @@ public class HiplunchTest {
     @Test
     public void testAllMessages() {
 
-        MattilanniemiProvider mattilanniemiProvider = new MattilanniemiProvider();
-        PiatoProvider piatoProvider = new PiatoProvider();
-        WilhelmiinaProvider wilhelmiinaProvider = new WilhelmiinaProvider();
+        List<BaseProvider> allProviders = new ProviderStorage().getAllProviders();
 
         ObjectMapper mapper = new ObjectMapper();
         try {
 
-            log.debug(mapper.writeValueAsString(mattilanniemiProvider.processMessage()));
-            log.debug(mapper.writeValueAsString(wilhelmiinaProvider.processMessage()));
-            log.debug(mapper.writeValueAsString(piatoProvider.processMessage()));
+            for (BaseProvider provider : allProviders) {
+                String message = mapper.writeValueAsString(provider.processMessage());
+                log.debug(message);
+                assertNotNull(message);
+            }
 
         } catch (Exception e) {
             log.error("Error parsing hipchat message: ", e);

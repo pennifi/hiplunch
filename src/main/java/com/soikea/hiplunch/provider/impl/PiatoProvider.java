@@ -23,7 +23,18 @@ public class PiatoProvider extends BaseSonaattiKimonoProvider {
     }
 
     @Override
+    public String getId() {
+        return "piato";
+    }
+
+    @Override
     protected Boolean hasGrill() {
         return true;
     }
+
+    @Override
+    protected String getRssUrl() {
+        return "http://www.sonaatti.fi/rssfeed/";
+    }
+
 }

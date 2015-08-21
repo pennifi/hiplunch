@@ -13,6 +13,11 @@ public class WilhelmiinaProvider extends BaseSonaattiKimonoProvider {
     }
 
     @Override
+    protected String getRssUrl() {
+        return "http://www.sonaatti.fi/rssfeed/";
+    }
+
+    @Override
     protected String getKimonoApikey() {
         return "2n104pnw";
     }
@@ -25,5 +30,10 @@ public class WilhelmiinaProvider extends BaseSonaattiKimonoProvider {
     @Override
     protected String getPrefix() {
         return "Wilhelmiina";
+    }
+
+    @Override
+    public String getId() {
+        return "wilhelmiina";
     }
 }

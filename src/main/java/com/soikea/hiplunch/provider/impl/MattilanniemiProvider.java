@@ -18,6 +18,11 @@ public class MattilanniemiProvider extends BaseSodexoProvider {
     }
 
     @Override
+    public String getId() {
+        return "mattilanniemi";
+    }
+
+    @Override
     protected String getSodexoId() {
         return "66";
     }

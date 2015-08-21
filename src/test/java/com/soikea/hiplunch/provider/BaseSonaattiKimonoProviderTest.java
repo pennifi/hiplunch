@@ -1,6 +1,5 @@
 package com.soikea.hiplunch.provider;
 
-import com.soikea.hiplunch.Constants;
 import com.soikea.hiplunch.provider.impl.PiatoProvider;
 import com.soikea.hiplunch.provider.impl.WilhelmiinaProvider;
 import org.junit.Assert;
@@ -28,18 +27,18 @@ public class BaseSonaattiKimonoProviderTest {
         String parsed3 = piatoProvider.cleanGrillResult(raw3);
 
         Assert
-            .assertEquals(Constants.GRILL_SEPARATOR + "Salaatti annos: Ma-Ke Paistettua lohta. To-Pe. Broilerinfilettä",
+            .assertEquals(BaseSonaattiKimonoProvider.GRILL_SEPARATOR + "Salaatti annos: Ma-Ke Paistettua lohta. To-Pe. Broilerinfilettä",
                 parsed);
-        Assert.assertEquals(Constants.GRILL_SEPARATOR + "Kebab annos. Jättikatkarawokkia.", parsed2);
-        Assert.assertEquals(Constants.GRILL_SEPARATOR + "Suljettu. (Paistopiste on pääsiäistauolla!...)", parsed3);
+        Assert.assertEquals(BaseSonaattiKimonoProvider.GRILL_SEPARATOR + "Kebab annos. Jättikatkarawokkia.", parsed2);
+        Assert.assertEquals(BaseSonaattiKimonoProvider.GRILL_SEPARATOR + "Suljettu. (Paistopiste on pääsiäistauolla!...)", parsed3);
 
     }
 
     @Test
     public void testGrillApi() {
-        String grillString = piatoProvider.processGrill();
+        String grillString = piatoProvider.cleanGrillResult(piatoProvider.getGrillApiString());
         log.debug(grillString);
-        Assert.assertTrue(grillString.startsWith(Constants.GRILL_SEPARATOR));
+        Assert.assertTrue(grillString.startsWith(BaseSonaattiKimonoProvider.GRILL_SEPARATOR));
     }
 
     @Test

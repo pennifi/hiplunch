@@ -1,9 +1,7 @@
 package com.soikea.hiplunch.provider;
 
 import com.soikea.hiplunch.ContentUtil;
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,43 +14,29 @@ import java.util.Calendar;
 public abstract class BaseSodexoProvider extends BaseProvider {
     static final Logger log = LoggerFactory.getLogger(BaseSodexoProvider.class);
 
-    static final SimpleDateFormat SODEXO_URL_DATEFORMAT = new SimpleDateFormat("yyyy/MM/dd");
+    public static final SimpleDateFormat SODEXO_URL_DATEFORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
 	protected abstract String getSodexoId();
 
-	public final String SODEXO_BASEURL = "http://www.sodexo.fi/ruokalistat/output/daily_json/"+getSodexoId()+"/";
+	private final String SODEXO_BASEURL = "http://www.sodexo.fi/ruokalistat/output/daily_json/"+getSodexoId()+"/";
 
 	public String getUrl() {
-		StringBuffer stringBuffer = new StringBuffer();
-
-		stringBuffer.append(SODEXO_BASEURL);
-        stringBuffer.append(SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime()));
-		stringBuffer.append("/fi");
-
-		return stringBuffer.toString();
+		return SODEXO_BASEURL + SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime()) + "/fi";
 	}
 
 	public String processFeed() {
-		StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
 
-		try {
-			JSONObject json = new JSONObject(ContentUtil.getJSONContent(getUrl()));
-
-			JSONArray array = json.getJSONArray("courses");
-
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject course = array.getJSONObject(i);
-				stringBuffer.append(course.getString("title_fi"));
-				if (i < array.length() - 1) {
-					stringBuffer.append(", ");
-				}
-			}
-			return stringBuffer.toString();
+        try {
+            stringBuilder.append(
+                ContentUtil.processJsonArray(
+                    ContentUtil.getJsonResult(getUrl(), "courses")
+                    , "title_fi"));
 
 		} catch (JSONException e) {
 			log.error("Unable to process feed " + e.getMessage(), e);
 		}
-		return null;
+        return stringBuilder.toString();
 	}
 
 

@@ -8,14 +8,18 @@ import com.soikea.hiplunch.domain.HipchatMessage;
  */
 public abstract class BaseProvider {
 
+
     public HipchatMessage processMessage() {
         HipchatMessage hipchatMessage = new HipchatMessage(
             "<a href=\"" + getMessageUrl() + "\">" + getPrefix() + "</a>: " + processFeed());
+
         Highlighter.checkForHighlights(hipchatMessage);
         return hipchatMessage;
     }
 
     public abstract String processFeed();
+
+    public abstract String getId();
 
     protected abstract String getMessageUrl();
 

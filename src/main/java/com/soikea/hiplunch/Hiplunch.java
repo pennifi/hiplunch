@@ -1,8 +1,8 @@
 package com.soikea.hiplunch;
 
-import com.soikea.hiplunch.provider.impl.MattilanniemiProvider;
-import com.soikea.hiplunch.provider.impl.PiatoProvider;
-import com.soikea.hiplunch.provider.impl.WilhelmiinaProvider;
+import com.soikea.hiplunch.provider.BaseProvider;
+
+import java.util.List;
 
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 19/08/14.
@@ -12,14 +12,10 @@ public class Hiplunch {
     public static void main(String[] args) {
 
         HipChatter hipChatter = new HipChatter();
+        List<BaseProvider> enabledProviders = new ProviderStorage().getEnabledProviders();
 
-        MattilanniemiProvider mattilanniemiProvider = new MattilanniemiProvider();
-        PiatoProvider piatoProvider = new PiatoProvider();
-        WilhelmiinaProvider wilhelmiinaProvider = new WilhelmiinaProvider();
-
-        hipChatter.sendMessage(mattilanniemiProvider.processMessage());
-        hipChatter.sendMessage(wilhelmiinaProvider.processMessage());
-        hipChatter.sendMessage(piatoProvider.processMessage());
-
+        for (BaseProvider provider : enabledProviders) {
+            hipChatter.sendMessage(provider.processMessage());
+        }
     }
 }

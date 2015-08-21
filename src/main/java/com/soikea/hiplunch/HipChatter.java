@@ -25,27 +25,23 @@ public class HipChatter {
 	public void sendMessage(HipchatMessage hipchatMessage) {
 
 		try {
-			ClientConfig clientConfig = new DefaultClientConfig();
+			ObjectMapper mapper = new ObjectMapper();
+			log.debug(mapper.writeValueAsString(hipchatMessage));
 
+			ClientConfig clientConfig = new DefaultClientConfig();
 			clientConfig.getFeatures().put(
 					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
 			Client client = Client.create(clientConfig);
 
-			ObjectMapper mapper = new ObjectMapper();
-
-			WebResource webResource = client
-					.resource(HIP_APIURL_PREFIX
-							+ HIP_APIURL_METHOD
-							+ HIP_APIURL_PARAMS);
+			WebResource webResource = client.resource(
+				HIP_APIURL_PREFIX + HIP_APIURL_METHOD + HIP_APIURL_PARAMS);
+			log.debug(webResource.toString());
 
 			ClientResponse response = webResource
 					.accept(HIP_HEADER_MIME)
 					.type(HIP_HEADER_MIME)
 					.post(ClientResponse.class, mapper.writeValueAsString(hipchatMessage));
-
-			log.debug(webResource.toString());
-			log.debug(mapper.writeValueAsString(hipchatMessage));
 			log.debug(response.toString());
 
 		} catch (Exception e) {

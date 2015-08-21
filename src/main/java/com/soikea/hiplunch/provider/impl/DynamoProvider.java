@@ -18,6 +18,11 @@ public class DynamoProvider extends BaseSodexoProvider {
     }
 
     @Override
+    public String getId() {
+        return "dynamo";
+    }
+
+    @Override
     protected String getSodexoId() {
         return "5865";
     }

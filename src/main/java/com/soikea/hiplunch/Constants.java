@@ -5,12 +5,11 @@ package com.soikea.hiplunch;
  */
 public class Constants {
 
-	public static final String ERROR_NOT_AVAILABLE = "Tietoja ei saatavilla.";
-	public static final String GRILL_SEPARATOR = "<a><i>Paistopisteeltä:</i></a> ";
-
 	public static final String HIP_ROOM = "263211"; // Soikea
 	public static final String HIP_API_KEY = "UBZKUrMSMlSv4PjCfJceixwOkR2sdByirfaRNtco"; // Soikea
 
 	public static final String[] HIGHLIGHTS = {"pekoni", "olut", "kalja", "pizza"};
+//	public static final String[] ENABLED_PROVIDERS = {"mattilanniemi", "wilhelmiina", "piato"};
+	public static final String[] ENABLED_PROVIDERS = {"piato"};
 
 }
