@@ -92,10 +92,11 @@ public abstract class BaseSonaattiKimonoProvider extends BaseKimonoProvider {
 			cleaned = cleaned.replaceAll("\n", " ");
 
 			cleaned = cleaned.replaceAll("[\\.,\\s]*[Pp]aistopiste palvelee [a-z]*\\s?-\\s?[a-z]* klo .*\\d*", "");
-			log.debug(cleaned);
+            log.debug(cleaned);
 			cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", GRILL_SEPARATOR);
 			cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d* ", GRILL_SEPARATOR);
 			cleaned = cleaned.replaceAll("Paistopisteeltä\\s?: ", GRILL_SEPARATOR);
+            cleaned = cleaned.replaceAll("Paistopiste .* [\\d\\.\\-]+", GRILL_SEPARATOR);
 			log.debug(cleaned);
 			cleaned = cleaned.replaceAll("\\s?\\([A-Z0-9,\\s]*\\)\\s?\\d*,\\d*\\s?€\\s?/\\s?\\d*,\\d*\\s?€", ".");
 			cleaned = cleaned.replaceAll("\\s\\s?", " ");

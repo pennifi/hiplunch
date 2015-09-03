@@ -21,16 +21,20 @@ public class BaseSonaattiKimonoProviderTest {
         String raw = "Paistopisteellä viikolla 12\nSalaatti annos: Ma-Ke \nPaistettua lohta (VL,G) 4,95 € / 10,00 €\nTo-Pe (VL,G) 4,95 € / 10,00 €\nBroilerinfilettä \nPaistopiste palvelee ma-pe klo 11.00-14.00";
         String raw2 = "Paistopisteellä viikolla 10\nKebab annos (L,M,G) 4,95 € / 10,00 €\nJättikatkarawokkia (L, M) 4,95€ / 9,40€\nPaistopiste palvelee ma-pe klo 11.00-14.30";
         String raw3 = "Paistopiste on pääsiäistauolla!\nSonaatti ottaa ylpeänä osaa KANSAINVÄLISEEN PUPUTUSVIIKKOON! Pääsiäisen läheisyys ja kevätauringon lisäämä karoteenin tarve mielessä haastamme teidät kaikki puputtamaan! Ohjelmassa päivittäin: Vaihtuvia puputusaiheisia tarjouksia ja yllätyksiä Yllätysarpajaiset Jokaisessa Sonaatin ravintolassa on myös virallinen PUPUTUSPÖYTÄ, joka on avoin kaikille puputtajille. Tervetuloa! P.S. Täydellä vatsalla ei sitten saa pomppia! Poing, Poing, Poing! Viestiäksesi puputusmielialasi, etene koko ruokajono pomppimalla kuin pupu ja lupaamme palkita sinut kahvilipulla!";
+        String raw4 = "Paistopiste on auki maanantaista perjantaihin 11.00-14.30 Pan and Grill is open from monday to friday 11.00-14.30 Possunpihviä ja choron-kastiketta (G) Pork steak and choron sauce (G).";
 
         String parsed = piatoProvider.cleanGrillResult(raw);
         String parsed2 = piatoProvider.cleanGrillResult(raw2);
         String parsed3 = piatoProvider.cleanGrillResult(raw3);
+        String parsed4 = piatoProvider.cleanGrillResult(raw4);
 
         Assert
             .assertEquals(BaseSonaattiKimonoProvider.GRILL_SEPARATOR + "Salaatti annos: Ma-Ke Paistettua lohta. To-Pe. Broilerinfilettä",
                 parsed);
         Assert.assertEquals(BaseSonaattiKimonoProvider.GRILL_SEPARATOR + "Kebab annos. Jättikatkarawokkia.", parsed2);
         Assert.assertEquals(BaseSonaattiKimonoProvider.GRILL_SEPARATOR + "Suljettu. (Paistopiste on pääsiäistauolla!...)", parsed3);
+        Assert.assertEquals(BaseSonaattiKimonoProvider.GRILL_SEPARATOR + "Possunpihviä ja choron-kastiketta (G) Pork steak and choron sauce (G).", parsed4);
+
 
     }
 
