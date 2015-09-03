@@ -6,15 +6,16 @@ Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsin
 
 ## TODO: ##
 
-- move hipchat channel key and id to external config
-- parametrize which menus should be ran (empty= all?) 
-- course tags and formatting (VH, L, G...)?
-- clean up code
+- Move hipchat channel key and id to external config
+- Add providers for Lutakko area restaurants
+- Parametrize which menus should be ran (empty= all?) 
+- Course tags and formatting (VH, L, G...)?
+- Clean up code
 
 ## Usage ##
 
-- clone repo
-- check Constants for api key and room id
-- check constants for hilights
-- run 'mvn clean install'
-- run 'java -jar target/hiplunch-1.0-jar-with-dependencies.jar'
+- Clone repo
+- Check Constants for api key and room id
+- Check constants for hilights
+- Run 'mvn clean install'
+- Run 'java -jar target/hiplunch-1.0-jar-with-dependencies.jar'
