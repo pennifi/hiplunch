@@ -36,7 +36,8 @@ public abstract class BaseSonaattiKimonoProvider extends BaseKimonoProvider {
         }
 
         if (hasGrill()) {
-            stringBuilder.append(" ").append(cleanGrillResult(getGrillApiString()));
+
+            stringBuilder = formatGrillString(stringBuilder);
         }
 
 		return stringBuilder.toString();
@@ -60,50 +61,8 @@ public abstract class BaseSonaattiKimonoProvider extends BaseKimonoProvider {
 		return stringBuilder.toString();
 	}
 
-	public String getGrillApiString() {
-		StringBuilder stringBuilder = new StringBuilder();
-
-		try {
-            stringBuilder.append(
-                ContentUtil.processJsonArray(
-                    ContentUtil.getJsonResult(KIMONO_URL, "results", "special")
-                    , "grill"));
-
-		} catch (JSONException e) {
-			return GRILL_SEPARATOR + " " + ContentUtil.ERROR_NOT_AVAILABLE;
-		}
-
-		return stringBuilder.toString();
-	}
-
-
-    public String cleanGrillResult(String raw) {
-
-        String cleaned = raw.trim();
-
-        if (raw.contains("tauolla") || raw.contains("suljettu") || raw.contains("seuraavan kerran")) {
-
-			cleaned = raw.replaceAll("\n", "---").split("---")[0];
-			cleaned = GRILL_SEPARATOR + "Suljettu. (" + cleaned + "...)";
-			log.debug(cleaned);
-
-		} else {
-
-			cleaned = cleaned.replaceAll("\n", " ");
-
-			cleaned = cleaned.replaceAll("[\\.,\\s]*[Pp]aistopiste palvelee [a-z]*\\s?-\\s?[a-z]* klo .*\\d*", "");
-            log.debug(cleaned);
-			cleaned = cleaned.replaceAll("PAISTOPISTEELTÄ ", GRILL_SEPARATOR);
-			cleaned = cleaned.replaceAll("Paistopisteellä viikolla \\d* ", GRILL_SEPARATOR);
-			cleaned = cleaned.replaceAll("Paistopisteeltä\\s?: ", GRILL_SEPARATOR);
-            cleaned = cleaned.replaceAll("Paistopiste .* [\\d\\.\\-]+", GRILL_SEPARATOR);
-			log.debug(cleaned);
-			cleaned = cleaned.replaceAll("\\s?\\([A-Z0-9,\\s]*\\)\\s?\\d*,\\d*\\s?€\\s?/\\s?\\d*,\\d*\\s?€", ".");
-			cleaned = cleaned.replaceAll("\\s\\s?", " ");
-			log.debug(cleaned);
-		}
-        return cleaned.trim();
+    public StringBuilder formatGrillString(StringBuilder raw) {
+        return new StringBuilder(raw.toString().replaceAll("Paistopiste:", GRILL_SEPARATOR));
     }
-
 
 }
