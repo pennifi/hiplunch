@@ -2,8 +2,6 @@ package com.soikea.hiplunch.provider;
 
 import com.soikea.hiplunch.ContentUtil;
 import org.codehaus.jettison.json.JSONException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,7 +10,6 @@ import java.util.Calendar;
  * @author Mika Pennanen, Soikea Solutions Oy, 19/08/14.
  */
 public abstract class BaseSodexoProvider extends BaseProvider {
-    static final Logger log = LoggerFactory.getLogger(BaseSodexoProvider.class);
 
     public static final SimpleDateFormat SODEXO_URL_DATEFORMAT = new SimpleDateFormat("yyyy/MM/dd");
 

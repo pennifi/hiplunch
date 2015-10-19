@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 24.3.2015.
  */
-public class BaseSonaattiKimonoProviderTest {
-    static final Logger log = LoggerFactory.getLogger(BaseSonaattiKimonoProviderTest.class);
+public class BaseSonaattiProviderTest {
+    static final Logger log = LoggerFactory.getLogger(BaseSonaattiProviderTest.class);
 
     PiatoProvider piatoProvider = new PiatoProvider();
     WilhelmiinaProvider wilhelmiinaProvider = new WilhelmiinaProvider();

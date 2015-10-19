@@ -1,16 +1,11 @@
 package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.provider.BaseSonaattiKimonoProvider;
+import com.soikea.hiplunch.provider.BaseSonaattiProvider;
 
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
  */
-public class PiatoProvider extends BaseSonaattiKimonoProvider {
-
-    @Override
-    protected String getKimonoApikey() {
-        return "e6rwhgda";
-    }
+public class PiatoProvider extends BaseSonaattiProvider {
 
     @Override
     protected String getMessageUrl() {
@@ -19,7 +14,7 @@ public class PiatoProvider extends BaseSonaattiKimonoProvider {
 
     @Override
     protected String getPrefix() {
-        return "Piato";
+        return "Sonaatti Piato";
     }
 
     @Override
@@ -33,8 +28,8 @@ public class PiatoProvider extends BaseSonaattiKimonoProvider {
     }
 
     @Override
-    protected String getRssUrl() {
-        return "http://www.sonaatti.fi/rssfeed/";
+    protected String getRSSTitleId() {
+        return "Piato";
     }
 
 }

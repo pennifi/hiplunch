@@ -1,9 +1,11 @@
 package com.soikea.hiplunch;
 
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.io.SyndFeedInput;
-import com.sun.syndication.io.XmlReader;
+
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -12,10 +14,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -100,7 +104,7 @@ public class ContentUtil {
 
         if (entryList != null) {
             for (SyndEntry entry : entryList) {
-                if (entry.getTitle().startsWith(prefix)) {
+                if (matchesTitle(entry.getTitle(), prefix)) {
                     String feedResult = cleanupRSSFeed(entry.getDescription().getValue());
 
                     if (feedResult.isEmpty() || feedResult.length() < 10) {
@@ -115,20 +119,56 @@ public class ContentUtil {
         return stringBuilder.toString();
     }
 
+    private static boolean matchesTitle(String feed, String pattern) {
+        return feed.toLowerCase().startsWith(pattern.toLowerCase());
+    }
+
+    private static String getUrlContents(String theUrl) {
+        StringBuilder content = new StringBuilder();
+        try {
+
+            URL url = new URL(theUrl);
+            URLConnection urlConnection = url.openConnection();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                content.append(line + "\n");
+            }
+            bufferedReader.close();
+        } catch (Exception e) {
+            log.error("Error getting url content for feed: {}", e.getMessage());
+        }
+        return content.toString();
+    }
 
     private static List<SyndEntry> getRssEntryList(String url) {
         List<SyndEntry> entryList = null;
 
         try {
-            SyndFeed feed = new SyndFeedInput().build(new XmlReader(new URL(url)));
+            String content = cleanupRawURLFeed(getUrlContents(url));
+
+            InputStream stream = new java.io.ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+            XmlReader reader = new XmlReader(stream);
+            SyndFeedInput input = new SyndFeedInput();
+
+            SyndFeed feed = input.build(reader);
 
             if (feed != null) {
-                entryList = (List<SyndEntry>) feed.getEntries();
+                entryList = feed.getEntries();
             }
-        } catch (Exception e) {
-            log.error("Error getting feed.", e.getMessage());
+
+        } catch (IOException e) {
+            log.error("Error getting feed: IOException: {}", e.getMessage());
+        } catch (FeedException e) {
+            log.error("Error getting feed: FeedException: {}", e.getMessage());
         }
-        return entryList;
+
+    return entryList;
+    }
+
+    private static String cleanupRawURLFeed(String value) {
+        return value.replaceAll("</br>", "");
     }
 
     private static String cleanupRSSFeed(String value) {
