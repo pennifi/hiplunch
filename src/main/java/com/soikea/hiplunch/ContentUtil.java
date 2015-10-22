@@ -13,10 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -26,36 +26,9 @@ import java.util.List;
  * @author Mika Pennanen, Soikea Solutions Oy, 04/11/14.
  */
 public class ContentUtil {
-	static final Logger log = LoggerFactory.getLogger(ContentUtil.class);
+    static final Logger log = LoggerFactory.getLogger(ContentUtil.class);
 
     public static final String ERROR_NOT_AVAILABLE = "Tietoja ei saatavilla.";
-
-	public static String getJSONContent(String urlString) {
-		StringBuilder stringBuffer = new StringBuilder();
-
-		try {
-
-			URL url = new URL(urlString);
-			URLConnection conn = url.openConnection();
-
-			BufferedReader br = new BufferedReader(
-					new InputStreamReader(conn.getInputStream()));
-
-			String result;
-			while (( result = br.readLine()) != null) {
-				stringBuffer.append(result);
-			}
-
-			return stringBuffer.toString();
-
-		} catch (MalformedURLException e) {
-			log.error("Error getting json content: " + e.getMessage(), e);
-		} catch (IOException e) {
-			log.error("Error getting json content: " + e.getMessage(), e);
-		}
-		return null;
-	}
-
 
     public static JSONArray getJsonResult(String url, String key) throws JSONException {
         return getJsonResult(url, key, null);
@@ -65,7 +38,7 @@ public class ContentUtil {
         JSONArray results;
 
         try {
-            JSONObject json = new JSONObject(getJSONContent(url));
+            JSONObject json = new JSONObject(getUrlContents(url));
 
             results = ( subkey != null ? json.getJSONObject(key).getJSONArray(subkey) : json.getJSONArray(key) );
 
@@ -103,8 +76,9 @@ public class ContentUtil {
         List<SyndEntry> entryList = getRssEntryList(url);
 
         if (entryList != null) {
-            for (SyndEntry entry : entryList) {
-                if (matchesTitle(entry.getTitle(), prefix)) {
+            entryList.stream()
+                .filter(entry -> matchesTitle(entry.getTitle(), prefix))
+                .forEach(entry -> {
                     String feedResult = cleanupRSSFeed(entry.getDescription().getValue());
 
                     if (feedResult.isEmpty() || feedResult.length() < 10) {
@@ -112,8 +86,7 @@ public class ContentUtil {
                     } else {
                         stringBuilder.append(feedResult);
                     }
-                }
-            }
+                });
         }
 
         return stringBuilder.toString();
@@ -133,7 +106,7 @@ public class ContentUtil {
             String line;
 
             while ((line = bufferedReader.readLine()) != null) {
-                content.append(line + "\n");
+                content.append(line).append("\n");
             }
             bufferedReader.close();
         } catch (Exception e) {
@@ -148,7 +121,7 @@ public class ContentUtil {
         try {
             String content = cleanupRawURLFeed(getUrlContents(url));
 
-            InputStream stream = new java.io.ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+            InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
             XmlReader reader = new XmlReader(stream);
             SyndFeedInput input = new SyndFeedInput();
 
@@ -164,7 +137,7 @@ public class ContentUtil {
             log.error("Error getting feed: FeedException: {}", e.getMessage());
         }
 
-    return entryList;
+        return entryList;
     }
 
     private static String cleanupRawURLFeed(String value) {

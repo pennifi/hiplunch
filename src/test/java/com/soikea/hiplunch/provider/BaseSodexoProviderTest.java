@@ -14,7 +14,7 @@ import java.util.Calendar;
 public class BaseSodexoProviderTest {
     static final Logger log = LoggerFactory.getLogger(BaseSodexoProviderTest.class);
 
-    MattilanniemiProvider mattilanniemiProvider = new MattilanniemiProvider();
+    final MattilanniemiProvider mattilanniemiProvider = new MattilanniemiProvider();
 
     @Test
     public void testUrl() {

@@ -7,6 +7,7 @@ import com.soikea.hiplunch.provider.impl.PiatoProvider;
 import com.soikea.hiplunch.provider.impl.WilhelmiinaProvider;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class ProviderStorage {
 
-    private List<BaseProvider> providers = new ArrayList<BaseProvider>();
+    private List<BaseProvider> providers = new ArrayList<>();
 
     public ProviderStorage() {
         providers.add(new MattilanniemiProvider());
@@ -24,16 +25,13 @@ public class ProviderStorage {
     }
 
     public List<BaseProvider> getEnabledProviders() {
-        List<BaseProvider> enabledProviders = new ArrayList<BaseProvider>();
+        final List<BaseProvider> enabledProviders = new ArrayList<>();
+        final List<String> propertyEnabledProvidersList = Arrays.asList(Constants.ENABLED_PROVIDERS);
 
-        String[] propertyEnabledProvidersList = Constants.ENABLED_PROVIDERS;
-        for (String providerId : propertyEnabledProvidersList) {
-            for (BaseProvider provider : providers) {
-                if (provider.getId().equals(providerId)) {
-                    enabledProviders.add(provider);
-                }
-            }
-        }
+        providers.stream()
+            .filter(p -> propertyEnabledProvidersList.contains(p.getId()))
+            .forEach(enabledProviders::add);
+
         return enabledProviders;
     }
 

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
  */
 public abstract class BaseProvider {
-    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+    final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public HipchatMessage processMessage() {
         HipchatMessage hipchatMessage = new HipchatMessage(
@@ -19,7 +19,7 @@ public abstract class BaseProvider {
         return hipchatMessage;
     }
 
-    public abstract String processFeed();
+    protected abstract String processFeed();
 
     public abstract String getId();
 

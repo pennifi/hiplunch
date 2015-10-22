@@ -36,7 +36,6 @@ public class HipChatter {
 
 			WebResource webResource = client.resource(
 				HIP_APIURL_PREFIX + HIP_APIURL_METHOD + HIP_APIURL_PARAMS);
-			log.debug(webResource.toString());
 
 			ClientResponse response = webResource
 					.accept(HIP_HEADER_MIME)
@@ -45,7 +44,7 @@ public class HipChatter {
 			log.debug(response.toString());
 
 		} catch (Exception e) {
-			log.error("Error sending hipchat message: ", e);
+			log.error("Error sending hipchat message: {}", e.getMessage());
 		}
 	}
 }

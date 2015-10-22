@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 public class BaseSonaattiProviderTest {
     static final Logger log = LoggerFactory.getLogger(BaseSonaattiProviderTest.class);
 
-    PiatoProvider piatoProvider = new PiatoProvider();
-    WilhelmiinaProvider wilhelmiinaProvider = new WilhelmiinaProvider();
+    final PiatoProvider piatoProvider = new PiatoProvider();
+    final WilhelmiinaProvider wilhelmiinaProvider = new WilhelmiinaProvider();
 
     @Test
     public void testWilhelmiinaFeed() {

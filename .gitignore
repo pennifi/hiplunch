@@ -1,3 +1,7 @@
 .idea/
 *.iml
 target
+.gradle
+build
+gradle-app.setting
+!gradle-wrapper.jar
