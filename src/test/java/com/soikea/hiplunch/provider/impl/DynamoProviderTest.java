@@ -1,6 +1,5 @@
 package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.provider.Provider;
 import com.soikea.hiplunch.provider.ProviderTest;
 import com.soikea.hiplunch.provider.SodexoProvider;
 import org.junit.Assert;
@@ -11,7 +10,7 @@ import java.util.Calendar;
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 24.3.2015.
  */
-public class DynamoProviderTest extends ProviderTest {
+public class DynamoProviderTest extends ProviderTest<DynamoProvider> {
 
     @Test
     public void testUrl() {
@@ -22,10 +21,5 @@ public class DynamoProviderTest extends ProviderTest {
                 +((DynamoProvider) getProvider()).getSodexoId()
                 + "/" + SodexoProvider.SODEXO_URL_DATEFORMAT
                 .format(Calendar.getInstance().getTime()) + "/fi", url);
-    }
-
-    @Override
-    protected Provider getProvider() {
-        return new DynamoProvider();
     }
 }
