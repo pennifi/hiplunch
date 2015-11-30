@@ -40,7 +40,6 @@ Default providers (run with argument "default"):
 ## TODO: ##
 
 - Move hipchat channel key and id to external config
-- Add providers for Lutakko area restaurants
-- Parametrize which menus should be ran (empty= all?) 
+- Add MORE providers!
 - Course tags and formatting (VH, L, G...)?
 - Clean up code
