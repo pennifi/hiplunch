@@ -13,7 +13,7 @@ public class WilhelmiinaProvider extends SonaattiProvider {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "Sonaatti Wilhelmiina";
     }
 

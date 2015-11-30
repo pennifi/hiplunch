@@ -19,7 +19,7 @@ public class FiiluProvider extends FazerProvider {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "Fazer Fiilu";
     }
 

@@ -38,8 +38,8 @@ public class NurkkaProvider extends Provider {
     }
 
     @Override
-    protected String getName() {
-        return "Nurkka";
+    public String getName() {
+        return "Lutakon Nurkka";
     }
 
 }

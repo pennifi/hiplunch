@@ -13,7 +13,7 @@ public class PiatoProvider extends SonaattiProvider {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "Sonaatti Piato";
     }
 

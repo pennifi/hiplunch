@@ -44,4 +44,10 @@ public class ProviderStorage {
     public List<Provider> getAllProviders() {
         return providers;
     }
+
+    public Provider getProviderById(String id) {
+       return getAllProviders().stream()
+            .filter(f -> (f.getId().equals(id)))
+            .findAny().get();
+    }
 }

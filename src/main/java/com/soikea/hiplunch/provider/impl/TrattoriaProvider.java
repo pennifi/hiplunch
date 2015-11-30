@@ -51,7 +51,7 @@ public class TrattoriaProvider extends Provider {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "Trattoria Aukio";
     }
 }

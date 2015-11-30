@@ -25,6 +25,6 @@ public abstract class Provider {
 
     protected abstract String getMessageUrl();
 
-    protected abstract String getName();
+    public abstract String getName();
 
 }
