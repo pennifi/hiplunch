@@ -11,23 +11,23 @@ import java.util.Calendar;
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 24.3.2015.
  */
-public class BaseSodexoProviderTest {
-    static final Logger log = LoggerFactory.getLogger(BaseSodexoProviderTest.class);
+public class SodexoProviderTest {
+    static final Logger log = LoggerFactory.getLogger(SodexoProviderTest.class);
 
-    final MattilanniemiProvider mattilanniemiProvider = new MattilanniemiProvider();
+    final Provider provider = new MattilanniemiProvider();
 
     @Test
     public void testUrl() {
-        String url = mattilanniemiProvider.getUrl();
+        String url = ((MattilanniemiProvider) provider).getUrl();
         log.debug(url);
         Assert.assertEquals(
-            "http://www.sodexo.fi/ruokalistat/output/daily_json/66/" + BaseSodexoProvider.SODEXO_URL_DATEFORMAT
+            "http://www.sodexo.fi/ruokalistat/output/daily_json/66/" + SodexoProvider.SODEXO_URL_DATEFORMAT
                 .format(Calendar.getInstance().getTime()) + "/fi", url);
     }
 
     @Test
     public void testFeed() {
-        String feed = mattilanniemiProvider.processFeed();
+        String feed = provider.processFeed();
         log.debug(feed);
         Assert.assertNotNull(feed);
     }

@@ -9,7 +9,7 @@ import java.util.Calendar;
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 19/08/14.
  */
-public abstract class BaseSodexoProvider extends BaseProvider {
+public abstract class SodexoProvider extends Provider {
 
     public static final SimpleDateFormat SODEXO_URL_DATEFORMAT = new SimpleDateFormat("yyyy/MM/dd");
 

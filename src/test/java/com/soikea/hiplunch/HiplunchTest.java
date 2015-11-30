@@ -1,6 +1,6 @@
 package com.soikea.hiplunch;
 
-import com.soikea.hiplunch.provider.BaseProvider;
+import com.soikea.hiplunch.provider.Provider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -25,12 +25,12 @@ public class HiplunchTest {
     @Test
     public void testAllMessages() {
 
-        List<BaseProvider> allProviders = new ProviderStorage().getAllProviders();
+        List<Provider> allProviders = new ProviderStorage().getAllProviders();
 
         ObjectMapper mapper = new ObjectMapper();
         try {
 
-            for (BaseProvider provider : allProviders) {
+            for (Provider provider : allProviders) {
                 String message = mapper.writeValueAsString(provider.processMessage());
                 log.debug(message);
                 assertNotNull(message);

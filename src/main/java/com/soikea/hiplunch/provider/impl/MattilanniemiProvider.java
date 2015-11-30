@@ -1,11 +1,11 @@
 package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.provider.BaseSodexoProvider;
+import com.soikea.hiplunch.provider.SodexoProvider;
 
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
  */
-public class MattilanniemiProvider extends BaseSodexoProvider {
+public class MattilanniemiProvider extends SodexoProvider {
 
     @Override
     protected String getMessageUrl() {

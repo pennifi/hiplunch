@@ -5,7 +5,7 @@ import com.soikea.hiplunch.ContentUtil;
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 18/08/14.
  */
-public abstract class BaseSonaattiProvider extends BaseProvider {
+public abstract class SonaattiProvider extends Provider {
 
     public static final String GRILL_SEPARATOR = "<a><i>Paistopisteeltä:</i></a> ";
 

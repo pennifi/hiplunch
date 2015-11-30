@@ -1,6 +1,6 @@
 package com.soikea.hiplunch;
 
-import com.soikea.hiplunch.provider.BaseProvider;
+import com.soikea.hiplunch.provider.Provider;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public class Hiplunch {
     public static void main(String[] args) {
 
         HipChatter hipChatter = new HipChatter();
-        List<BaseProvider> enabledProviders = new ProviderStorage().getEnabledProviders();
+        List<Provider> enabledProviders = new ProviderStorage().getEnabledProviders();
 
-        for (BaseProvider provider : enabledProviders) {
+        for (Provider provider : enabledProviders) {
             hipChatter.sendMessage(provider.processMessage());
         }
     }

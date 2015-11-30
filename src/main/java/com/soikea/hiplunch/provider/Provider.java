@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
  */
-public abstract class BaseProvider {
+public abstract class Provider {
     final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public HipchatMessage processMessage() {
@@ -26,6 +26,5 @@ public abstract class BaseProvider {
     protected abstract String getMessageUrl();
 
     protected abstract String getPrefix();
-
 
 }

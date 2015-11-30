@@ -88,6 +88,27 @@ public class ContentUtil {
                     }
                 });
         }
+        log.debug(stringBuilder.toString());
+        return stringBuilder.toString();
+    }
+
+    public static String getRSSFeedResults(String url) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        List<SyndEntry> entryList = getRssEntryList(url);
+
+        if (entryList != null) {
+            entryList.stream()
+                .forEach(entry -> {
+                    String feedResult = entry.getDescription().getValue();
+
+                    if (feedResult.isEmpty() || feedResult.length() < 10) {
+                        stringBuilder.append(ERROR_NOT_AVAILABLE);
+                    } else {
+                        stringBuilder.append(feedResult);
+                    }
+                });
+        }
 
         return stringBuilder.toString();
     }
