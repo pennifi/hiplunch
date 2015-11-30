@@ -23,7 +23,7 @@ public class DynamoProvider extends SodexoProvider {
     }
 
     @Override
-    protected String getSodexoId() {
+    public String getSodexoId() {
         return "5865";
     }
 }

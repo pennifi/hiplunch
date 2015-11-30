@@ -13,7 +13,7 @@ public abstract class SodexoProvider extends Provider {
 
     public static final SimpleDateFormat SODEXO_URL_DATEFORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
-	protected abstract String getSodexoId();
+	public abstract String getSodexoId();
 
 	private final String SODEXO_BASEURL = "http://www.sodexo.fi/ruokalistat/output/daily_json/"+getSodexoId()+"/";
 

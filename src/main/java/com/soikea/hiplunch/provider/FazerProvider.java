@@ -35,20 +35,35 @@ public abstract class FazerProvider extends Provider {
     private String stripTodayFromFazerFeed(String s) {
         String today = getWeekdayName(0);
         String tomorrow = getWeekdayName(1);
-        log.debug(today + "  " + tomorrow);
+        String result;
+
         int start = s.indexOf(today);
-        int end = s.indexOf(tomorrow);
-        String result = s.substring(start, end);
+        if (start >= s.length() || start < 0) { start = s.length(); }
+        result = s.substring(start, s.length());
+
+        int end = result.indexOf(tomorrow);
+        if (end >= result.length() || end < 0) { end = result.length(); }
+        result = result.substring(0, end);
+
         result = result.replaceAll(today, "");
         result = result.replaceAll(tomorrow, "");
         result = result.replaceAll("<.+?>", "");
+        result = result.replaceAll("Lounas 7,10 opiskelijakortilla 2.60Kela tukee korkeakouluopiskelijoiden ruokailua 1,94 euroa/ ateria.", "");
+
         result = result.replaceAll("<br />", "");
         result = result.replaceAll("&nbsp;", "");
         result = result.replaceAll("\\(.+?\\)", "");
         result = result.replaceAll("\\(.+?\\)", "");
-        result = result.replaceAll("\\s\\d+?,\\d+", ": </strong>");
-        result = result.replaceAll("\\n", "<strong>");
+        result = result.replaceAll("\\s\\d+?,\\d+", ":</strong> ");
+        result = result.replaceAll("\\n", " <strong>");
         result = result.replaceAll("  ", ", ");
+        result = result.replaceAll(">,", ">");
+        result = result.replaceAll(",\\s?<", " <");
+
+        result = result.replaceAll("<strong>Deli salaattibaari:</strong>", "");
+        result = result.replaceAll("Päivän keittolounas", "Keitto");
+        result = result.replaceAll("Nordic Buffet", "Buffet");
+        result = result.replaceAll("Street gourmet grilli", "Grilli");
 
         return result;
     }
@@ -56,7 +71,12 @@ public abstract class FazerProvider extends Provider {
     private String getWeekdayName(int offset) {
         Calendar calendar = Calendar.getInstance();
         calendar.roll(Calendar.DAY_OF_WEEK, offset);
-        return StringUtils.capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        }
+        String result = StringUtils.capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
+        log.debug(result);
+        return result;
     }
 
 }
