@@ -13,7 +13,11 @@ public class NurkkaProvider extends Provider {
     protected String processFeed() {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
-        feed = StringHelper.stripOneDayFromMenu(feed, true, "NURKAN LOUNASLISTA");
+
+        String today = StringHelper.getWeekdayName(0).toUpperCase();
+        String tomorrow = StringHelper.getWeekdayName(1).toUpperCase();
+
+        feed = StringHelper.stripOneDayFromMenu(feed, today, tomorrow, "NURKAN LOUNASLISTA");
 
         feed = feed.replaceAll("\\n", "");
         feed = feed.replaceAll("&nbsp;", "");

@@ -31,7 +31,11 @@ public class FiiluProvider extends FazerProvider {
     @Override
     protected String processFeed() {
         String result = readRawFeed();
-        result = StringHelper.stripOneDayFromMenu(result, false, "Kela tukee");
+
+        String today = StringHelper.getWeekdayName(0);
+        String tomorrow = StringHelper.getWeekdayName(1);
+
+        result = StringHelper.stripOneDayFromMenu(result, today, tomorrow, "Kela tukee");
         result = result.replaceAll("<.+?>", "");
         result = result.replaceAll("Lounas 7,10 opiskelijakortilla 2.60Kela tukee korkeakouluopiskelijoiden ruokailua 1,94 euroa/ ateria.", "");
 

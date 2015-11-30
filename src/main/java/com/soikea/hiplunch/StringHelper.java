@@ -25,24 +25,21 @@ public class StringHelper {
         return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }
 
-    public static String stripOneDayFromMenu(String rawMenu, boolean maximizeDayNames, String forceEnding) {
-        String today = StringHelper.getWeekdayName(0);
-        if (maximizeDayNames) { today = today.toUpperCase(); }
-        String tomorrow = StringHelper.getWeekdayName(1);
-        if (maximizeDayNames) { tomorrow = tomorrow.toUpperCase(); }
+    public static String stripOneDayFromMenu(String rawMenu, String today, String tomorrow, String forceEnding) {
+
         String result;
 
-        int start = rawMenu.indexOf(today);
-        if (start >= rawMenu.length() || start < 0) {
-            start = rawMenu.length();
+        int startIndex = rawMenu.indexOf(today);
+        if (startIndex >= rawMenu.length() || startIndex < 0) {
+            startIndex = rawMenu.length();
         }
-        result = rawMenu.substring(start, rawMenu.length());
+        result = rawMenu.substring(startIndex, rawMenu.length());
 
-        int end = result.indexOf(tomorrow);
-        if (end >= result.length() || end < 0) {
-            end = result.length();
+        int endIndex = result.indexOf(tomorrow);
+        if (endIndex >= result.length() || endIndex < 0) {
+            endIndex = result.length();
         }
-        result = result.substring(0, end);
+        result = result.substring(0, endIndex);
 
         result = result.replaceAll(today, "");
         result = result.replaceAll(tomorrow, "");
