@@ -4,6 +4,7 @@ import com.soikea.hiplunch.provider.Provider;
 import com.soikea.hiplunch.provider.impl.DynamoProvider;
 import com.soikea.hiplunch.provider.impl.FiiluProvider;
 import com.soikea.hiplunch.provider.impl.MattilanniemiProvider;
+import com.soikea.hiplunch.provider.impl.NurkkaProvider;
 import com.soikea.hiplunch.provider.impl.PiatoProvider;
 import com.soikea.hiplunch.provider.impl.WilhelmiinaProvider;
 
@@ -24,6 +25,7 @@ public class ProviderStorage {
         providers.add(new PiatoProvider());
         providers.add(new WilhelmiinaProvider());
         providers.add(new FiiluProvider());
+        providers.add(new NurkkaProvider());
     }
 
     public List<Provider> getEnabledProviders() {

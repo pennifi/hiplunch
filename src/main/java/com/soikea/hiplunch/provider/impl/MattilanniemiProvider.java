@@ -13,7 +13,7 @@ public class MattilanniemiProvider extends SodexoProvider {
     }
 
     @Override
-    protected String getPrefix() {
+    protected String getName() {
         return "Sodexo Mattilanniemi";
     }
 

@@ -13,7 +13,7 @@ public abstract class Provider {
 
     public HipchatMessage processMessage() {
         HipchatMessage hipchatMessage = new HipchatMessage(
-            "<a href=\"" + getMessageUrl() + "\">" + getPrefix() + "</a>: " + processFeed());
+            "<a href=\"" + getMessageUrl() + "\">" + getName() + "</a>: " + processFeed());
 
         Highlighter.checkForHighlights(hipchatMessage);
         return hipchatMessage;
@@ -25,6 +25,6 @@ public abstract class Provider {
 
     protected abstract String getMessageUrl();
 
-    protected abstract String getPrefix();
+    protected abstract String getName();
 
 }

@@ -117,7 +117,7 @@ public class ContentUtil {
         return feed.toLowerCase().startsWith(pattern.toLowerCase());
     }
 
-    private static String getUrlContents(String theUrl) {
+    public static String getUrlContents(String theUrl) {
         StringBuilder content = new StringBuilder();
         try {
 

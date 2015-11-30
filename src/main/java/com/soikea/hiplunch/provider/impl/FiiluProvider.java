@@ -18,7 +18,7 @@ public class FiiluProvider extends FazerProvider {
     }
 
     @Override
-    protected String getPrefix() {
+    protected String getName() {
         return "Fazer Fiilu";
     }
 
