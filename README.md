@@ -4,6 +4,26 @@ A simple Java app for parsing RSS or JSON sources for lunch menus and posting th
 
 Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsing is feed specific (no real deterministic approach) At the moment parses Sonaatti lunch cafeterias and Sodexo Mattilanniemi feeds.
 
+## Usage ##
+```
+penni ~/projects/hiplunch $ java -jar target/hiplunch-2.0.0-jar-with-dependencies.jar help
+Usage:
+	java -jar hiplunch.jar <provider...|default|help>
+
+Providers:
+mattilanniemi	- Sodexo Mattilanniemi
+dynamo	- Sodexo Dynamo
+piato	- Sonaatti Piato
+wilhelmiina	- Sonaatti Wilhelmiina
+fiilu	- Fazer Fiilu
+nurkka	- Lutakon Nurkka
+trattoria	- Trattoria Aukio
+
+Default providers (run with argument "default"):
+	dynamo fiilu nurkka trattoria
+```
+
+
 ## Providers ##
 
 - Sonaatti
@@ -17,15 +37,6 @@ Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsin
 - Fazer
 -- Fiilu
 
-
-## Usage ##
-
-- Clone repo
-- Check Constants for api key and room id
-- Check constants for hilights
-- Run 'mvn clean install'
-- Run 'java -jar target/hiplunch-1.0-jar-with-dependencies.jar'
-
 ## TODO: ##
 
 - Move hipchat channel key and id to external config
@@ -33,4 +44,3 @@ Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsin
 - Parametrize which menus should be ran (empty= all?) 
 - Course tags and formatting (VH, L, G...)?
 - Clean up code
-
