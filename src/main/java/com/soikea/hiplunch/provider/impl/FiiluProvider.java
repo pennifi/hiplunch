@@ -1,5 +1,6 @@
 package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.StringHelper;
 import com.soikea.hiplunch.provider.FazerProvider;
 
 /**
@@ -25,5 +26,30 @@ public class FiiluProvider extends FazerProvider {
     @Override
     protected String getFazerId() {
         return "29801";
+    }
+
+    @Override
+    protected String processFeed() {
+        String result = readRawFeed();
+        result = StringHelper.stripOneDayFromMenu(result, false, "Kela tukee");
+        result = result.replaceAll("<.+?>", "");
+        result = result.replaceAll("Lounas 7,10 opiskelijakortilla 2.60Kela tukee korkeakouluopiskelijoiden ruokailua 1,94 euroa/ ateria.", "");
+
+        result = result.replaceAll("<br />", "");
+        result = result.replaceAll("&nbsp;", "");
+        result = result.replaceAll("\\(.+?\\)", "");
+        result = result.replaceAll("\\(.+?\\)", "");
+        result = result.replaceAll("\\s\\d+?,\\d+", ":</i> ");
+        result = result.replaceAll("\\n", " <i>");
+        result = result.replaceAll("  ", ", ");
+        result = result.replaceAll(">,", ">");
+        result = result.replaceAll(",\\s?<", " <");
+
+        result = result.replaceAll("<strong>Deli salaattibaari:</strong>", "");
+        result = result.replaceAll("Päivän keittolounas", "Keitto");
+        result = result.replaceAll("Nordic Buffet", "Buffet");
+        result = result.replaceAll("Street gourmet grilli", "Grilli");
+
+        return result;
     }
 }

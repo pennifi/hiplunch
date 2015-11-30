@@ -10,7 +10,7 @@ import java.util.Locale;
  * @author Mika Pennanen, Soikea Solutions Oy, 30.11.15.
  */
 public class StringHelper {
-    static final Logger log = LoggerFactory.getLogger(HipChatter.class);
+    static final Logger log = LoggerFactory.getLogger(StringHelper.class);
 
     public static String getWeekdayName(int offset) {
         Calendar calendar = Calendar.getInstance();
@@ -18,10 +18,7 @@ public class StringHelper {
         if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         }
-        String result =
-            capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
-        log.debug(result);
-        return result;
+        return capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
     }
 
     public static String capitalize(final String line) {
