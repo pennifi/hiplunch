@@ -1,7 +1,8 @@
-package com.soikea.hiplunch.provider;
+package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.provider.impl.DynamoProvider;
-import com.soikea.hiplunch.provider.impl.MattilanniemiProvider;
+import com.soikea.hiplunch.provider.Provider;
+import com.soikea.hiplunch.provider.ProviderTest;
+import com.soikea.hiplunch.provider.SodexoProvider;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class DynamoProviderTest extends ProviderTest {
         Assert.assertEquals(
             "http://www.sodexo.fi/ruokalistat/output/daily_json/"
                 +((DynamoProvider) getProvider()).getSodexoId()
-                + "/" +SodexoProvider.SODEXO_URL_DATEFORMAT
+                + "/" + SodexoProvider.SODEXO_URL_DATEFORMAT
                 .format(Calendar.getInstance().getTime()) + "/fi", url);
     }
 

@@ -36,5 +36,4 @@ public abstract class SodexoProvider extends Provider {
         return stringBuilder.toString();
 	}
 
-
 }

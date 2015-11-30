@@ -18,8 +18,6 @@ public abstract class FazerProvider extends Provider {
     public String processFeed() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        log.debug(getRssUrl());
-
         String feedResults = ContentUtil.getRSSFeedResults(getRssUrl());
 
         if (feedResults.length() < 10) {

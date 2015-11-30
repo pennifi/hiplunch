@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * @author Mika Pennanen, Soikea Solutions Oy, 30.11.15.
  */
 public abstract class ProviderTest {
-    final Logger log = LoggerFactory.getLogger(this.getClass());
+    public final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected abstract Provider getProvider();
 

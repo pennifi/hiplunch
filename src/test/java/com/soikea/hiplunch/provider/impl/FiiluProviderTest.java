@@ -1,5 +1,7 @@
-package com.soikea.hiplunch.provider;
+package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.provider.Provider;
+import com.soikea.hiplunch.provider.ProviderTest;
 import com.soikea.hiplunch.provider.impl.FiiluProvider;
 
 /**

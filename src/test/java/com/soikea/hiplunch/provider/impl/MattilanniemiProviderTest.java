@@ -1,6 +1,8 @@
-package com.soikea.hiplunch.provider;
+package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.provider.impl.MattilanniemiProvider;
+import com.soikea.hiplunch.provider.Provider;
+import com.soikea.hiplunch.provider.ProviderTest;
+import com.soikea.hiplunch.provider.SodexoProvider;
 import org.junit.Assert;
 import org.junit.Test;
 
