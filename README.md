@@ -26,16 +26,9 @@ Default providers (run with argument "default"):
 
 ## Providers ##
 
-- Sonaatti
--- All locations (just add provider)
--- Piato
--- Wilhelmiina
-- Sodexo
--- All locations (just add provider)
--- Mattilanniemi
--- Dynamo
-- Fazer
--- Fiilu
+Included providers, see list above or run 'help'
+Adding a provider: see commit https://bitbucket.org/soikea2/hiplunch/commits/06038c1ecf47a5514dfc61d9fbf17b47b68e73d8
+
 
 ## TODO: ##
 
