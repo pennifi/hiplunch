@@ -26,4 +26,11 @@ public class DynamoProvider extends SodexoProvider {
     public String getSodexoId() {
         return "5865";
     }
+
+    @Override
+    public String processFeed() {
+        String feed = super.processFeed();
+        feed = feed.replaceAll("(, )?Iltaruokailu klo [\\d\\.\\s-]+", ".");
+        return feed;
+    }
 }
