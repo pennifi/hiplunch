@@ -35,9 +35,8 @@ public class FiiluProvider extends FazerProvider {
         String today = StringHelper.getWeekdayName(0);
         String tomorrow = StringHelper.getWeekdayName(1);
 
-        result = StringHelper.stripOneDayFromMenu(result, today, tomorrow, "Kela tukee");
+        result = StringHelper.stripOneDayFromMenu(result, today, tomorrow, "Lounas 7,10 opiskelijakortilla");
         result = result.replaceAll("<.+?>", "");
-        result = result.replaceAll("Lounas 7,10 opiskelijakortilla 2.60Kela tukee korkeakouluopiskelijoiden ruokailua 1,94 euroa/ ateria.", "");
 
         result = result.replaceAll("<br />", "");
         result = result.replaceAll("&nbsp;", "");
@@ -49,7 +48,7 @@ public class FiiluProvider extends FazerProvider {
         result = result.replaceAll(">,", ">");
         result = result.replaceAll(",\\s?<", " <");
 
-        result = result.replaceAll("<strong>Deli salaattibaari:</strong>", "");
+        result = result.replaceAll("<i>Deli salaattibaari:</i>", "");
         result = result.replaceAll("Päivän keittolounas", "Keitto");
         result = result.replaceAll("Nordic Buffet", "Buffet");
         result = result.replaceAll("Street gourmet grilli", "Grilli");
