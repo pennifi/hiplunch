@@ -14,17 +14,23 @@ import static org.junit.Assert.assertTrue;
 public class HighlighterTest {
     static final Logger log = LoggerFactory.getLogger(HighlighterTest.class);
 
+    public static final String[] HIGHLIGHTS = {"pekoni", "olut", "kalja", "pizza"};
+
+    private Highlighter hilighter = new Highlighter();
+
+    private HipchatMessage message = new HipchatMessage();
+
 
     @Test
     public void testHightLights() {
-        HipchatMessage message = new HipchatMessage();
 
+        hilighter.setHilights(HIGHLIGHTS);
         message.setMessage("Buffet: Pekoni-tomaattikuorrutettuja KALJApihvejä, Säräjuureksia Juusto-kasvispizzaa Keitto: Täyteläistä mustajuurisosekeittoa Deli salaattibaari: Grilli: Kanaa Kiovan tapaan, Tartarkastiketta, Paahdettuja porkkanoita, Seesammaustettuja ranskalaisia, Falafel pitaleipää ja tsatsikia Puolukkapiirakka, Vaniljakastiketta");
-        Highlighter.checkForHighlights(message);
+        hilighter.checkForHighlights(message);
+
         log.debug(message.getMessage());
         assertTrue(message.getMessage().contains("<b>pizza</b>"));
-        assertTrue(message.getMessage().contains("<b>pekoni</b>"));
-        assertTrue(message.getMessage().contains("<b>kalja</b>"));
-
+        assertTrue(message.getMessage().contains("<b>Pekoni</b>"));
+        assertTrue(message.getMessage().contains("<b>KALJA</b>"));
     }
 }

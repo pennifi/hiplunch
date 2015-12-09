@@ -11,14 +11,27 @@ import java.util.regex.Pattern;
  */
 public class Highlighter {
 
-    public static void checkForHighlights(HipchatMessage hipchatMessage) {
-        String[] highlights = Constants.HIGHLIGHTS;
-        for (String hilight : highlights) {
+    private String[] hilights;
+
+    public void checkForHighlights(HipchatMessage hipchatMessage) {
+        for (String hilight : getHilights()) {
             if (StringUtils.containsIgnoreCase(hipchatMessage.getMessage(), hilight)) {
                 hipchatMessage.setColor(HipchatEnums.Color.red);
-                hipchatMessage.setMessage(hipchatMessage.getMessage().replaceAll("(?i)"+ Pattern.quote(hilight), "<b>" + hilight + "</b>"));
+                hipchatMessage.setMessage(hipchatMessage.getMessage().replaceAll("(?i)("+ Pattern.quote(hilight)+")", "<b>$1</b>"));
                 hipchatMessage.setNotify(true);
             }
         }
     }
+
+    public String[] getHilights() {
+        if (hilights == null) {
+            String[] highlights = Constants.HIGHLIGHTS;
+        }
+        return hilights;
+    }
+
+    public void setHilights(String[] hilights) {
+        this.hilights = hilights;
+    }
+
 }

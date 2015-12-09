@@ -11,11 +11,13 @@ import org.slf4j.LoggerFactory;
 public abstract class Provider {
     public final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    private Highlighter hilighter = new Highlighter();
+
     public HipchatMessage processMessage() {
         HipchatMessage hipchatMessage = new HipchatMessage(
             "<a href=\"" + getMessageUrl() + "\">" + getName() + "</a>: " + processFeed());
 
-        Highlighter.checkForHighlights(hipchatMessage);
+        hilighter.checkForHighlights(hipchatMessage);
         return hipchatMessage;
     }
 
