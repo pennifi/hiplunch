@@ -25,7 +25,7 @@ public class Highlighter {
 
     public String[] getHilights() {
         if (hilights == null) {
-            String[] highlights = Constants.HIGHLIGHTS;
+            hilights = Constants.HIGHLIGHTS;
         }
         return hilights;
     }

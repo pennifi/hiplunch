@@ -25,21 +25,31 @@ public class StringHelper {
         return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }
 
-    public static String stripOneDayFromMenu(String rawMenu, String today, String tomorrow, String forceEnding) {
-
+    public static String cutInput(String raw, String startString, String endString) {
         String result;
-
-        int startIndex = rawMenu.indexOf(today);
-        if (startIndex >= rawMenu.length() || startIndex < 0) {
-            startIndex = rawMenu.length();
+        int startIndex = raw.indexOf(startString);
+        if (startIndex >= raw.length() || startIndex < 0) {
+            startIndex = raw.length();
         }
-        result = rawMenu.substring(startIndex, rawMenu.length());
+        result = raw.substring(startIndex, raw.length());
 
-        int endIndex = result.indexOf(tomorrow);
+        int endIndex = result.indexOf(endString);
         if (endIndex >= result.length() || endIndex < 0) {
             endIndex = result.length();
         }
-        result = result.substring(0, endIndex);
+        return result.substring(0, endIndex);
+    }
+
+    public static String stripOneDayFromMenu(String rawMenu, String today, String tomorrow, String forceEnding) {
+
+        return stripOneDayFromMenu(rawMenu, today, tomorrow, forceEnding, " ");
+    }
+
+    public static String stripOneDayFromMenu(String rawMenu, String today, String tomorrow, String forceEnding, String forceStart) {
+
+        String result = cutInput(rawMenu, forceStart, forceEnding);
+
+        result = cutInput(result, today, tomorrow);
 
         result = result.replaceAll(today, "");
         result = result.replaceAll(tomorrow, "");
