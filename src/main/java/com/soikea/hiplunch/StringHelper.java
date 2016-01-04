@@ -42,7 +42,7 @@ public class StringHelper {
 
     public static String stripOneDayFromMenu(String rawMenu, String today, String tomorrow, String forceEnding) {
 
-        return stripOneDayFromMenu(rawMenu, today, tomorrow, forceEnding, " ");
+        return stripOneDayFromMenu(rawMenu, today, tomorrow, forceEnding, "");
     }
 
     public static String stripOneDayFromMenu(String rawMenu, String today, String tomorrow, String forceEnding, String forceStart) {
