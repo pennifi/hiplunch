@@ -15,7 +15,7 @@ public class FiiluProvider extends FazerProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.fazer.fi/kahvilat-ja-leipomot/kahvilat--ravintolat/byfazer/ravintola-fiilu/";
+        return "http://www.fazer.fi/kahvilat-ja-leipomot/ravintolat/byfazer/ravintola-fiilu/";
     }
 
     @Override
