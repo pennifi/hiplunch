@@ -16,8 +16,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -113,10 +113,10 @@ public class ContentUtil {
 
     public static String getUrlContents(String theUrl) {
         StringBuilder content = new StringBuilder();
-        try {
 
-            URL url = new URL(theUrl);
-            URLConnection urlConnection = url.openConnection();
+        try {
+            HttpURLConnection urlConnection = openUrlConnection(theUrl);
+
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line;
 
@@ -128,6 +128,25 @@ public class ContentUtil {
             log.error("Error getting url content for feed: {}", e.getMessage());
         }
         return content.toString();
+    }
+
+    private static HttpURLConnection openUrlConnection(String theUrl) throws IOException {
+        URL url = new URL(theUrl);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setInstanceFollowRedirects(true);
+
+        int status = urlConnection.getResponseCode();
+        if (status != HttpURLConnection.HTTP_OK) {
+            if (status == HttpURLConnection.HTTP_MOVED_TEMP
+                || status == HttpURLConnection.HTTP_MOVED_PERM
+                || status == HttpURLConnection.HTTP_SEE_OTHER) {
+
+                String newUrl = urlConnection.getHeaderField("Location");
+                log.debug("Redirect to URL : " + newUrl);
+                return openUrlConnection(newUrl);
+            }
+        }
+        return urlConnection;
     }
 
     private static List<SyndEntry> getRssEntryList(String url) {
