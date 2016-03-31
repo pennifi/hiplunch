@@ -12,14 +12,13 @@ import static org.junit.Assert.assertTrue;
  * @author Mika Pennanen, Soikea Solutions Oy, 9.12.15.
  */
 public class HighlighterTest {
-    static final Logger log = LoggerFactory.getLogger(HighlighterTest.class);
+    private static final Logger log = LoggerFactory.getLogger(HighlighterTest.class);
 
-    public static final String[] HIGHLIGHTS = {"pekoni", "olut", "kalja", "pizza"};
+    private static final String[] HIGHLIGHTS = {"pekoni", "olut", "kalja", "pizza"};
 
-    private Highlighter hilighter = new Highlighter();
+    private final Highlighter hilighter = new Highlighter();
 
-    private HipchatMessage message = new HipchatMessage();
-
+    private final HipchatMessage message = new HipchatMessage();
 
     @Test
     public void testHightLights() {

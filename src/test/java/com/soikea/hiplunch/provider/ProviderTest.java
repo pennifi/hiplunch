@@ -11,39 +11,32 @@ import java.lang.reflect.ParameterizedType;
  * @author Mika Pennanen, Soikea Solutions Oy, 30.11.15.
  */
 public abstract class ProviderTest<T extends Provider> {
-    public final Logger log = LoggerFactory.getLogger(this.getClass());
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private T provider;
 
     @SuppressWarnings("unchecked")
-    void initProvider() {
+    private void initProvider() {
         ParameterizedType pt
             = (ParameterizedType) getClass().getGenericSuperclass();
         String parameterClassName
             = pt.getActualTypeArguments()[0].toString().split("\\s")[1];
         try {
             provider = (T) Class.forName(parameterClassName).newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     @Test
     public void testFeed() {
-
         String feed = getProvider().processFeed();
         log.debug(feed);
         Assert.assertNotNull(feed);
     }
 
     protected Provider getProvider() {
-        if (provider == null) {
-           initProvider();
-        }
+        if (provider == null) { initProvider(); }
         return provider;
     }
 }

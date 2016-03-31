@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
  */
 public class HiplunchTest {
-    static final Logger log = LoggerFactory.getLogger(HiplunchTest.class);
+    private static final Logger log = LoggerFactory.getLogger(HiplunchTest.class);
 
     @Test
     public void sanityCheck() {

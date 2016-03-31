@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Hiplunch {
 
-    private static ProviderStorage providerStorage = new ProviderStorage();
+    private static final ProviderStorage providerStorage = new ProviderStorage();
 
     private static final String CMD_RUN_DEFAULT = "default";
     private static final String CMD_RUN_HELP = "help";

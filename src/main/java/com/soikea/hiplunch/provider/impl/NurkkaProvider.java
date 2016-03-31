@@ -21,7 +21,6 @@ public class NurkkaProvider extends Provider {
 
         feed = feed.replaceAll("\\n", "");
         feed = feed.replaceAll("&nbsp;", "");
-//        feed = feed.replaceAll("</li>", ", ");
         feed = feed.replaceAll("<.+?>", "");
 
         return feed +" tai <a href=\""+getMessageUrl()+"\">Nurkan lounaslista</a>.";

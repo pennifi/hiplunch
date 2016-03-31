@@ -29,7 +29,7 @@ public class TrattoriaProvider extends Provider {
         feed = StringHelper.stripOneDayFromMenu(feed, today, tomorrow, "</body>");
 
         String result = "";
-        String pattern = "<span.+?name\">\\s+?(.+?)\\s+?<\\/span>";
+        String pattern = "<span.+?name\">\\s+?(.+?)\\s+?</span>";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(feed);
         while (m.find()) {

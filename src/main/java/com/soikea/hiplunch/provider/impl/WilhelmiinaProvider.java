@@ -27,9 +27,4 @@ public class WilhelmiinaProvider extends SonaattiProvider {
         return false;
     }
 
-    @Override
-    protected String getRSSTitleId() {
-        return "Wilhelmiina";
-    }
-
 }

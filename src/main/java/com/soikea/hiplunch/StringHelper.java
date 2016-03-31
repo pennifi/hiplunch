@@ -1,8 +1,5 @@
 package com.soikea.hiplunch;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -10,7 +7,6 @@ import java.util.Locale;
  * @author Mika Pennanen, Soikea Solutions Oy, 30.11.15.
  */
 public class StringHelper {
-    static final Logger log = LoggerFactory.getLogger(StringHelper.class);
 
     public static String getWeekdayName(int offset) {
         Calendar calendar = Calendar.getInstance();

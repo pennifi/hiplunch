@@ -1,6 +1,5 @@
 package com.soikea.hiplunch;
 
-
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
@@ -26,24 +25,19 @@ import java.util.List;
  * @author Mika Pennanen, Soikea Solutions Oy, 04/11/14.
  */
 public class ContentUtil {
-    static final Logger log = LoggerFactory.getLogger(ContentUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(ContentUtil.class);
 
     public static final String ERROR_NOT_AVAILABLE = "Tietoja ei saatavilla.";
 
     public static JSONArray getJsonResult(String url, String key) throws JSONException {
-        return getJsonResult(url, key, null);
-    }
-
-    public static JSONArray getJsonResult(String url, String key, String subkey) throws JSONException {
         JSONArray results;
 
         try {
             JSONObject json = new JSONObject(getUrlContents(url));
-
-            results = ( subkey != null ? json.getJSONObject(key).getJSONArray(subkey) : json.getJSONArray(key) );
+            results = json.getJSONArray(key);
 
         } catch (JSONException e) {
-            throw new JSONException("Unable to get Kimono result for "+url+" . " + e.getMessage());
+            throw new JSONException("Unable to get Json result for "+url+" : " + e.getMessage());
         }
         return results;
     }

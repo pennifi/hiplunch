@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ProviderStorage {
 
-    private List<Provider> providers = new ArrayList<>();
+    private final List<Provider> providers = new ArrayList<>();
 
     public ProviderStorage() {
         providers.add(new MattilanniemiProvider());

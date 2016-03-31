@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
  * @author Mika Pennanen, Soikea Solutions Oy, 18/08/14.
  */
 public class HipChatter {
-	static final Logger log = LoggerFactory.getLogger(HipChatter.class);
+	private static final Logger log = LoggerFactory.getLogger(HipChatter.class);
 
-	public static final String HIP_APIURL_PREFIX = "https://api.hipchat.com/v2/";
-	public static final String HIP_APIURL_METHOD = "room/" + Constants.HIP_ROOM + "/notification";
-	public static final String HIP_APIURL_PARAMS = "?auth_token=" + Constants.HIP_API_KEY;
-	public static final String HIP_HEADER_MIME = "application/json";
+	private static final String HIP_APIURL_PREFIX = "https://api.hipchat.com/v2/";
+	private static final String HIP_APIURL_METHOD = "room/" + Constants.HIP_ROOM + "/notification";
+	private static final String HIP_APIURL_PARAMS = "?auth_token=" + Constants.HIP_API_KEY;
+	private static final String HIP_HEADER_MIME = "application/json";
 
 	public void sendMessage(HipchatMessage hipchatMessage) {
 

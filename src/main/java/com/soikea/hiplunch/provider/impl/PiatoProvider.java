@@ -27,9 +27,4 @@ public class PiatoProvider extends SonaattiProvider {
         return true;
     }
 
-    @Override
-    protected String getRSSTitleId() {
-        return "Piato";
-    }
-
 }

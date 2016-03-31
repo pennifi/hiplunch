@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
  * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
  */
 public abstract class Provider {
-    public final Logger log = LoggerFactory.getLogger(this.getClass());
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private Highlighter hilighter = new Highlighter();
+    private final Highlighter hilighter = new Highlighter();
 
     public HipchatMessage processMessage() {
         HipchatMessage hipchatMessage = new HipchatMessage(

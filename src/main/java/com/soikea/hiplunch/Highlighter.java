@@ -23,7 +23,7 @@ public class Highlighter {
         }
     }
 
-    public String[] getHilights() {
+    private String[] getHilights() {
         if (hilights == null) {
             hilights = Constants.HIGHLIGHTS;
         }
