@@ -47,7 +47,7 @@ public class TrattoriaProvider extends Provider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.raflaamo.fi/fi/jyvaskyla/trattoria-aukio#navigation_raflaamolunchmenuportlet_war_raflaamorestaurantportlet";
+        return "https://www.raflaamo.fi/fi/jyvaskyla/trattoria-aukio#navigation_raflaamolunchmenuportlet_war_raflaamorestaurantportlet";
     }
 
     @Override
