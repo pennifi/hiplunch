@@ -26,7 +26,7 @@ public class Hiplunch {
         if (!arguments.isEmpty()) {
 
             if (arguments.contains(CMD_RUN_DEFAULT)) {
-                runProviders = providerStorage.getEnabledProviders();
+                runProviders = providerStorage.getConfiguredDefaultProviders();
 
             } else if (arguments.contains(CMD_RUN_HELP)) {
                 outputHelp();
@@ -58,7 +58,7 @@ public class Hiplunch {
             output(provider.getId() + "\t- " + provider.getName() + "\n");
         }
         output("\nDefault providers (run with argument \""+CMD_RUN_DEFAULT+"\"):\n\t");
-        for (Provider provider : providerStorage.getEnabledProviders()) {
+        for (Provider provider : providerStorage.getConfiguredDefaultProviders()) {
             output(provider.getId() + " ");
         }
         output("\n\n");

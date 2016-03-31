@@ -30,15 +30,15 @@ public class ProviderStorage {
         providers.add(new TrattoriaProvider());
     }
 
-    public List<Provider> getEnabledProviders() {
-        final List<Provider> enabledProviders = new ArrayList<>();
-        final List<String> propertyEnabledProvidersList = Arrays.asList(Constants.ENABLED_PROVIDERS);
+    public List<Provider> getConfiguredDefaultProviders() {
+        final List<Provider> defaultProfiders = new ArrayList<>();
+        final List<String> propertyDefaultProvidersList = Arrays.asList(Constants.DEFAULT_PROVIDERS);
 
         providers.stream()
-            .filter(p -> propertyEnabledProvidersList.contains(p.getId()))
-            .forEach(enabledProviders::add);
+            .filter(p -> propertyDefaultProvidersList.contains(p.getId()))
+            .forEach(defaultProfiders::add);
 
-        return enabledProviders;
+        return defaultProfiders;
     }
 
     public List<Provider> getAllProviders() {

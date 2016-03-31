@@ -9,6 +9,6 @@ public class Constants {
 	public static final String HIP_API_KEY = "UBZKUrMSMlSv4PjCfJceixwOkR2sdByirfaRNtco"; // Soikea
 
 	public static final String[] HIGHLIGHTS = {"pekoni", "olut", "kalja", "pizza"};
-	public static final String[] ENABLED_PROVIDERS = {"dynamo", "fiilu", "nurkka", "trattoria"};
+	public static final String[] DEFAULT_PROVIDERS = {"dynamo", "fiilu", "nurkka", "trattoria"};
 
 }
