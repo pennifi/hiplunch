@@ -2,24 +2,21 @@ package com.soikea.hiplunch.provider.impl;
 
 import com.soikea.hiplunch.provider.SodexoProvider;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
- */
-public class DynamoProvider extends SodexoProvider {
+public class BittipannuProvider extends SodexoProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.sodexo.fi/jamk-dynamo/";
+        return "http://www.sodexo.fi/jamk-dynamo/"; // url still with old name
     }
 
     @Override
     public String getName() {
-        return "Sodexo Dynamo";
+        return "Sodexo Bittipannu";
     }
 
     @Override
     public String getId() {
-        return "dynamo";
+        return "bittipannu";
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.soikea.hiplunch;
 
 import com.soikea.hiplunch.provider.Provider;
-import com.soikea.hiplunch.provider.impl.DynamoProvider;
+import com.soikea.hiplunch.provider.impl.BittipannuProvider;
 import com.soikea.hiplunch.provider.impl.FiiluProvider;
 import com.soikea.hiplunch.provider.impl.MattilanniemiProvider;
 import com.soikea.hiplunch.provider.impl.NurkkaProvider;
@@ -13,16 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
- */
 public class ProviderStorage {
 
     private final List<Provider> providers = new ArrayList<>();
 
     public ProviderStorage() {
         providers.add(new MattilanniemiProvider());
-        providers.add(new DynamoProvider());
+        providers.add(new BittipannuProvider());
         providers.add(new PiatoProvider());
         providers.add(new WilhelmiinaProvider());
         providers.add(new FiiluProvider());

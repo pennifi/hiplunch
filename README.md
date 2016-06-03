@@ -12,7 +12,7 @@ Usage:
 
 Providers:
 mattilanniemi	- Sodexo Mattilanniemi
-dynamo	- Sodexo Dynamo
+bittipannu	- Sodexo Bittipannu
 piato	- Sonaatti Piato
 wilhelmiina	- Sonaatti Wilhelmiina
 fiilu	- Fazer Fiilu
@@ -20,7 +20,7 @@ nurkka	- Lutakon Nurkka
 trattoria	- Trattoria Aukio
 
 Default providers (run with argument "default"):
-	dynamo fiilu nurkka trattoria
+	bittipannu fiilu nurkka trattoria
 ```
 
 
