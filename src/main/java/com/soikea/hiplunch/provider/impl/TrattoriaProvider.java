@@ -36,7 +36,6 @@ public class TrattoriaProvider extends Provider {
             result = result + m.group(1).trim() + ". ";
         }
 
-        log.debug(result);
         return result;
     }
 
