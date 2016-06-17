@@ -1,6 +1,7 @@
 package com.soikea.hiplunch.provider.impl;
 
 import com.soikea.hiplunch.ContentUtil;
+import com.soikea.hiplunch.FeedCutter;
 import com.soikea.hiplunch.StringHelper;
 import com.soikea.hiplunch.provider.Provider;
 
@@ -26,7 +27,10 @@ public class TrattoriaProvider extends Provider {
         calendar.roll(Calendar.DAY_OF_WEEK, 1);
         String tomorrow = StringHelper.getWeekdayName(1) + " " + sdf.format(calendar.getTime());
 
-        feed = StringHelper.stripOneDayFromMenu(feed, today, tomorrow, "</body>");
+        feed = FeedCutter.builder(feed)
+            .withStartPoints(today)
+            .withEndPoints(tomorrow, "Trattoria Aukio", "</body>")
+            .fullProcess();
 
         String result = "";
         String pattern = "<span.+?name\">\\s+?(.+?)\\s+?</span>";

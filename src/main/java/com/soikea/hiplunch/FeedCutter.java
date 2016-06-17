@@ -1,0 +1,128 @@
+package com.soikea.hiplunch;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * @author Mika Pennanen, Soikea Solutions Oy, 17.6.16.
+ */
+public class FeedCutter {
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    private String feed;
+
+    private List<String> startPoints;
+    private List<String> endPoints;
+
+    private List<String> removables;
+    private List<String> spaceables;
+
+
+    private FeedCutter(String feed) {
+        this.feed = feed;
+    }
+
+    public static FeedCutter builder(String feed) {
+        return new FeedCutter(feed);
+    }
+
+
+    public FeedCutter withStartPoints(String... startPoints) {
+        this.startPoints = Arrays.asList(startPoints);
+        return this;
+    }
+
+    public FeedCutter withEndPoints(String... endPoints) {
+        this.endPoints = Arrays.asList(endPoints);
+        return this;
+    }
+
+    public FeedCutter withRemovables(String... removables) {
+        this.removables = Arrays.asList(removables);
+        return this;
+    }
+
+    public FeedCutter withSpaceables(String... spaceables) {
+        this.spaceables = Arrays.asList(spaceables);
+        return this;
+    }
+
+    public FeedCutter startProcess() {
+        return this.cutBeginning().cutEnding();
+    }
+
+    public FeedCutter cleanUp() {
+        return this.replaceRemoveables().replaceSpaceables();
+    }
+
+    public String fullProcess() {
+        return startProcess().cleanUp().toString();
+    }
+
+    private FeedCutter cutBeginning() {
+        List<String> reverseStartPoints = startPoints.subList(0, startPoints.size());
+        Collections.reverse(reverseStartPoints);
+        this.feed = cut("start", reverseStartPoints);
+        return this;
+    }
+
+    private FeedCutter cutEnding() {
+        this.feed = cut("end", endPoints);
+        return this;
+    }
+
+    private String cut(String mode, List<String> list) {
+        if (list.size() > 0) {
+            String cutString = list.get(0);
+
+            if (feed.contains(cutString)) {
+                int cutPoint = feed.indexOf(cutString);
+
+                if (cutPoint >= feed.length() || cutPoint < 0) {
+                    cutPoint = feed.length();
+                }
+                feed = feed.replaceAll(cutString, "");
+                if ("start".equals(mode)) {
+                    feed = feed.substring(cutPoint, feed.length());
+                } else if ("end".equals(mode)) {
+                    feed = feed.substring(0, cutPoint);
+                }
+            }
+            return cut(mode, list.subList(1, list.size()));
+        } else {
+            return feed;
+        }
+    }
+
+    public FeedCutter replaceSpaceables() {
+        if (spaceables != null) {
+            return this.replace(" ", spaceables);
+        }
+        return this;
+    }
+
+    public FeedCutter replaceRemoveables() {
+        if (removables != null) {
+            return this.replace("", removables);
+        }
+        return this;
+    }
+
+    public FeedCutter replace(String the, List<String> targets) {
+        for (String target : targets) {
+            this.feed = feed.replaceAll(target, the);
+        }
+        return this;
+    }
+
+
+    @Override
+    public String toString() {
+       return feed;
+    }
+
+}

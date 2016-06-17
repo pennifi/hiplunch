@@ -12,7 +12,6 @@ public class BittipannuProviderTest extends ProviderTest<BittipannuProvider> {
     @Test
     public void testUrl() {
         String url = ((BittipannuProvider) getProvider()).getUrl();
-        log.debug(url);
         Assert.assertEquals(
             "http://www.sodexo.fi/ruokalistat/output/daily_json/"
                 +((BittipannuProvider) getProvider()).getSodexoId()

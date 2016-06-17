@@ -1,9 +1,12 @@
 package com.soikea.hiplunch.provider.impl;
 
 import com.soikea.hiplunch.ContentUtil;
+import com.soikea.hiplunch.FeedCutter;
 import com.soikea.hiplunch.StringHelper;
 import com.soikea.hiplunch.provider.Provider;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
 
 public class QulkuriProvider extends Provider {
 
@@ -14,15 +17,15 @@ public class QulkuriProvider extends Provider {
         String today = "<h4>" + StringUtils.capitalize(StringHelper.getWeekdayName(0).substring(0, 2)) + "</h4>"; // Ma
         String tomorrow = "<h4>" + StringUtils.capitalize(StringHelper.getWeekdayName(1).substring(0, 2)) + "</h4>"; // Ti
 
-        feed = StringHelper.stripOneDayFromMenu(feed, today, tomorrow, "L = Laktoositon, G = Gluteeniton", "id=\"lutakko-lounaslista\"");
-
-        feed = feed.replaceAll("</h5>", ":")
-            .replaceAll("<p>", " ")
-            .replaceAll("\\n", "")
-            .replaceAll("&nbsp;", "")
-            .replaceAll("<.+?>", "")
-            .replaceAll("\\s\\s+?", " ")
-            .trim();
+        feed = FeedCutter.builder(feed)
+            .withStartPoints(today, "id=\"lutakko-lounaslista\"")
+            .withEndPoints(tomorrow, "L = Laktoositon, G = Gluteeniton")
+            .withSpaceables("\\s\\s+?")
+            .withRemovables("\\n", "&nbsp;", "<.+?>")
+            .startProcess()
+            .replace(": ", Arrays.asList("</h5>"))
+            .cleanUp()
+            .toString();
 
         return feed;
     }

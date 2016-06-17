@@ -82,7 +82,6 @@ public class ContentUtil {
                     }
                 });
         }
-        log.debug(stringBuilder.toString());
         return stringBuilder.toString();
     }
 
