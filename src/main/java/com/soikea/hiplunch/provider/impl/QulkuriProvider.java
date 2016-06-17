@@ -9,22 +9,22 @@ public class QulkuriProvider extends Provider {
 
     @Override
     protected String processFeed() {
-
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.capitalize(StringHelper.getWeekdayName(0).substring(0, 2));
-        String tomorrow = StringUtils.capitalize(StringHelper.getWeekdayName(1).substring(0, 2));
+        String today = "<h4>" + StringUtils.capitalize(StringHelper.getWeekdayName(0).substring(0, 2)) + "</h4>"; // Ma
+        String tomorrow = "<h4>" + StringUtils.capitalize(StringHelper.getWeekdayName(1).substring(0, 2)) + "</h4>"; // Ti
 
-        feed = StringHelper.stripOneDayFromMenu(feed, "<h4>"+today+"</h4>", "<h4>"+tomorrow+"</h4>", "id=\"lutakko-bistrolista\"", "id=\"lutakko-lounaslista\"");
+        feed = StringHelper.stripOneDayFromMenu(feed, today, tomorrow, "L = Laktoositon, G = Gluteeniton", "id=\"lutakko-lounaslista\"");
 
-        feed = feed.replaceAll("</h5>", ":");
-        feed = feed.replaceAll("<p>", " ");
+        feed = feed.replaceAll("</h5>", ":")
+            .replaceAll("<p>", " ")
+            .replaceAll("\\n", "")
+            .replaceAll("&nbsp;", "")
+            .replaceAll("<.+?>", "")
+            .replaceAll("\\s\\s+?", " ")
+            .trim();
 
-        feed = feed.replaceAll("\\n", "");
-        feed = feed.replaceAll("&nbsp;", "");
-        feed = feed.replaceAll("<.+?>", "");
-        feed = feed.replaceAll("\\s\\s+?", " ");
-        return feed.trim();
+        return feed;
     }
 
     @Override
