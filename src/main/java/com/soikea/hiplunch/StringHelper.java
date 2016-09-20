@@ -3,15 +3,13 @@ package com.soikea.hiplunch;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 30.11.15.
- */
 public class StringHelper {
 
     public static String getWeekdayName(int offset) {
         Calendar calendar = Calendar.getInstance();
         calendar.roll(Calendar.DAY_OF_WEEK, offset);
-        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
+            || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         }
         return capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));

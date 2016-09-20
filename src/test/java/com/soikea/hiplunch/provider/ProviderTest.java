@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.ParameterizedType;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 30.11.15.
- */
 public abstract class ProviderTest<T extends Provider> {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -17,10 +14,8 @@ public abstract class ProviderTest<T extends Provider> {
 
     @SuppressWarnings("unchecked")
     private void initProvider() {
-        ParameterizedType pt
-            = (ParameterizedType) getClass().getGenericSuperclass();
-        String parameterClassName
-            = pt.getActualTypeArguments()[0].toString().split("\\s")[1];
+        ParameterizedType pt = (ParameterizedType) getClass().getGenericSuperclass();
+        String parameterClassName = pt.getActualTypeArguments()[0].toString().split("\\s")[1];
         try {
             provider = (T) Class.forName(parameterClassName).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
@@ -36,7 +31,9 @@ public abstract class ProviderTest<T extends Provider> {
     }
 
     protected Provider getProvider() {
-        if (provider == null) { initProvider(); }
+        if (provider == null) {
+            initProvider();
+        }
         return provider;
     }
 }

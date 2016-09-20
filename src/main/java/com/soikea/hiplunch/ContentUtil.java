@@ -21,9 +21,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 04/11/14.
- */
 public class ContentUtil {
     private static final Logger log = LoggerFactory.getLogger(ContentUtil.class);
 
@@ -35,9 +32,8 @@ public class ContentUtil {
         try {
             JSONObject json = new JSONObject(getUrlContents(url));
             results = json.getJSONArray(key);
-
         } catch (JSONException e) {
-            throw new JSONException("Unable to get Json result for "+url+" : " + e.getMessage());
+            throw new JSONException(String.format("Unable to get Json result for %s : %s", url, e.getMessage()));
         }
         return results;
     }
@@ -55,14 +51,12 @@ public class ContentUtil {
                     stringBuilder.append(".");
                 }
             }
-
         } catch (JSONException e) {
-            log.error(" ", e);
+            log.error("processJsonArray exception: {}", e.getMessage());
         }
 
         return stringBuilder;
     }
-
 
     public static String getRSSFeedResults(String url, String prefix) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -70,17 +64,15 @@ public class ContentUtil {
         List<SyndEntry> entryList = getRssEntryList(url);
 
         if (entryList != null) {
-            entryList.stream()
-                .filter(entry -> matchesTitle(entry.getTitle(), prefix))
-                .forEach(entry -> {
-                    String feedResult = cleanupRSSFeed(entry.getDescription().getValue());
+            entryList.stream().filter(entry -> matchesTitle(entry.getTitle(), prefix)).forEach(entry -> {
+                String feedResult = cleanupRSSFeed(entry.getDescription().getValue());
 
-                    if (feedResult.isEmpty() || feedResult.length() < 10) {
-                        stringBuilder.append(ERROR_NOT_AVAILABLE);
-                    } else {
-                        stringBuilder.append(feedResult);
-                    }
-                });
+                if (feedResult.isEmpty() || feedResult.length() < 10) {
+                    stringBuilder.append(ERROR_NOT_AVAILABLE);
+                } else {
+                    stringBuilder.append(feedResult);
+                }
+            });
         }
         return stringBuilder.toString();
     }
@@ -91,16 +83,15 @@ public class ContentUtil {
         List<SyndEntry> entryList = getRssEntryList(url);
 
         if (entryList != null) {
-            entryList.stream()
-                .forEach(entry -> {
-                    String feedResult = entry.getDescription().getValue();
+            entryList.stream().forEach(entry -> {
+                String feedResult = entry.getDescription().getValue();
 
-                    if (feedResult.isEmpty() || feedResult.length() < 10) {
-                        stringBuilder.append(ERROR_NOT_AVAILABLE);
-                    } else {
-                        stringBuilder.append(feedResult);
-                    }
-                });
+                if (feedResult.isEmpty() || feedResult.length() < 10) {
+                    stringBuilder.append(ERROR_NOT_AVAILABLE);
+                } else {
+                    stringBuilder.append(feedResult);
+                }
+            });
         }
 
         return stringBuilder.toString();
@@ -136,12 +127,11 @@ public class ContentUtil {
 
         int status = urlConnection.getResponseCode();
         if (status != HttpURLConnection.HTTP_OK) {
-            if (status == HttpURLConnection.HTTP_MOVED_TEMP
-                || status == HttpURLConnection.HTTP_MOVED_PERM
+            if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM
                 || status == HttpURLConnection.HTTP_SEE_OTHER) {
 
                 String newUrl = urlConnection.getHeaderField("Location");
-                log.debug("Redirect to URL : " + newUrl);
+                log.debug("Redirect to URL : {}", newUrl);
                 return openUrlConnection(newUrl);
             }
         }
@@ -163,7 +153,6 @@ public class ContentUtil {
             if (feed != null) {
                 entryList = feed.getEntries();
             }
-
         } catch (IOException e) {
             log.error("Error getting feed: IOException: {}", e.getMessage());
         } catch (FeedException e) {
@@ -192,5 +181,4 @@ public class ContentUtil {
         }
         return stringBuilder.toString().trim();
     }
-
 }

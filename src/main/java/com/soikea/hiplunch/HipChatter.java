@@ -11,40 +11,35 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 18/08/14.
- */
 public class HipChatter {
-	private static final Logger log = LoggerFactory.getLogger(HipChatter.class);
+    private static final Logger log = LoggerFactory.getLogger(HipChatter.class);
 
-	private static final String HIP_APIURL_PREFIX = "https://api.hipchat.com/v2/";
-	private static final String HIP_APIURL_METHOD = "room/" + Constants.HIP_ROOM + "/notification";
-	private static final String HIP_APIURL_PARAMS = "?auth_token=" + Constants.HIP_API_KEY;
-	private static final String HIP_HEADER_MIME = "application/json";
+    private static final String HIP_APIURL_PREFIX = "https://api.hipchat.com/v2/";
 
-	public void sendMessage(HipchatMessage hipchatMessage) {
+    private static final String HIP_APIURL_METHOD = "room/" + Constants.HIP_ROOM + "/notification";
 
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			log.debug(mapper.writeValueAsString(hipchatMessage));
+    private static final String HIP_APIURL_PARAMS = "?auth_token=" + Constants.HIP_API_KEY;
 
-			ClientConfig clientConfig = new DefaultClientConfig();
-			clientConfig.getFeatures().put(
-					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+    private static final String HIP_HEADER_MIME = "application/json";
 
-			Client client = Client.create(clientConfig);
+    public void sendMessage(HipchatMessage hipchatMessage) {
 
-			WebResource webResource = client.resource(
-				HIP_APIURL_PREFIX + HIP_APIURL_METHOD + HIP_APIURL_PARAMS);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            log.debug(mapper.writeValueAsString(hipchatMessage));
 
-			ClientResponse response = webResource
-					.accept(HIP_HEADER_MIME)
-					.type(HIP_HEADER_MIME)
-					.post(ClientResponse.class, mapper.writeValueAsString(hipchatMessage));
-			log.debug(response.toString());
+            ClientConfig clientConfig = new DefaultClientConfig();
+            clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
-		} catch (Exception e) {
-			log.error("Error sending hipchat message: {}", e.getMessage());
-		}
-	}
+            Client client = Client.create(clientConfig);
+
+            WebResource webResource = client.resource(HIP_APIURL_PREFIX + HIP_APIURL_METHOD + HIP_APIURL_PARAMS);
+
+            ClientResponse response = webResource.accept(HIP_HEADER_MIME).type(HIP_HEADER_MIME)
+                .post(ClientResponse.class, mapper.writeValueAsString(hipchatMessage));
+            log.debug(response.toString());
+        } catch (Exception e) {
+            log.error("Error sending hipchat message: {}", e.getMessage());
+        }
+    }
 }

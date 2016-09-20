@@ -2,9 +2,6 @@ package com.soikea.hiplunch.provider.impl;
 
 import com.soikea.hiplunch.provider.SonaattiProvider;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
- */
 public class WilhelmiinaProvider extends SonaattiProvider {
 
     @Override
@@ -26,5 +23,4 @@ public class WilhelmiinaProvider extends SonaattiProvider {
     protected Boolean hasGrill() {
         return false;
     }
-
 }

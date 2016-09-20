@@ -1,6 +1,5 @@
 package com.soikea.hiplunch;
 
-
 import com.soikea.hiplunch.domain.HipchatMessage;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -8,13 +7,10 @@ import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 9.12.15.
- */
 public class HighlighterTest {
     private static final Logger log = LoggerFactory.getLogger(HighlighterTest.class);
 
-    private static final String[] HIGHLIGHTS = {"pekoni", "olut", "kalja", "pizza"};
+    private static final String[] HIGHLIGHTS = { "pekoni", "olut", "kalja", "pizza" };
 
     private final Highlighter hilighter = new Highlighter();
 
@@ -24,7 +20,8 @@ public class HighlighterTest {
     public void testHightLights() {
 
         hilighter.setHilights(HIGHLIGHTS);
-        message.setMessage("Buffet: Pekoni-tomaattikuorrutettuja KALJApihvejä, Säräjuureksia Juusto-kasvispizzaa Keitto: Täyteläistä mustajuurisosekeittoa Deli salaattibaari: Grilli: Kanaa Kiovan tapaan, Tartarkastiketta, Paahdettuja porkkanoita, Seesammaustettuja ranskalaisia, Falafel pitaleipää ja tsatsikia Puolukkapiirakka, Vaniljakastiketta");
+        message.setMessage(
+            "Buffet: Pekoni-tomaattikuorrutettuja KALJApihvejä, Säräjuureksia Juusto-kasvispizzaa Keitto: Täyteläistä mustajuurisosekeittoa Deli salaattibaari: Grilli: Kanaa Kiovan tapaan, Tartarkastiketta, Paahdettuja porkkanoita, Seesammaustettuja ranskalaisia, Falafel pitaleipää ja tsatsikia Puolukkapiirakka, Vaniljakastiketta");
         hilighter.checkForHighlights(message);
 
         log.debug(message.getMessage());

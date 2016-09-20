@@ -7,20 +7,22 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 17.6.16.
- */
 public class FeedCutter {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    private static final String CUTMODE_START = "start";
+
+    private static final String CUTMODE_END = "end";
 
     private String feed;
 
     private List<String> startPoints;
+
     private List<String> endPoints;
 
     private List<String> removables;
-    private List<String> spaceables;
 
+    private List<String> spaceables;
 
     private FeedCutter(String feed) {
         this.feed = feed;
@@ -29,7 +31,6 @@ public class FeedCutter {
     public static FeedCutter builder(String feed) {
         return new FeedCutter(feed);
     }
-
 
     public FeedCutter withStartPoints(String... startPoints) {
         this.startPoints = Arrays.asList(startPoints);
@@ -66,12 +67,12 @@ public class FeedCutter {
     private FeedCutter cutBeginning() {
         List<String> reverseStartPoints = startPoints.subList(0, startPoints.size());
         Collections.reverse(reverseStartPoints);
-        this.feed = cut("start", reverseStartPoints);
+        this.feed = cut(CUTMODE_START, reverseStartPoints);
         return this;
     }
 
     private FeedCutter cutEnding() {
-        this.feed = cut("end", endPoints);
+        this.feed = cut(CUTMODE_END, endPoints);
         return this;
     }
 
@@ -86,9 +87,9 @@ public class FeedCutter {
                     cutPoint = feed.length();
                 }
                 feed = feed.replaceAll(cutString, "");
-                if ("start".equals(mode)) {
+                if (CUTMODE_START.equals(mode)) {
                     feed = feed.substring(cutPoint, feed.length());
-                } else if ("end".equals(mode)) {
+                } else if (CUTMODE_END.equals(mode)) {
                     feed = feed.substring(0, cutPoint);
                 }
             }
@@ -119,10 +120,8 @@ public class FeedCutter {
         return this;
     }
 
-
     @Override
     public String toString() {
-       return feed;
+        return feed;
     }
-
 }

@@ -30,14 +30,12 @@ public class ProviderStorage {
     }
 
     public List<Provider> getConfiguredDefaultProviders() {
-        final List<Provider> defaultProfiders = new ArrayList<>();
+        final List<Provider> defaultProviders = new ArrayList<>();
         final List<String> propertyDefaultProvidersList = Arrays.asList(Constants.DEFAULT_PROVIDERS);
 
-        providers.stream()
-            .filter(p -> propertyDefaultProvidersList.contains(p.getId()))
-            .forEach(defaultProfiders::add);
+        providers.stream().filter(p -> propertyDefaultProvidersList.contains(p.getId())).forEach(defaultProviders::add);
 
-        return defaultProfiders;
+        return defaultProviders;
     }
 
     public List<Provider> getAllProviders() {
@@ -45,8 +43,6 @@ public class ProviderStorage {
     }
 
     public Provider getProviderById(String id) {
-       return getAllProviders().stream()
-            .filter(f -> (f.getId().equals(id)))
-            .findAny().get();
+        return getAllProviders().stream().filter(f -> (f.getId().equals(id))).findAny().get();
     }
 }

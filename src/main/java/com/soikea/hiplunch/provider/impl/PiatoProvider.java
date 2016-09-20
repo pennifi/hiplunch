@@ -2,9 +2,6 @@ package com.soikea.hiplunch.provider.impl;
 
 import com.soikea.hiplunch.provider.SonaattiProvider;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
- */
 public class PiatoProvider extends SonaattiProvider {
 
     @Override

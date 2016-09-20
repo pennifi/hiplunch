@@ -6,9 +6,6 @@ import com.soikea.hiplunch.provider.FazerProvider;
 
 import java.util.Arrays;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 30.11.15.
- */
 public class FiiluProvider extends FazerProvider {
 
     @Override
@@ -35,7 +32,7 @@ public class FiiluProvider extends FazerProvider {
     protected String processFeed() {
         String feed = readRawFeed();
 
-        String today = StringHelper.getWeekdayName(0);
+        String today =  StringHelper.getWeekdayName(0);
         String tomorrow = StringHelper.getWeekdayName(1);
 
         feed = FeedCutter.builder(feed)

@@ -11,9 +11,6 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
- */
 public class HiplunchTest {
     private static final Logger log = LoggerFactory.getLogger(HiplunchTest.class);
 
@@ -29,16 +26,13 @@ public class HiplunchTest {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-
             for (Provider provider : allProviders) {
                 String message = mapper.writeValueAsString(provider.processMessage());
                 log.debug(message);
                 assertNotNull(message);
             }
-
         } catch (Exception e) {
             log.error("Error parsing hipchat message: ", e);
         }
     }
-
 }

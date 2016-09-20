@@ -6,9 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.regex.Pattern;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 19.8.15.
- */
 public class Highlighter {
 
     private String[] hilights;
@@ -17,7 +14,8 @@ public class Highlighter {
         for (String hilight : getHilights()) {
             if (StringUtils.containsIgnoreCase(hipchatMessage.getMessage(), hilight)) {
                 hipchatMessage.setColor(HipchatEnums.Color.red);
-                hipchatMessage.setMessage(hipchatMessage.getMessage().replaceAll("(?i)("+ Pattern.quote(hilight)+")", "<b>$1</b>"));
+                hipchatMessage.setMessage(
+                    hipchatMessage.getMessage().replaceAll("(?i)(" + Pattern.quote(hilight) + ")", "<b>$1</b>"));
                 hipchatMessage.setNotify(true);
             }
         }
@@ -33,5 +31,4 @@ public class Highlighter {
     public void setHilights(String[] hilights) {
         this.hilights = hilights;
     }
-
 }

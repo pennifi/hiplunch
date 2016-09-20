@@ -8,17 +8,13 @@ import org.junit.Test;
 import java.text.MessageFormat;
 import java.util.Calendar;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 24.3.2015.
- */
 public class MattilanniemiProviderTest extends ProviderTest<MattilanniemiProvider> {
 
     @Test
     public void testUrl() {
         String url = ((MattilanniemiProvider) getProvider()).getUrl();
         Assert.assertEquals(MessageFormat.format("http://www.sodexo.fi/ruokalistat/output/daily_json/{0}/{1}/fi",
-                ((MattilanniemiProvider) getProvider()).getSodexoId(),
-                SodexoProvider.SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime())), url);
+            ((MattilanniemiProvider) getProvider()).getSodexoId(),
+            SodexoProvider.SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime())), url);
     }
-
 }

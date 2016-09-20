@@ -10,9 +10,6 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 30.11.15.
- */
 public class TrattoriaProvider extends Provider {
 
     @Override
@@ -39,7 +36,6 @@ public class TrattoriaProvider extends Provider {
         while (m.find()) {
             result = result + m.group(1).trim() + ". ";
         }
-
         return result;
     }
 

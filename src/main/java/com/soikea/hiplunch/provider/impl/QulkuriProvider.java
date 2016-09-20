@@ -44,5 +44,4 @@ public class QulkuriProvider extends Provider {
     public String getName() {
         return "Le Qulkuri Lutakko";
     }
-
 }

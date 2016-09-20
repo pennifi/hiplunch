@@ -2,65 +2,67 @@ package com.soikea.hiplunch.domain;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-/**
- * @author Mika Pennanen, Soikea Solutions Oy, 19/08/14.
- */
 public class HipchatMessage {
 
-	private String from = "LunchBot";
-	private HipchatEnums.Format format = HipchatEnums.Format.html;
-	private boolean notify = false;
-	private HipchatEnums.Color color = HipchatEnums.Color.green;
-	private String message = "Default message: Not initialized.";
+    private String from = "LunchBot";
 
-	public HipchatMessage() {}
+    private HipchatEnums.Format format = HipchatEnums.Format.html;
 
-	public HipchatMessage(String message) {
-		this.message = message;
-	}
+    private boolean notify = false;
 
-	@JsonProperty(value = "from")
-	public String getFrom() {
-		return from;
-	}
+    private HipchatEnums.Color color = HipchatEnums.Color.green;
 
-	public void setFrom(String from) {
-		this.from = from;
-	}
+    private String message = "Default message: Not initialized.";
 
-	@JsonProperty(value = "message_format")
-	public HipchatEnums.Format getFormat() {
-		return format;
-	}
+    public HipchatMessage() {
+    }
 
-	public void setFormat(HipchatEnums.Format format) {
-		this.format = format;
-	}
+    public HipchatMessage(String message) {
+        this.message = message;
+    }
 
-	@JsonProperty(value = "notify")
-	public boolean isNotify() {
-		return notify;
-	}
+    @JsonProperty(value = "from")
+    public String getFrom() {
+        return from;
+    }
 
-	public void setNotify(boolean notify) {
-		this.notify = notify;
-	}
+    public void setFrom(String from) {
+        this.from = from;
+    }
 
-	@JsonProperty(value = "color")
-	public HipchatEnums.Color getColor() {
-		return color;
-	}
+    @JsonProperty(value = "message_format")
+    public HipchatEnums.Format getFormat() {
+        return format;
+    }
 
-	public void setColor(HipchatEnums.Color color) {
-		this.color = color;
-	}
+    public void setFormat(HipchatEnums.Format format) {
+        this.format = format;
+    }
 
-	@JsonProperty(value = "message")
-	public String getMessage() {
-		return message;
-	}
+    @JsonProperty(value = "notify")
+    public boolean isNotify() {
+        return notify;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setNotify(boolean notify) {
+        this.notify = notify;
+    }
+
+    @JsonProperty(value = "color")
+    public HipchatEnums.Color getColor() {
+        return color;
+    }
+
+    public void setColor(HipchatEnums.Color color) {
+        this.color = color;
+    }
+
+    @JsonProperty(value = "message")
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
