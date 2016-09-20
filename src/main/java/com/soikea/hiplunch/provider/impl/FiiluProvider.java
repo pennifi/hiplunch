@@ -36,7 +36,7 @@ public class FiiluProvider extends FazerProvider {
         String tomorrow = StringHelper.getWeekdayName(1);
 
         feed = FeedCutter.builder(feed)
-            .withStartPoints(today)
+            .withStartPoints(today, "jälkiruoan ja kahvin.")
             .withEndPoints(tomorrow, "Lounas 7,20 opiskelijakortilla")
             .withSpaceables("\\s\\s+?")
             .withRemovables("\\n", "&nbsp;", "<.+?>", "\\(.+?\\)")
