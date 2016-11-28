@@ -4,6 +4,7 @@ import com.soikea.hiplunch.ContentUtil;
 import com.soikea.hiplunch.FeedCutter;
 import com.soikea.hiplunch.StringHelper;
 import com.soikea.hiplunch.provider.Provider;
+import org.apache.commons.lang3.StringUtils;
 
 public class NurkkaProvider extends Provider {
 
@@ -12,13 +13,13 @@ public class NurkkaProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringHelper.capitalize(StringHelper.getWeekdayName(0));
-        String tomorrow = StringHelper.capitalize(StringHelper.getWeekdayName(1));
+        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0) + "na");
+        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1) + "na");
 
         return FeedCutter.builder(feed)
             .withStartPoints(today, "LOUNAALLA")
             .withEndPoints(tomorrow, "Sis.")
-            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d\\d?\\.\\d\\d?\\.\\:")
+            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d\\d?\\.\\d\\d?\\.\\:", "\\(.*?\\)")
             .startProcess()
             .cleanUp()
             .toString().trim();
