@@ -10,7 +10,7 @@ public class TrattoriaProvider extends Provider {
     protected String processFeed() {
 
         return FeedCutter.builder(ContentUtil.getUrlContents(getMessageUrl()))
-            .withStartPoints("restaurant-menu__items-list\">")
+            .withStartPoints("restaurant-menu__items-list\">", "restaurant-menu__header\">Nyt lounaalla")
             .withEndPoints("<div class=\"restaurant-menu__button-container")
             .withRemovables("<.+?>", "\\w+[0-9,]+\\w+", "&euro;")
             .fullProcess().trim();
