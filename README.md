@@ -8,12 +8,12 @@ Mainly useful for Mattilanniemi area at Jyväskylä, Finland, as the feed parsin
 
 ## Build ##
 ```
-penni ~/projects/hiplunch $ mvn clean install
+penni ~/projects/hiplunch $ gradle build
 ```
 
 ## Usage ##
 ```
-penni ~/projects/hiplunch $ java -jar target/hiplunch-2.1.4-jar-with-dependencies.jar
+penni ~/projects/hiplunch $ java -jar build/libs/hiplunch.jar
 Usage:
 	java -jar hiplunch.jar <provider...|default|help>
 
