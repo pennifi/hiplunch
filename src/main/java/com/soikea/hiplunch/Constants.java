@@ -4,7 +4,7 @@ public class Constants {
 
     public static final String[] HIGHLIGHTS = { "pekoni", "olut", "kalja", "pizza", "makkara" };
 
-    public static final String[] DEFAULT_PROVIDERS = { "bittipannu", "fiilu", "nurkka", "trattoria", "qulkuri" };
+    public static final String[] DEFAULT_PROVIDERS = { "bittipannu", "fiilu", "nurkka", "trattoria", "qulkuri", "sodexo-ge" };
 
     /**
      * If property s not set with -D returns s from env
