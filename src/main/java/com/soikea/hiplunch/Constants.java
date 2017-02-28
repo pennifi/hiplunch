@@ -2,11 +2,14 @@ package com.soikea.hiplunch;
 
 public class Constants {
 
-    public static final String HIP_ROOM = "263211"; // Soikea
-
-    public static final String HIP_API_KEY = "UBZKUrMSMlSv4PjCfJceixwOkR2sdByirfaRNtco"; // Soikea
-
     public static final String[] HIGHLIGHTS = { "pekoni", "olut", "kalja", "pizza", "makkara" };
 
     public static final String[] DEFAULT_PROVIDERS = { "bittipannu", "fiilu", "nurkka", "trattoria", "qulkuri" };
+
+    /**
+     * If property s not set with -D returns s from env
+     */
+    protected static String getSystemVariable(String s) {
+        return System.getProperty(s) != null ? System.getProperty(s) : System.getenv(s);
+    }
 }

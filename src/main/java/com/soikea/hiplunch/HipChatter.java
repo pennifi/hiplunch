@@ -14,11 +14,15 @@ import org.slf4j.LoggerFactory;
 public class HipChatter {
     private static final Logger log = LoggerFactory.getLogger(HipChatter.class);
 
+    private static final String HIP_ROOM_VARNAME = "HIPCHAT_ROOM";
+
+    private static final String HIP_TOKEN_VARNAME = "HIPCHAT_TOKEN";
+
     private static final String HIP_APIURL_PREFIX = "https://api.hipchat.com/v2/";
 
-    private static final String HIP_APIURL_METHOD = "room/" + Constants.HIP_ROOM + "/notification";
+    private static final String HIP_APIURL_METHOD = "room/" + Constants.getSystemVariable(HIP_ROOM_VARNAME) + "/notification";
 
-    private static final String HIP_APIURL_PARAMS = "?auth_token=" + Constants.HIP_API_KEY;
+    private static final String HIP_APIURL_PARAMS = "?auth_token=" + Constants.getSystemVariable(HIP_TOKEN_VARNAME);
 
     private static final String HIP_HEADER_MIME = "application/json";
 

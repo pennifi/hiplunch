@@ -28,11 +28,13 @@ public class Hiplunch {
                 outputHelp();
             } else {
                 for (String arg : arguments) {
-                    Provider provider = providerStorage.getProviderById(arg);
-                    if (provider != null) {
-                        runProviders.add(provider);
-                    } else {
-                        output("Error: Unknown provider [" + arg + "]!\n");
+                    if (!arg.startsWith("-")) {
+                        try {
+                            Provider provider = providerStorage.getProviderById(arg);
+                            runProviders.add(provider);
+                        } catch (Exception e) {
+                            output("Error: Unknown provider [" + arg + "]!\n");
+                        }
                     }
                 }
             }
