@@ -13,7 +13,7 @@ penni ~/projects/hiplunch $ gradle build
 
 ## Usage ##
 ```
-penni ~/projects/hiplunch $ java -jar build/libs/hiplunch.jar
+penni ~/projects/hiplunch $ java -jar build/libs/hiplunch.jar help
 Usage:
 	java -jar hiplunch.jar <provider...|default|help>
 
@@ -26,15 +26,19 @@ fiilu	- Fazer Fiilu
 nurkka	- Lutakon Nurkka
 trattoria	- Trattoria Aukio
 qulkuri	- Le Qulkuri Lutakko
+sodexo-ge	- GE Healthcare
 
 Default providers (run with argument "default"):
-	bittipannu fiilu nurkka trattoria qulkuri
+	bittipannu fiilu nurkka trattoria qulkuri sodexo-ge
+
+To enable sending messages, you need to add two vars either to system Env or as -D properties to the command, eg:
+	java -DHIPCHAT_ROOM=***** -DHIPCHAT_TOKEN=******* -jar build/libs/hiplunch.jar bittipannu
 ```
+
 ## Providers ##
 
 Included providers, see list above or run 'help'
 Adding a provider: see commit https://github.com/soikea/hiplunch/commit/06038c1ecf47a5514dfc61d9fbf17b47b68e73d8
-
 
 ## TODO: ##
 

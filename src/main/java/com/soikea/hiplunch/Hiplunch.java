@@ -59,6 +59,9 @@ public class Hiplunch {
             output(provider.getId() + " ");
         }
         output("\n\n");
+        output("To enable sending messages, you need to add two vars either to system Env or as -D properties to the command, eg:\n");
+        output("\tjava -DHIPCHAT_ROOM=***** -DHIPCHAT_TOKEN=******* -jar build/libs/hiplunch.jar bittipannu");
+        output("\n\n");
     }
 
     private static void output(String output) {
