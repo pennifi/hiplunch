@@ -10,7 +10,7 @@ public abstract class FazerProvider extends Provider {
 
     private String getRssUrl() {
         return MessageFormat
-            .format("http://www.fazer.fi/api/location/menurss/current?pageId={0}&language=fi", getFazerId());
+            .format("https://www.fazer.fi/api/location/menurss/current?pageId={0}&language=fi", getFazerId());
     }
 
     protected String readRawFeed() {
