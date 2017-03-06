@@ -102,12 +102,16 @@ public class ContentUtil {
     }
 
     public static String getUrlContents(String theUrl) {
+        return getUrlContents(theUrl, "UTF-8");
+    }
+
+        public static String getUrlContents(String theUrl, String charsetName) {
         StringBuilder content = new StringBuilder();
 
         try {
             HttpURLConnection urlConnection = openUrlConnection(theUrl);
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), charsetName));
             String line;
 
             while ((line = bufferedReader.readLine()) != null) {

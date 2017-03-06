@@ -3,6 +3,7 @@ package com.soikea.hiplunch;
 import com.soikea.hiplunch.provider.Provider;
 import com.soikea.hiplunch.provider.impl.BittipannuProvider;
 import com.soikea.hiplunch.provider.impl.FiiluProvider;
+import com.soikea.hiplunch.provider.impl.HaraldProvider;
 import com.soikea.hiplunch.provider.impl.MattilanniemiProvider;
 import com.soikea.hiplunch.provider.impl.NurkkaProvider;
 import com.soikea.hiplunch.provider.impl.PiatoProvider;
@@ -31,6 +32,7 @@ public class ProviderStorage {
         providers.add(new QulkuriProvider());
         providers.add(new VallilaGEProvider());
         providers.add(new TietotaloProvider());
+        providers.add(new HaraldProvider());
     }
 
     public List<Provider> getConfiguredDefaultProviders() {
