@@ -1,18 +1,9 @@
 package com.soikea.hiplunch;
 
+import com.google.common.reflect.ClassPath;
 import com.soikea.hiplunch.provider.Provider;
-import com.soikea.hiplunch.provider.impl.BittipannuProvider;
-import com.soikea.hiplunch.provider.impl.FiiluProvider;
-import com.soikea.hiplunch.provider.impl.HaraldProvider;
-import com.soikea.hiplunch.provider.impl.MattilanniemiProvider;
-import com.soikea.hiplunch.provider.impl.NurkkaProvider;
-import com.soikea.hiplunch.provider.impl.PiatoProvider;
-import com.soikea.hiplunch.provider.impl.QulkuriProvider;
-import com.soikea.hiplunch.provider.impl.TietotaloProvider;
-import com.soikea.hiplunch.provider.impl.TrattoriaProvider;
-import com.soikea.hiplunch.provider.impl.VallilaGEProvider;
-import com.soikea.hiplunch.provider.impl.WilhelmiinaProvider;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,17 +13,20 @@ public class ProviderStorage {
     private final List<Provider> providers = new ArrayList<>();
 
     public ProviderStorage() {
-        providers.add(new MattilanniemiProvider());
-        providers.add(new BittipannuProvider());
-        providers.add(new PiatoProvider());
-        providers.add(new WilhelmiinaProvider());
-        providers.add(new FiiluProvider());
-        providers.add(new NurkkaProvider());
-        providers.add(new TrattoriaProvider());
-        providers.add(new QulkuriProvider());
-        providers.add(new VallilaGEProvider());
-        providers.add(new TietotaloProvider());
-        providers.add(new HaraldProvider());
+
+        final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+        try {
+            for (final ClassPath.ClassInfo info : ClassPath.from(loader).getTopLevelClasses()) {
+                if (info.getName().startsWith("com.soikea.hiplunch.provider.impl")
+                    && !info.getName().endsWith("Test")) {
+                    final Class<?> clazz = info.load();
+                    providers.add((Provider) clazz.newInstance());
+                }
+            }
+        } catch (IOException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Provider> getConfiguredDefaultProviders() {
