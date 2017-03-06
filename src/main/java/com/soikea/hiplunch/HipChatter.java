@@ -12,19 +12,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HipChatter {
+
     private static final Logger log = LoggerFactory.getLogger(HipChatter.class);
 
     private static final String HIP_ROOM_VARNAME = "HIPCHAT_ROOM";
 
     private static final String HIP_TOKEN_VARNAME = "HIPCHAT_TOKEN";
 
-    private static final String HIP_APIURL_PREFIX = "https://api.hipchat.com/v2/";
-
-    private static final String HIP_APIURL_METHOD = "room/" + Constants.getSystemVariable(HIP_ROOM_VARNAME) + "/notification";
-
-    private static final String HIP_APIURL_PARAMS = "?auth_token=" + Constants.getSystemVariable(HIP_TOKEN_VARNAME);
-
     private static final String HIP_HEADER_MIME = "application/json";
+
+    private String HIPCHAT_RESOURCE = null;
+
+    private String HIPCHAT_ROOM = null;
+
+    private String HIPCHAT_TOKEN = null;
+
+    public HipChatter() {
+        HIPCHAT_ROOM = Constants.getSystemVariable(HIP_ROOM_VARNAME);
+        HIPCHAT_TOKEN = Constants.getSystemVariable(HIP_TOKEN_VARNAME);
+
+        HIPCHAT_RESOURCE = "https://api.hipchat.com/v2/room/" + HIPCHAT_ROOM + "/notification?auth_token=" + HIPCHAT_TOKEN;
+    }
 
     public void sendMessage(HipchatMessage hipchatMessage) {
 
@@ -37,7 +45,7 @@ public class HipChatter {
 
             Client client = Client.create(clientConfig);
 
-            WebResource webResource = client.resource(HIP_APIURL_PREFIX + HIP_APIURL_METHOD + HIP_APIURL_PARAMS);
+            WebResource webResource = client.resource(HIPCHAT_RESOURCE);
 
             ClientResponse response = webResource.accept(HIP_HEADER_MIME).type(HIP_HEADER_MIME)
                 .post(ClientResponse.class, mapper.writeValueAsString(hipchatMessage));
@@ -45,5 +53,9 @@ public class HipChatter {
         } catch (Exception e) {
             log.error("Error sending hipchat message: {}", e.getMessage());
         }
+    }
+
+    public boolean canSendMessage() {
+        return HIPCHAT_ROOM != null && HIPCHAT_TOKEN != null;
     }
 }

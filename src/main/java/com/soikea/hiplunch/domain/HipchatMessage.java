@@ -65,4 +65,8 @@ public class HipchatMessage {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String toString() {
+        return message;
+    }
 }

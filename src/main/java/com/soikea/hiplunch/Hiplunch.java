@@ -14,9 +14,10 @@ public class Hiplunch {
 
     private static final String CMD_RUN_HELP = "help";
 
+    private static final HipChatter hipChatter = new HipChatter();
+
     public static void main(String[] args) {
 
-        HipChatter hipChatter = new HipChatter();
         List<String> arguments = Arrays.asList(args);
         List<Provider> runProviders = new ArrayList<>();
 
@@ -42,8 +43,16 @@ public class Hiplunch {
             outputHelp();
         }
 
-        for (Provider provider : runProviders) {
-            hipChatter.sendMessage(provider.processMessage());
+        if (hipChatter.canSendMessage()) {
+            for (Provider provider : runProviders) {
+                hipChatter.sendMessage(provider.processMessage());
+            }
+        } else {
+            // Only console
+            output("No external messaging configured, only console output: \n\n");
+            for (Provider provider : runProviders) {
+                output(provider.processMessage().toString() + "\n");
+            }
         }
     }
 
