@@ -11,12 +11,16 @@ import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.net.HttpURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -58,25 +62,6 @@ public class ContentUtil {
         return stringBuilder;
     }
 
-    public static String getRSSFeedResults(String url, String prefix) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        List<SyndEntry> entryList = getRssEntryList(url);
-
-        if (entryList != null) {
-            entryList.stream().filter(entry -> matchesTitle(entry.getTitle(), prefix)).forEach(entry -> {
-                String feedResult = cleanupRSSFeed(entry.getDescription().getValue());
-
-                if (feedResult.isEmpty() || feedResult.length() < 10) {
-                    stringBuilder.append(ERROR_NOT_AVAILABLE);
-                } else {
-                    stringBuilder.append(feedResult);
-                }
-            });
-        }
-        return stringBuilder.toString();
-    }
-
     public static String getRSSFeedResults(String url) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -105,11 +90,16 @@ public class ContentUtil {
         return getUrlContents(theUrl, "UTF-8");
     }
 
-        public static String getUrlContents(String theUrl, String charsetName) {
+    public static String getUrlContents(String theUrl, String charsetName) {
         StringBuilder content = new StringBuilder();
 
         try {
-            HttpURLConnection urlConnection = openUrlConnection(theUrl);
+            HttpURLConnection urlConnection;
+            if (theUrl.startsWith("https")) {
+                urlConnection = openHttpsConnection(theUrl);
+            } else {
+                urlConnection = openHttpConnection(theUrl);
+            }
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), charsetName));
             String line;
@@ -124,19 +114,59 @@ public class ContentUtil {
         return content.toString();
     }
 
-    private static HttpURLConnection openUrlConnection(String theUrl) throws IOException {
+    private static HttpsURLConnection openHttpsConnection(String theUrl) throws Exception {
         URL url = new URL(theUrl);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection urlConnection;
+        SSLContext sc = SSLContext.getInstance("SSL");
+
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+            public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+                // do nothing
+            }
+            public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+                // do nothing
+            }
+        } };
+
+        // Install the all-trusting trust manager
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        urlConnection = (HttpsURLConnection) url.openConnection();
         urlConnection.setInstanceFollowRedirects(true);
+        urlConnection.setSSLSocketFactory(sc.getSocketFactory());
 
         int status = urlConnection.getResponseCode();
-        if (status != HttpURLConnection.HTTP_OK) {
-            if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM
-                || status == HttpURLConnection.HTTP_SEE_OTHER) {
+        if (status != HttpsURLConnection.HTTP_OK) {
+            if (status == HttpsURLConnection.HTTP_MOVED_TEMP
+                || status == HttpsURLConnection.HTTP_MOVED_PERM
+                || status == HttpsURLConnection.HTTP_SEE_OTHER) {
 
                 String newUrl = urlConnection.getHeaderField("Location");
                 log.debug("Redirect to URL : {}", newUrl);
-                return openUrlConnection(newUrl);
+                return openHttpsConnection(newUrl);
+            }
+        }
+        return urlConnection;
+    }
+
+    private static HttpURLConnection openHttpConnection(String theUrl) throws Exception {
+        URL url = new URL(theUrl);
+        HttpURLConnection urlConnection;
+
+        urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setInstanceFollowRedirects(true);
+
+        int status = urlConnection.getResponseCode();
+        if (status != HttpsURLConnection.HTTP_OK) {
+            if (status == HttpsURLConnection.HTTP_MOVED_TEMP
+                || status == HttpsURLConnection.HTTP_MOVED_PERM
+                || status == HttpsURLConnection.HTTP_SEE_OTHER) {
+
+                String newUrl = urlConnection.getHeaderField("Location");
+                log.debug("Redirect to URL : {}", newUrl);
+                return openHttpConnection(newUrl);
             }
         }
         return urlConnection;
@@ -157,10 +187,8 @@ public class ContentUtil {
             if (feed != null) {
                 entryList = feed.getEntries();
             }
-        } catch (IOException e) {
-            log.error("Error getting feed: IOException: {}", e.getMessage());
-        } catch (FeedException e) {
-            log.error("Error getting feed: FeedException: {}", e.getMessage());
+        } catch (IOException | FeedException e) {
+            log.error("Error getting feed: " + e.getClass().getSimpleName()+ " {}", e.getMessage());
         }
 
         return entryList;

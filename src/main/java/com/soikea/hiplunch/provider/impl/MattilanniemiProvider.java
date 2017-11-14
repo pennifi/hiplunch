@@ -6,7 +6,7 @@ public class MattilanniemiProvider extends SodexoProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.sodexo.fi/mattilanniemi/";
+        return "https://www.sodexo.fi/mattilanniemi/";
     }
 
     @Override

@@ -6,7 +6,7 @@ public class BittipannuProvider extends SodexoProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.sodexo.fi/jamk-dynamo/"; // url still with old name
+        return "https://www.sodexo.fi/jamk-dynamo/"; // url still with old name
     }
 
     @Override

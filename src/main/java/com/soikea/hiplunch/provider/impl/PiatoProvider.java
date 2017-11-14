@@ -6,7 +6,7 @@ public class PiatoProvider extends SonaattiProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.sonaatti.fi/piato/";
+        return "https://www.sonaatti.fi/piato/";
     }
 
     @Override
@@ -20,8 +20,7 @@ public class PiatoProvider extends SonaattiProvider {
     }
 
     @Override
-    protected Boolean hasGrill() {
-        return true;
+    protected String getSonaattiId() {
+        return "1408";
     }
-
 }

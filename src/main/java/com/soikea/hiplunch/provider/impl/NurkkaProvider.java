@@ -13,13 +13,13 @@ public class NurkkaProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0) + "na");
-        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1) + "na");
+        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0));
+        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1));
 
         return FeedCutter.builder(feed)
-            .withStartPoints(today, "LOUNAALLA")
-            .withEndPoints(tomorrow, "Sis.")
-            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d\\d?\\.\\d\\d?\\.\\:", "\\(.*?\\)")
+            .withStartPoints(today, "PÄIVÄN LOUNAS")
+            .withEndPoints(tomorrow, "Sis. päivän annos")
+            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d\\d?\\.\\d\\d?\\.\\:?", "\\(.*?\\)")
             .startProcess()
             .cleanUp()
             .toString().trim();
@@ -32,7 +32,7 @@ public class NurkkaProvider extends Provider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.lutakonnurkka.fi/lounas/";
+        return "https://www.lutakonnurkka.fi/lounas/";
     }
 
     @Override

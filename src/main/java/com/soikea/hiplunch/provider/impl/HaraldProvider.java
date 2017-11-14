@@ -14,9 +14,9 @@ public class HaraldProvider extends Provider {
         String today = StringUtils.lowerCase(StringHelper.getWeekdayName(0));
         String tomorrow = StringUtils.lowerCase(StringHelper.getWeekdayName(1));
 
-        return FeedCutter.builder(ContentUtil.getUrlContents(getMessageUrl(), "iso-8859-1"))
-            .withStartPoints(today, "lounaslistaTable\">")
-            .withEndPoints(tomorrow, "Pidätämme oikeudet muutoksiin")
+        return FeedCutter.builder(ContentUtil.getUrlContents(getMessageUrl(), "utf-8"))
+            .withStartPoints(today, "lunch-week\">>")
+            .withEndPoints(tomorrow, "Pidätämme oikeudet muutoksiin.")
             .withRemovables("<.+?>", "\\w*[0-9,\\.]+\\w*", "&euro;")
             .withSpaceables("\\s\\s*")
             .fullProcess().trim();
@@ -29,7 +29,7 @@ public class HaraldProvider extends Provider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www2.ravintolaharald.fi/ruoka--ja-juomalistat/lounas";
+        return "https://www.ravintolaharald.fi/jyvaskyla/lounas/";
     }
 
     @Override

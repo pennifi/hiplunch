@@ -6,7 +6,7 @@ public class WilhelmiinaProvider extends SonaattiProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.sonaatti.fi/wilhelmiina/";
+        return "https://www.sonaatti.fi/wilhelmiina/";
     }
 
     @Override
@@ -20,7 +20,7 @@ public class WilhelmiinaProvider extends SonaattiProvider {
     }
 
     @Override
-    protected Boolean hasGrill() {
-        return false;
+    protected String getSonaattiId() {
+        return "1402";
     }
 }

@@ -1,20 +1,8 @@
 package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.ContentUtil;
-import com.soikea.hiplunch.FeedCutter;
-import com.soikea.hiplunch.provider.Provider;
+import com.soikea.hiplunch.provider.LounaatInfoProvider;
 
-public class TrattoriaProvider extends Provider {
-
-    @Override
-    protected String processFeed() {
-
-        return FeedCutter.builder(ContentUtil.getUrlContents(getMessageUrl()))
-            .withStartPoints("restaurant-menu__items-list\">", "restaurant-menu__header\">Nyt lounaalla")
-            .withEndPoints("<div class=\"restaurant-menu__button-container")
-            .withRemovables("<.+?>", "\\w+[0-9,]+\\w+", "&euro;")
-            .fullProcess().trim();
-    }
+public class TrattoriaProvider extends LounaatInfoProvider {
 
     @Override
     public String getId() {
@@ -29,5 +17,10 @@ public class TrattoriaProvider extends Provider {
     @Override
     public String getName() {
         return "Trattoria Aukio";
+    }
+
+    @Override
+    protected String getLounaatInfoIdentifier() {
+        return "trattoria-aukio/jyvaskyla";
     }
 }

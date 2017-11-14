@@ -65,14 +65,18 @@ public class FeedCutter {
     }
 
     private FeedCutter cutBeginning() {
-        List<String> reverseStartPoints = startPoints.subList(0, startPoints.size());
-        Collections.reverse(reverseStartPoints);
-        this.feed = cut(CUTMODE_START, reverseStartPoints);
+        if ( startPoints != null && startPoints.size() > 0) {
+            List<String> reverseStartPoints = startPoints.subList(0, startPoints.size());
+            Collections.reverse(reverseStartPoints);
+            this.feed = cut(CUTMODE_START, reverseStartPoints);
+        }
         return this;
     }
 
     private FeedCutter cutEnding() {
-        this.feed = cut(CUTMODE_END, endPoints);
+        if (endPoints != null && endPoints.size() > 0) {
+            this.feed = cut(CUTMODE_END, endPoints);
+        }
         return this;
     }
 

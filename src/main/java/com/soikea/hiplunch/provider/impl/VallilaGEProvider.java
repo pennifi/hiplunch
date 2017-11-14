@@ -6,7 +6,7 @@ public class VallilaGEProvider extends SodexoProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "http://www.sodexo.fi/en/ge";
+        return "https://www.sodexo.fi/en/ge";
     }
 
     @Override
