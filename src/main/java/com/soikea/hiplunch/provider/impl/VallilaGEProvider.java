@@ -6,12 +6,12 @@ public class VallilaGEProvider extends SodexoProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "https://www.sodexo.fi/en/ge";
+        return "https://www.sodexo.fi/neliapila-lounas";
     }
 
     @Override
     public String getName() {
-        return "GE Healthcare";
+        return "Neliapila";
     }
 
     @Override
@@ -21,6 +21,6 @@ public class VallilaGEProvider extends SodexoProvider {
 
     @Override
     public String getSodexoId() {
-        return "538";
+        return "31832";
     }
 }
