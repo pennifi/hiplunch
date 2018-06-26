@@ -37,9 +37,9 @@ public class FiiluProvider extends FazerProvider {
 
         feed = FeedCutter.builder(feed)
             .withStartPoints(today, "jälkiruoan ja kahvin.")
-            .withEndPoints(tomorrow, "Lounas 7,20 opiskelijakortilla")
+            .withEndPoints(tomorrow, "end ngRepeat: lunchMenu in lunchMenus", "Lounas 7,20 opiskelijakortilla")
             .withSpaceables("\\s\\s+?")
-            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\(.+?\\)")
+            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\(.+?\\)", "€")
             .startProcess()
             .replace(":</i> ", Arrays.asList("\\s\\d+?,\\d+"))
             .replace(" <i>", Arrays.asList("\\n"))

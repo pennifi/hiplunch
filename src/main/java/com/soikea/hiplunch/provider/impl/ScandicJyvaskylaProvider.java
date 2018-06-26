@@ -9,6 +9,16 @@ public class ScandicJyvaskylaProvider extends LounaatInfoProvider {
     }
 
     @Override
+    protected String getStartPointOverride() {
+        return "<div id=\"menu\"";
+    }
+
+    @Override
+    protected String getEndPointOverride() {
+        return "Lounas sisältää";
+    }
+
+    @Override
     public String getId() {
         return "scandic-jkl";
     }

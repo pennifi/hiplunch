@@ -23,4 +23,14 @@ public class TrattoriaProvider extends LounaatInfoProvider {
     protected String getLounaatInfoIdentifier() {
         return "trattoria-aukio/jyvaskyla";
     }
+
+    @Override
+    protected String getStartPointOverride() {
+        return "<div id=\"menu\"";
+    }
+
+    @Override
+    protected String getEndPointOverride() {
+        return "Lounas sisältää";
+    }
 }

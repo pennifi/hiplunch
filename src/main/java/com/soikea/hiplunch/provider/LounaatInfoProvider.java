@@ -13,10 +13,14 @@ public abstract class LounaatInfoProvider extends Provider {
     String today = StringHelper.getWeekdayName(0) + "na";
     String tomorrow = StringHelper.getWeekdayName(1) + "na";
 
+    protected abstract String getStartPointOverride();
+
+    protected abstract String getEndPointOverride();
+
     protected String processFeed() {
         return FeedCutter.builder(ContentUtil.getUrlContents(LOUNAAT_BASEURL))
-            .withStartPoints(today, "<div id=\"menu\"")
-            .withEndPoints(tomorrow, "Lounas sisältää runsaan", "<!-- Boksi -->")
+            .withStartPoints(today, getStartPointOverride())
+            .withEndPoints(tomorrow, getEndPointOverride(), "<!-- Boksi -->")
             .withRemovables("€", "Alkuruokana",
                 "\\w+[0-9,]+\\w+",
                 "<a href=\"#[mlGg]\".+?</a>",
