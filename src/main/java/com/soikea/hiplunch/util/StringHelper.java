@@ -1,4 +1,4 @@
-package com.soikea.hiplunch;
+package com.soikea.hiplunch.util;
 
 import java.util.Calendar;
 import java.util.Locale;

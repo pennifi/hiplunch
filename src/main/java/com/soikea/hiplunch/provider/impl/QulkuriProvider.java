@@ -1,8 +1,8 @@
 package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.ContentUtil;
-import com.soikea.hiplunch.FeedCutter;
-import com.soikea.hiplunch.StringHelper;
+import com.soikea.hiplunch.util.ContentUtil;
+import com.soikea.hiplunch.util.FeedCutter;
+import com.soikea.hiplunch.util.StringHelper;
 import com.soikea.hiplunch.provider.Provider;
 import org.apache.commons.lang3.StringUtils;
 

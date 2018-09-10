@@ -1,7 +1,7 @@
 package com.soikea.hiplunch.provider;
 
-import com.soikea.hiplunch.Highlighter;
-import com.soikea.hiplunch.domain.HipchatMessage;
+import com.soikea.hiplunch.hipchat.Highlighter;
+import com.soikea.hiplunch.hipchat.HipchatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,13 +10,19 @@ public abstract class Provider {
 
     private final Highlighter hilighter = new Highlighter();
 
-    public HipchatMessage processMessage() {
+    public HipchatMessage processMessageForHipchat() {
         HipchatMessage hipchatMessage = new HipchatMessage(
             "<a href=\"" + getMessageUrl() + "\">" + getName() + "</a>: " + processFeed());
 
         hilighter.checkForHighlights(hipchatMessage);
         return hipchatMessage;
     }
+
+    public String processMessageForTeams() {
+        String s = String.format("* [%s](%S): %s.", getName(), getMessageUrl(), processFeed());
+        return hilighter.hilight(s);
+    }
+
 
     protected abstract String processFeed();
 

@@ -3,6 +3,7 @@ package com.soikea.hiplunch.provider.impl;
 import com.soikea.hiplunch.provider.LounaatInfoProvider;
 
 public class ScandicJyvaskylaProvider extends LounaatInfoProvider {
+
     @Override
     protected String getLounaatInfoIdentifier() {
         return "scandic-jyvaskyla/jyvaskyla";

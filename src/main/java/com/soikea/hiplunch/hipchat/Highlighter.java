@@ -1,7 +1,6 @@
-package com.soikea.hiplunch;
+package com.soikea.hiplunch.hipchat;
 
-import com.soikea.hiplunch.domain.HipchatEnums;
-import com.soikea.hiplunch.domain.HipchatMessage;
+import com.soikea.hiplunch.Constants;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.regex.Pattern;
@@ -19,6 +18,15 @@ public class Highlighter {
                 hipchatMessage.setNotify(true);
             }
         }
+    }
+
+    public String hilight(String string) {
+        for (String hilight : getHilights()) {
+            if (StringUtils.containsIgnoreCase(string, hilight)) {
+                return string.replaceAll("(?i)(" + Pattern.quote(hilight) + ")", "**$1**");
+            }
+        }
+        return string;
     }
 
     private String[] getHilights() {

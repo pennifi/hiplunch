@@ -1,6 +1,6 @@
 package com.soikea.hiplunch.provider;
 
-import com.soikea.hiplunch.ContentUtil;
+import com.soikea.hiplunch.util.ContentUtil;
 
 import java.text.MessageFormat;
 

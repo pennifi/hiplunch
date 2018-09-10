@@ -9,7 +9,7 @@ public class Constants {
     /**
      * If property s not set with -D returns s from env
      */
-    protected static String getSystemVariable(String s) {
+    public static String getSystemVariable(String s) {
         return System.getProperty(s) != null ? System.getProperty(s) : System.getenv(s);
     }
 }

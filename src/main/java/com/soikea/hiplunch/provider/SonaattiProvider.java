@@ -1,7 +1,7 @@
 package com.soikea.hiplunch.provider;
 
-import com.soikea.hiplunch.ContentUtil;
-import com.soikea.hiplunch.FeedCutter;
+import com.soikea.hiplunch.util.ContentUtil;
+import com.soikea.hiplunch.util.FeedCutter;
 
 public abstract class SonaattiProvider extends Provider {
 

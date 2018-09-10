@@ -1,4 +1,4 @@
-package com.soikea.hiplunch;
+package com.soikea.hiplunch.util;
 
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class ContentUtil {
@@ -212,5 +214,9 @@ public class ContentUtil {
             }
         }
         return stringBuilder.toString().trim();
+    }
+
+    public static String formatDate() {
+        return new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
     }
 }

@@ -1,7 +1,12 @@
 package com.soikea.hiplunch;
 
+import com.soikea.hiplunch.graph.TeamsGraphChatter;
+import com.soikea.hiplunch.graph.TeamsGraphMessage;
+import com.soikea.hiplunch.hipchat.HipChatter;
 import com.soikea.hiplunch.provider.Provider;
+import com.soikea.hiplunch.util.ContentUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +20,8 @@ public class Hiplunch {
     private static final String CMD_RUN_HELP = "help";
 
     private static final HipChatter hipChatter = new HipChatter();
+
+    private static final TeamsGraphChatter teamsChatter = new TeamsGraphChatter();
 
     public static void main(String[] args) {
 
@@ -45,13 +52,28 @@ public class Hiplunch {
 
         if (hipChatter.canSendMessage()) {
             for (Provider provider : runProviders) {
-                hipChatter.sendMessage(provider.processMessage());
+                try {
+                    hipChatter.sendMessage(provider.processMessageForHipchat());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (teamsChatter.canSendMessage()) {
+            List<String> menus = new ArrayList<>();
+            for (Provider provider : runProviders) {
+                    menus.add(provider.processMessageForTeams());
+            }
+            try {
+                String header = ContentUtil.formatDate();
+                teamsChatter.sendMessage(new TeamsGraphMessage(header, menus));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } else {
             // Only console
             output("No external messaging configured, only console output: \n\n");
             for (Provider provider : runProviders) {
-                output(provider.processMessage().toString() + "\n");
+                output(provider.processMessageForHipchat().toString() + "\n");
             }
         }
     }

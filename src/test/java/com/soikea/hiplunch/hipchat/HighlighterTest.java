@@ -1,6 +1,5 @@
-package com.soikea.hiplunch;
+package com.soikea.hiplunch.hipchat;
 
-import com.soikea.hiplunch.domain.HipchatMessage;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ public class HighlighterTest {
 
     private final Highlighter hilighter = new Highlighter();
 
-    private final HipchatMessage message = new HipchatMessage();
+    private final HipchatMessage message = new HipchatMessage("");
 
     @Test
     public void testHightLights() {

@@ -33,6 +33,8 @@ Default providers (run with argument "default"):
 
 To enable sending messages, you need to add two vars either to system Env or as -D properties to the command, eg:
 	java -DHIPCHAT_ROOM=***** -DHIPCHAT_TOKEN=******* -jar build/libs/hiplunch.jar bittipannu
+or	
+	java -DTEAMS_HOOK=***** -jar build/libs/hiplunch.jar bittipannu qulkuri
 ```
 
 ## Providers ##

@@ -28,7 +28,7 @@ public class HiplunchTest {
         ObjectMapper mapper = new ObjectMapper();
         try {
             for (Provider provider : allProviders) {
-                String message = mapper.writeValueAsString(provider.processMessage());
+                String message = mapper.writeValueAsString(provider.processMessageForHipchat());
                 log.debug(message);
                 assertNotNull(message);
             }

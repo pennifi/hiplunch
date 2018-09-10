@@ -1,4 +1,4 @@
-package com.soikea.hiplunch.domain;
+package com.soikea.hiplunch.hipchat;
 
 public class HipchatEnums {
 
