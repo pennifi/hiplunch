@@ -1,7 +1,5 @@
 # HIPLUNCH #
 
-[![Build Status](https://travis-ci.com/soikea/hiplunch.svg?token=BwvYvsK33EqYoqbDsVYm&branch=master)](https://travis-ci.com/soikea/hiplunch)
-
 A simple Java app for parsing RSS or JSON sources for lunch menus and posting them to a Hipchat channel.
 
 Mainly useful for usage around Jyväskylä, Finland, as the feed parsing is feed specific (no real deterministic approach).
