@@ -2,6 +2,7 @@ package com.soikea.hiplunch.provider;
 
 import com.soikea.hiplunch.hipchat.Highlighter;
 import com.soikea.hiplunch.hipchat.HipchatMessage;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ public abstract class Provider {
     }
 
     public String processMessageForTeams() {
-        String s = String.format("* [%s](%S): %s.", getName(), getMessageUrl(), processFeed());
+        String s = String.format("* [%s](%S): %s", getName(), getMessageUrl(), StringUtils.trim(processFeed()));
         return hilighter.hilight(s);
     }
 
