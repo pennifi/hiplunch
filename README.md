@@ -1,8 +1,8 @@
 # HIPLUNCH #
 
-A simple Java app for parsing RSS or JSON sources for lunch menus and posting them to a Hipchat channel.
+This is a simple Java app for parsing RSS or JSON sources for lunch menus and posting them to a Hipchat or Teams channel. Purpose for this is training and refining Java skills, attempting different methods for parsing web data and transforming it to another channel.
 
-Mainly useful for usage around Jyväskylä, Finland, as the feed parsing is feed specific (no real deterministic approach).
+At the moment, mainly useful for usage around Jyväskylä, Finland, as the parsing is feed specific, and no menus elsewhere have been added yet.
 
 ## Build ##
 ```
@@ -38,7 +38,7 @@ or
 ## Providers ##
 
 Included providers, see list above or run 'help'
-Adding a provider: see commit https://github.com/soikea/hiplunch/commit/06038c1ecf47a5514dfc61d9fbf17b47b68e73d8
+Adding a provider: see commit https://github.com/pennifi/hiplunch/commit/06038c1ecf47a5514dfc61d9fbf17b47b68e73d8
 
 ## TODO: ##
 
