@@ -10,8 +10,8 @@ public abstract class FactoryProvider extends Provider {
 
     protected final String FACTORY_BASEURL = "http://www.ravintolafactory.com/lounasravintolat/ravintolat/" + getFactoryIdentifier() + "/";
 
-    String today = StringHelper.getWeekdayName(1) + "";
-    String tomorrow = StringHelper.getWeekdayName(2) + "";
+    String today = StringHelper.getWeekdayName(0) + "";
+    String tomorrow = StringHelper.getWeekdayName(1) + "";
 
     protected abstract String getStartPointOverride();
 
