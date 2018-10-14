@@ -20,7 +20,7 @@ public abstract class Provider {
     }
 
     public String processMessageForTeams() {
-        String s = String.format("* [%s](%S): %s", getName(), getMessageUrl(), StringUtils.trim(processFeed()));
+        String s = String.format("* [%s](%s): %s", getName(), getMessageUrl(), StringUtils.trim(processFeed()));
         return hilighter.hilight(s);
     }
 
