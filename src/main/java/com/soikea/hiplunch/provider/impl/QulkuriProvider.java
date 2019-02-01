@@ -19,7 +19,7 @@ public class QulkuriProvider extends Provider {
 
         feed = FeedCutter.builder(feed)
             .withStartPoints(today, "id=\"lutakko-lounaslista\"")
-            .withEndPoints(tomorrow, "Kaikki annokset ovat", "Bistrolista")
+            .withEndPoints(tomorrow, "Annokset ovat pääsääntöisesti", "Bistrolista")
             .withSpaceables("\\s\\s+?")
             .withRemovables("\\n", "&nbsp;", "<.+?>")
             .startProcess()

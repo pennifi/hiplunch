@@ -18,7 +18,7 @@ public class NurkkaProvider extends Provider {
 
         return FeedCutter.builder(feed)
             .withStartPoints(today, "PÄIVÄN LOUNAS")
-            .withEndPoints(tomorrow, "Sis. päivän annos")
+            .withEndPoints(tomorrow, "Lounaaseen sisältyy", "Sis. päivän annos")
             .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d\\d?\\.\\d\\d?\\.\\:?", "\\(.*?\\)")
             .startProcess()
             .cleanUp()
