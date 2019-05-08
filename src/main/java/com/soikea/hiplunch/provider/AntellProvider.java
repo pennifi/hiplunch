@@ -20,7 +20,7 @@ public abstract class AntellProvider extends Provider {
     protected String processFeed() {
         return FeedCutter.builder(ContentUtil.getUrlContents(ANTELL_BASEURL))
             .withStartPoints(today, getStartPointOverride())
-            .withEndPoints(tomorrow, getEndPointOverride())
+            .withEndPoints(tomorrow, "Buffetlounas", getEndPointOverride())
             .withRemovables("€", "&euro;",
                     "\\w+[0-9,]+\\w+",
                     "\\(.+?\\),?",
