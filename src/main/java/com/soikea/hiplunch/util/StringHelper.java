@@ -15,6 +15,15 @@ public class StringHelper {
         return capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
     }
 
+    public static String getWeekdayNameWithSaturday(int offset) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.roll(Calendar.DAY_OF_WEEK, offset);
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        }
+        return capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
+    }
+
     public static String capitalize(final String line) {
         return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }

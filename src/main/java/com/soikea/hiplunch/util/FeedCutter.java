@@ -59,6 +59,9 @@ public class FeedCutter {
     public FeedCutter cleanUp() {
         return this.replaceRemoveables().replaceSpaceables();
     }
+    public FeedCutter cleanUpReverse() {
+        return this.replaceSpaceables().replaceRemoveables();
+    }
 
     public String fullProcess() {
         return startProcess().cleanUp().toString();
