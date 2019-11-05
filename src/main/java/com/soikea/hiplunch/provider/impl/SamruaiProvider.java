@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class SamruaiProvider extends Provider {
 
-    public static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(" dd.MM");
+    public static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(" d.MM");
 
     @Override
     protected String processFeed() {
