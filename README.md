@@ -18,8 +18,8 @@ Usage:
 Providers:
 mattilanniemi	- Sodexo Mattilanniemi
 bittipannu	- Sodexo Bittipannu
-piato	- Sonaatti Piato
-wilhelmiina	- Sonaatti Wilhelmiina
+piato	- Semma Piato
+maija	- Semma Maija
 fiilu	- Fazer Fiilu
 nurkka	- Lutakon Nurkka
 trattoria	- Trattoria Aukio

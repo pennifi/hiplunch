@@ -2,25 +2,25 @@ package com.soikea.hiplunch.provider.impl;
 
 import com.soikea.hiplunch.provider.SemmaProvider;
 
-public class PiatoProvider extends SemmaProvider {
+public class MaijaProvider extends SemmaProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "https://www.semma.fi/ravintolat2/mattilanniemi/piato/";
+        return "https://www.semma.fi/ravintolat2/mattilanniemi/maija/";
     }
 
     @Override
     public String getName() {
-        return "Semma Piato";
+        return "Semma Maija";
     }
 
     @Override
     public String getId() {
-        return "piato";
+        return "maija";
     }
 
     @Override
     protected String getSemmaId() {
-        return "1408";
+        return "1402";
     }
 }
