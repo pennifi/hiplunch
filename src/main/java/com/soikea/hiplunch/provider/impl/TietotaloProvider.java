@@ -21,7 +21,7 @@ public class TietotaloProvider extends SodexoProvider {
 
     @Override
     public String getSodexoId() {
-        return "96";
+        return "123";
     }
 
     @Override

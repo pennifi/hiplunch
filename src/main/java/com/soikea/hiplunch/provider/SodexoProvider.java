@@ -8,14 +8,14 @@ import java.util.Calendar;
 
 public abstract class SodexoProvider extends Provider {
 
-    public static final SimpleDateFormat SODEXO_URL_DATEFORMAT = new SimpleDateFormat("yyyy/MM/dd");
+    public static final SimpleDateFormat SODEXO_URL_DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     protected abstract String getSodexoId();
 
     private final String SODEXO_BASEURL = "https://www.sodexo.fi/ruokalistat/output/daily_json/" + getSodexoId() + "/";
 
     public String getUrl() {
-        return SODEXO_BASEURL + SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime()) + "/fi";
+        return SODEXO_BASEURL + SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime());
     }
 
     protected String processFeed() {

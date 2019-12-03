@@ -14,6 +14,6 @@ public class BittipannuProviderTest extends ProviderTest<BittipannuProvider> {
         String url = ((BittipannuProvider) getProvider()).getUrl();
         Assert.assertEquals(
             "https://www.sodexo.fi/ruokalistat/output/daily_json/" + ((BittipannuProvider) getProvider()).getSodexoId()
-                + "/" + SodexoProvider.SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime()) + "/fi", url);
+                + "/" + SodexoProvider.SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime()), url);
     }
 }

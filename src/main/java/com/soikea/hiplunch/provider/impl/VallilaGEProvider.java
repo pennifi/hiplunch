@@ -21,6 +21,6 @@ public class VallilaGEProvider extends SodexoProvider {
 
     @Override
     public String getSodexoId() {
-        return "31832";
+        return "173";
     }
 }

@@ -32,17 +32,40 @@ public class ContentUtil {
 
     public static final String ERROR_NOT_AVAILABLE = "Tietoja ei saatavilla.";
 
+    public static JSONObject getUrlContentAsJson(String url) throws JSONException {
+        JSONObject results;
+        try {
+            String urlContent = getUrlContents(url);
+            results = new JSONObject(urlContent);
+        } catch (JSONException e) {
+            throw new JSONException(String.format("Unable to get Json result for %s : %s", url, e.getMessage()));
+        }
+        return results;
+    }
+
+
     public static JSONArray getJsonResult(String url, String key) throws JSONException {
         JSONArray results;
-
         try {
-            JSONObject json = new JSONObject(getUrlContents(url));
+            JSONObject json = getUrlContentAsJson(url);
             results = json.getJSONArray(key);
         } catch (JSONException e) {
             throw new JSONException(String.format("Unable to get Json result for %s : %s", url, e.getMessage()));
         }
         return results;
     }
+
+    public static JSONObject getJsonObjectResult(String url, String key) throws JSONException {
+        JSONObject results;
+        try {
+            JSONObject json = getUrlContentAsJson(url);
+            results = json.getJSONObject(key);
+        } catch (JSONException e) {
+            throw new JSONException(String.format("Unable to get Json result for %s : %s", url, e.getMessage()));
+        }
+        return results;
+    }
+
 
     public static StringBuilder processJsonArray(JSONArray results, String key) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -59,6 +82,33 @@ public class ContentUtil {
             }
         } catch (JSONException e) {
             log.error("processJsonArray exception: {}", e.getMessage());
+        }
+
+        return stringBuilder;
+    }
+
+    public static StringBuilder processJsonObjectArray(JSONObject results, String key) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try {
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject course = null;
+                try {
+                    course = results.getJSONObject("" + i);
+                } catch (JSONException e) {
+                    log.debug("processJsonObjectArray exception: {}", e.getMessage());
+                }
+                if (course != null) {
+                    stringBuilder.append(course.getString(key));
+                    if (i < results.length() - 1) {
+                        stringBuilder.append(", ");
+                    } else {
+                        stringBuilder.append(".");
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            log.error("processJsonObjectArray exception: {}", e.getMessage());
         }
 
         return stringBuilder;
@@ -97,7 +147,10 @@ public class ContentUtil {
 
         try {
             HttpURLConnection urlConnection;
+
+
             if (theUrl.startsWith("https")) {
+
                 urlConnection = openHttpsConnection(theUrl);
             } else {
                 urlConnection = openHttpConnection(theUrl);
@@ -137,6 +190,9 @@ public class ContentUtil {
         sc.init(null, trustAllCerts, new java.security.SecureRandom());
         urlConnection = (HttpsURLConnection) url.openConnection();
         urlConnection.setInstanceFollowRedirects(true);
+
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0");
+
         urlConnection.setSSLSocketFactory(sc.getSocketFactory());
 
         int status = urlConnection.getResponseCode();

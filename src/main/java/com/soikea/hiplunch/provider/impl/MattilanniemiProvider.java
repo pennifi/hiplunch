@@ -21,6 +21,6 @@ public class MattilanniemiProvider extends SodexoProvider {
 
     @Override
     public String getSodexoId() {
-        return "66";
+        return "124";
     }
 }

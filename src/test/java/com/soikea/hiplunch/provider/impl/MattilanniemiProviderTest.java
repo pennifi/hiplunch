@@ -13,7 +13,7 @@ public class MattilanniemiProviderTest extends ProviderTest<MattilanniemiProvide
     @Test
     public void testUrl() {
         String url = ((MattilanniemiProvider) getProvider()).getUrl();
-        Assert.assertEquals(MessageFormat.format("https://www.sodexo.fi/ruokalistat/output/daily_json/{0}/{1}/fi",
+        Assert.assertEquals(MessageFormat.format("https://www.sodexo.fi/ruokalistat/output/daily_json/{0}/{1}",
             ((MattilanniemiProvider) getProvider()).getSodexoId(),
             SodexoProvider.SODEXO_URL_DATEFORMAT.format(Calendar.getInstance().getTime())), url);
     }
