@@ -83,7 +83,7 @@ public class Hiplunch {
         output("\n");
         output("Providers:\n");
         for (Provider provider : providerStorage.getAllProviders()) {
-            output(provider.getId() + "\t- " + provider.getName() + "\n");
+            output("\t" +provider.getId() + "\t- " + provider.getName() + "\n");
         }
         output("\nDefault providers (run with argument \"" + CMD_RUN_DEFAULT + "\"):\n\t");
         for (Provider provider : providerStorage.getConfiguredDefaultProviders()) {
@@ -91,7 +91,10 @@ public class Hiplunch {
         }
         output("\n\n");
         output("To enable sending messages, you need to add two vars either to system Env or as -D properties to the command, eg:\n");
-        output("\tjava -DHIPCHAT_ROOM=***** -DHIPCHAT_TOKEN=******* -jar build/libs/hiplunch.jar bittipannu");
+        output("\tjava -DHIPCHAT_ROOM=***** -DHIPCHAT_TOKEN=******* -jar build/libs/hiplunch.jar bittipannu\n");
+        output("or\n");
+        output("\tjava -DTEAMS_HOOK=******** -jar build/libs/hiplunch.jar maija piato\n");
+
         output("\n\n");
     }
 
