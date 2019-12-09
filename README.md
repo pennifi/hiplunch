@@ -9,6 +9,8 @@ At the moment, mainly useful for usage around Jyväskylä, Finland, as the parsi
 penni ~/projects/hiplunch $ gradle build
 ```
 
+Or use a prebuilt jar from Releases
+
 ## Usage ##
 ```
 penni ~/projects/hiplunch $ java -jar build/libs/hiplunch.jar help
