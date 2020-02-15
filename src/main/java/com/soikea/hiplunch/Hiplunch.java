@@ -4,6 +4,8 @@ import com.soikea.hiplunch.graph.TeamsGraphChatter;
 import com.soikea.hiplunch.graph.TeamsGraphMessage;
 import com.soikea.hiplunch.hipchat.HipChatter;
 import com.soikea.hiplunch.provider.Provider;
+import com.soikea.hiplunch.slack.SlackChatter;
+import com.soikea.hiplunch.slack.SlackMessage;
 import com.soikea.hiplunch.util.ContentUtil;
 
 import java.io.IOException;
@@ -22,6 +24,8 @@ public class Hiplunch {
     private static final HipChatter hipChatter = new HipChatter();
 
     private static final TeamsGraphChatter teamsChatter = new TeamsGraphChatter();
+
+    private static final SlackChatter slackChatter = new SlackChatter();
 
     public static void main(String[] args) {
 
@@ -58,10 +62,11 @@ public class Hiplunch {
                     e.printStackTrace();
                 }
             }
-        } else if (teamsChatter.canSendMessage()) {
+        }
+        if (teamsChatter.canSendMessage()) {
             List<String> menus = new ArrayList<>();
             for (Provider provider : runProviders) {
-                    menus.add(provider.processMessageForTeams());
+                menus.add(provider.processMessageForTeams());
             }
             try {
                 String header = ContentUtil.formatDate();
@@ -69,7 +74,20 @@ public class Hiplunch {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
+        }
+        if (slackChatter.canSendMessage()) {
+            List<String> menus = new ArrayList<>();
+            for (Provider provider : runProviders) {
+                menus.add(provider.processMessageForSlack());
+            }
+            try {
+                String header = ContentUtil.formatDate();
+                slackChatter.sendMessage(new SlackMessage(header, menus));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        {
             // Only console
             output("No external messaging configured, only console output: \n\n");
             for (Provider provider : runProviders) {

@@ -19,6 +19,11 @@ public abstract class Provider {
         return hipchatMessage;
     }
 
+    public String processMessageForSlack() {
+        String s = String.format("<%s|%s>: %s", getMessageUrl(), getName(), processFeed());
+        return hilighter.hilight(s);
+    }
+
     public String processMessageForTeams() {
         String s = String.format("* [%s](%s): %s", getName(), getMessageUrl(), StringUtils.trim(processFeed()));
         return hilighter.hilight(s);
