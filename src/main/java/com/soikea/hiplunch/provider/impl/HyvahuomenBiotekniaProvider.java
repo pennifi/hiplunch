@@ -1,7 +1,9 @@
 package com.soikea.hiplunch.provider.impl;
 
 import com.soikea.hiplunch.provider.HyvahuomenProvider;
+import com.soikea.hiplunch.provider.MenuProvider;
 
+@MenuProvider
 public class HyvahuomenBiotekniaProvider extends HyvahuomenProvider {
 
     @Override

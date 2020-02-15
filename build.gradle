@@ -19,6 +19,7 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.1.2'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.google.guava:guava:21.0'
+    compile 'io.github.classgraph:classgraph:4.8.28'
     testCompile 'junit:junit:4.12'
 }
 jar {

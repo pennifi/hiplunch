@@ -1,9 +1,11 @@
 package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.provider.SodexoProvider;
 import com.soikea.hiplunch.util.ContentUtil;
 import org.codehaus.jettison.json.JSONException;
 
+@MenuProvider
 public class BittipannuProvider extends SodexoProvider {
 
     @Override

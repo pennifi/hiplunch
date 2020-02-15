@@ -1,7 +1,9 @@
 package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.provider.SemmaProvider;
 
+@MenuProvider
 public class PiatoProvider extends SemmaProvider {
 
     @Override

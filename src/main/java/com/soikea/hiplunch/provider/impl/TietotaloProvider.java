@@ -1,7 +1,9 @@
 package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.provider.SodexoProvider;
 
+@MenuProvider
 public class TietotaloProvider extends SodexoProvider {
 
     @Override

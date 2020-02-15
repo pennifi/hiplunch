@@ -1,5 +1,6 @@
 package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.util.ContentUtil;
 import com.soikea.hiplunch.util.FeedCutter;
 import com.soikea.hiplunch.util.StringHelper;
@@ -8,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 
+@MenuProvider
 public class QulkuriProvider extends Provider {
 
     @Override

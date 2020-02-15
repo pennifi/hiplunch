@@ -1,11 +1,13 @@
 package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.util.ContentUtil;
 import com.soikea.hiplunch.util.FeedCutter;
 import com.soikea.hiplunch.util.StringHelper;
 import com.soikea.hiplunch.provider.Provider;
 import org.apache.commons.lang3.StringUtils;
 
+@MenuProvider
 public class HaraldProvider extends Provider {
 
     @Override

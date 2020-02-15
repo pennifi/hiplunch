@@ -1,9 +1,13 @@
 package com.soikea.hiplunch;
 
-import com.google.common.reflect.ClassPath;
+import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.provider.Provider;
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfo;
+import io.github.classgraph.ClassInfoList;
+import io.github.classgraph.ScanResult;
 
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,17 +18,15 @@ public class ProviderStorage {
 
     public ProviderStorage() {
 
-        final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        try (ScanResult result = new ClassGraph().enableAllInfo()
+                .whitelistPackages(getClass().getPackage().getName()).scan()) {
 
-        try {
-            for (final ClassPath.ClassInfo info : ClassPath.from(loader).getTopLevelClasses()) {
-                if (info.getName().startsWith("com.soikea.hiplunch.provider.impl")
-                    && !info.getName().endsWith("Test")) {
-                    final Class<?> clazz = info.load();
-                    providers.add((Provider) clazz.newInstance());
-                }
+            ClassInfoList classInfos = result.getClassesWithAnnotation(MenuProvider.class.getName());
+            for (final ClassInfo info : classInfos) {
+                final Class<?> clazz = info.loadClass();
+                providers.add((Provider) clazz.getDeclaredConstructor().newInstance());
             }
-        } catch (IOException | InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }

@@ -1,5 +1,6 @@
 package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.provider.Provider;
 import com.soikea.hiplunch.util.ContentUtil;
 import com.soikea.hiplunch.util.FeedCutter;
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@MenuProvider
 public class SkillaProvider extends Provider {
 
     public static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(" dd.MM.");
