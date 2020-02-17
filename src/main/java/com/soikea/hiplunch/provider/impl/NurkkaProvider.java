@@ -16,11 +16,15 @@ public class NurkkaProvider extends Provider {
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
         String today = StringUtils.upperCase(StringHelper.getWeekdayName(0));
+        today = today.substring(0, today.length()-2);
         String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1));
+        tomorrow = tomorrow.substring(0, tomorrow.length()-2);
 
+        System.out.println(today);
+        System.out.println(tomorrow);
         return FeedCutter.builder(feed)
-            .withStartPoints(today, "PÄIVÄN LOUNAS")
-            .withEndPoints(tomorrow, "Lounaaseen sisältyy", "Sis. päivän annos")
+            .withStartPoints(today, "<h3>PÄIVÄN LOUNAS 10,00€ / PÄIVÄN KEITTO 9,00€:</h3>")
+            .withEndPoints(tomorrow, "Lounaaseen sisältyy päivän annos")
             .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d\\d?\\.\\d\\d?\\.\\:?", "\\(.*?\\)")
             .startProcess()
             .cleanUp()
