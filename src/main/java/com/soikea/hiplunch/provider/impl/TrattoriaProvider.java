@@ -2,9 +2,31 @@ package com.soikea.hiplunch.provider.impl;
 
 import com.soikea.hiplunch.provider.LounaatInfoProvider;
 import com.soikea.hiplunch.provider.MenuProvider;
+import com.soikea.hiplunch.provider.Provider;
+import com.soikea.hiplunch.util.ContentUtil;
+import com.soikea.hiplunch.util.FeedCutter;
+import com.soikea.hiplunch.util.StringHelper;
+import org.apache.commons.lang3.StringUtils;
 
 @MenuProvider
-public class TrattoriaProvider extends LounaatInfoProvider {
+public class TrattoriaProvider extends Provider {
+
+    @Override
+    protected String processFeed() {
+
+        String feed = ContentUtil.getUrlContents(getMessageUrl());
+
+        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0));
+        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1));
+
+        return FeedCutter.builder(feed)
+                .withStartPoints(today, "<ul class=\"restaurant-menu__items-list\">")
+                .withEndPoints(tomorrow, "<div class=\"restaurant-menu__button-container\">")
+                .withRemovables("\\n", "&nbsp;", "<.+?>", "&euro;", "\\d\\d?\\,\\d\\d?", "\\(.*?\\)")
+                .startProcess()
+                .cleanUp()
+                .toString().trim();
+    }
 
     @Override
     public String getId() {
@@ -21,18 +43,4 @@ public class TrattoriaProvider extends LounaatInfoProvider {
         return "Trattoria Aukio";
     }
 
-    @Override
-    protected String getLounaatInfoIdentifier() {
-        return "trattoria-aukio/jyvaskyla";
-    }
-
-    @Override
-    protected String getStartPointOverride() {
-        return "<div id=\"menu\"";
-    }
-
-    @Override
-    protected String getEndPointOverride() {
-        return "Lounas sisältää";
-    }
 }
