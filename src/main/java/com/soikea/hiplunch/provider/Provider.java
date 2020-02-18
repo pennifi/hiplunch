@@ -21,7 +21,7 @@ public abstract class Provider {
 
     public String processMessageForSlack() {
         String s = String.format("<%s|%s>: %s", getMessageUrl(), getName(), processFeed());
-        return hilighter.hilight(s);
+        return hilighter.hilightSlack(s);
     }
 
     public String processMessageForTeams() {

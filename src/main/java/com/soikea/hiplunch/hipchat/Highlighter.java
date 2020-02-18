@@ -29,6 +29,15 @@ public class Highlighter {
         return string;
     }
 
+    public String hilightSlack(String string) {
+        for (String hilight : getHilights()) {
+            if (StringUtils.containsIgnoreCase(string, hilight)) {
+                return string.replaceAll("(?i)(" + Pattern.quote(hilight) + ")", "*$1*");
+            }
+        }
+        return string;
+    }
+
     private String[] getHilights() {
         if (hilights == null) {
             hilights = Constants.HIGHLIGHTS;
