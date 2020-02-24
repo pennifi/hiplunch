@@ -1,6 +1,5 @@
 package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.provider.LounaatInfoProvider;
 import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.provider.Provider;
 import com.soikea.hiplunch.util.ContentUtil;
@@ -19,13 +18,16 @@ public class TrattoriaProvider extends Provider {
         String today = StringUtils.upperCase(StringHelper.getWeekdayName(0));
         String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1));
 
-        return FeedCutter.builder(feed)
+        String result = FeedCutter.builder(feed)
                 .withStartPoints(today, "<ul class=\"restaurant-menu__items-list\">")
                 .withEndPoints(tomorrow, "<div class=\"restaurant-menu__button-container\">")
-                .withRemovables("\\n", "&nbsp;", "<.+?>", "&euro;", "\\d\\d?\\,\\d\\d?", "\\(.*?\\)")
+                .withRemovables("\\n", "&nbsp;", "<.+?>", "&euro;", "\\d\\d?\\,\\d\\d?", "\\(.*?\\)", "SALAATTIPÖYTÄ JA PÄIVÄN KEITTO ALKURUOKANA")
                 .startProcess()
                 .cleanUp()
                 .toString().trim();
+        result = StringUtils.lowerCase(result);
+        result = StringUtils.capitalize(result);
+        return result;
     }
 
     @Override
