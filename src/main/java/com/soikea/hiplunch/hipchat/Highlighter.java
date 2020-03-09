@@ -32,7 +32,7 @@ public class Highlighter {
     public String hilightSlack(String string) {
         for (String hilight : getHilights()) {
             if (StringUtils.containsIgnoreCase(string, hilight)) {
-                return string.replaceAll("(?i)(" + Pattern.quote(hilight) + ")", "*$1*");
+                return string.replaceAll("(?i)(" + Pattern.quote(hilight) + ")", "＊$1＊");
             }
         }
         return string;
