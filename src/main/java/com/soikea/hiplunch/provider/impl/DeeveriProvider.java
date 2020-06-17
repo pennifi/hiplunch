@@ -19,7 +19,7 @@ public class DeeveriProvider extends Provider {
         return FeedCutter.builder(ContentUtil.getUrlContents(getMessageUrl(), "utf-8"))
             .withStartPoints(today, "Omasi varmistat tilaamalla edellisenä päivänä")
             .withEndPoints(tomorrow, "Aamupala")
-            .withRemovables("\\(.*\\)", "\\{.*\\}","<.+?>", "\\w*[0-9,\\.]+\\w*", "&euro;")
+            .withRemovables("<.+?>", "\\w*[0-9,\\.]+\\w*", "&euro;")
             .withSpaceables("\\s\\s*")
             .fullProcess().trim();
     }
