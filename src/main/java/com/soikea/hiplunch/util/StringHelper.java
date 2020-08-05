@@ -9,10 +9,14 @@ public class StringHelper {
         Calendar calendar = Calendar.getInstance();
         calendar.roll(Calendar.DAY_OF_WEEK, offset);
         if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
-            || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         }
-        return capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
+        String day = capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
+        if (day.endsWith("na")) {
+            day = day.substring(0,day.length() -2);
+        }
+        return day;
     }
 
     public static String getWeekdayNameWithSaturday(int offset) {
@@ -21,7 +25,11 @@ public class StringHelper {
         if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         }
-        return capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
+        String day = capitalize(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("fi")));
+        if (day.endsWith("na")) {
+            day = day.substring(0,day.length() -2);
+        }
+        return day;
     }
 
     public static String capitalize(final String line) {

@@ -14,6 +14,7 @@ public class QulkuriProvider extends Provider {
 
     @Override
     protected String processFeed() {
+
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
         String today = "<h4>" + StringUtils.capitalize(StringHelper.getWeekdayName(0).substring(0, 2)) + "</h4>"; // Ma

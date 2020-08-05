@@ -15,15 +15,15 @@ public class DeeveriProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.capitalize(StringUtils.lowerCase(StringHelper.getWeekdayName(0)));
-        String tomorrow = StringUtils.capitalize(StringUtils.lowerCase(StringHelper.getWeekdayName(1)));
+        String today = StringHelper.getWeekdayName(0);
+        String tomorrow = StringHelper.getWeekdayName(1);
 
         return FeedCutter.builder(feed)
-            .withStartPoints(today, "Lounaslista")
-            .withEndPoints(tomorrow, "Aamupala")
-            .withRemovables("<.+?>", "\\w*[0-9,\\.]+\\w*", "&euro;")
-            .withSpaceables(" \\(\\)")
-            .fullProcess().trim();
+                .withStartPoints(today, "Omasi varmistat tilaamalla edellisenä päivänä</div>")
+                .withEndPoints(tomorrow, "Aamupala")
+                .withSpaceables("\\n", "\\t", " \\(\\)")
+                .withRemovables("<.+?>", "\\w*[0-9,\\.]+\\w*", "&euro;")
+                .fullProcess().trim();
 
     }
 
