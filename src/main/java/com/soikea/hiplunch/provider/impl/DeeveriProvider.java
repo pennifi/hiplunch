@@ -13,15 +13,18 @@ public class DeeveriProvider extends Provider {
     @Override
     protected String processFeed() {
 
+        String feed = ContentUtil.getUrlContents(getMessageUrl());
+
         String today = StringUtils.capitalize(StringUtils.lowerCase(StringHelper.getWeekdayName(0)));
         String tomorrow = StringUtils.capitalize(StringUtils.lowerCase(StringHelper.getWeekdayName(1)));
 
-        return FeedCutter.builder(ContentUtil.getUrlContents(getMessageUrl(), "utf-8"))
-            .withStartPoints(today, "Omasi varmistat tilaamalla edellisenä päivänä")
+        return FeedCutter.builder(feed)
+            .withStartPoints(today, "Lounaslista")
             .withEndPoints(tomorrow, "Aamupala")
             .withRemovables("<.+?>", "\\w*[0-9,\\.]+\\w*", "&euro;")
-            .withSpaceables("\\s\\s*")
+            .withSpaceables(" \\(\\)")
             .fullProcess().trim();
+
     }
 
     @Override

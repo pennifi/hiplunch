@@ -15,18 +15,17 @@ public class TrattoriaProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0));
-        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1));
+        String today = StringUtils.capitalize(StringHelper.getWeekdayName(0));
+        String tomorrow = StringUtils.capitalize(StringHelper.getWeekdayName(1));
 
         String result = FeedCutter.builder(feed)
-                .withStartPoints(today, "<ul class=\"restaurant-menu__items-list\">")
-                .withEndPoints(tomorrow, "<div class=\"restaurant-menu__button-container\">")
-                .withRemovables("\\n", "&nbsp;", "<.+?>", "&euro;", "\\d\\d?\\,\\d\\d?", "\\(.*?\\)", "SALAATTIPÖYTÄ JA PÄIVÄN KEITTO ALKURUOKANA")
-                .startProcess()
-                .cleanUp()
-                .toString().trim();
-        result = StringUtils.lowerCase(result);
-        result = StringUtils.capitalize(result);
+                .withStartPoints(today + "</h2>",
+                        "VL = vähälaktoosinen, L = laktoositon, G = Gluteeniton, VE = vegaaninen, T = tulinen, M = maidoton, K = kasviruoka, PÄ = sisältää pähkinää")
+                .withEndPoints(tomorrow + "</h2>", "slidingcrossselling_WAR_raflaamoliferayportlets")
+                .withRemovables("\\n", "&nbsp;", "<.+?>", "&euro;", "\\d\\d?\\,\\d\\d?", "\\(.*?\\)", "Runsas salaattibuffet ja päivän keitto", "Runsas salaattibuffet ja päivän keitto alkuruokana", "Trattoria Aukiossa on kello 10:30-14:00 tarjolla runsas salaattibuffet sekä päivittäin vaihtuvat lounasannokset. Lisäksi tarjoamme viikoittain vaihtuvan kasvisannoksen.")
+                .withSpaceables("\\t", "\\s\\s*")
+                .fullProcess().trim();
+
         return result;
     }
 
@@ -37,7 +36,7 @@ public class TrattoriaProvider extends Provider {
 
     @Override
     protected String getMessageUrl() {
-        return "https://www.raflaamo.fi/fi/jyvaskyla/trattoria-aukio-jyvaskyla";
+        return "https://www.raflaamo.fi/fi/jyvaskyla/trattoria-aukio-jyvaskyla/menu";
     }
 
     @Override
