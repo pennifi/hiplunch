@@ -1,9 +1,10 @@
 package com.soikea.hiplunch.provider.impl;
 
+import com.soikea.hiplunch.provider.MenuProvider;
 import com.soikea.hiplunch.provider.Provider;
 
+@MenuProvider
 public class ShalimarProvider extends Provider {
-
 
     @Override
     protected String processFeed() {
