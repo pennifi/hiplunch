@@ -28,7 +28,7 @@ public class ScandicJyvaskylaProvider extends LounaatInfoProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "https://www.scandichotels.fi/hotellit/suomi/jyvaskyla/scandic-jyvaskyla/ravintola-ja-baari/ravintola-colonial";
+        return "https://www.scandichotels.fi/hotellit/suomi/jyvaskyla/scandic-jyvaskyla-station/ravintola-ja-baari/ravintola";
     }
 
     @Override

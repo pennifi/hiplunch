@@ -21,7 +21,7 @@ public class TrattoriaProvider extends Provider {
         String result = FeedCutter.builder(feed)
                 .withStartPoints(today + "</h2>",
                         "VL = vähälaktoosinen, L = laktoositon, G = Gluteeniton, VE = vegaaninen, T = tulinen, M = maidoton, K = kasviruoka, PÄ = sisältää pähkinää")
-                .withEndPoints(tomorrow + "</h2>", "slidingcrossselling_WAR_raflaamoliferayportlets")
+                .withEndPoints(tomorrow + "</h2>", "<div class=\"portlet-boundary portlet-boundary_slidingcrossselling_WAR_raflaamoliferayportlets")
                 .withRemovables("\\n", "&nbsp;", "<.+?>", "&euro;", "\\d\\d?\\,\\d\\d?", "\\(.*?\\)", "Runsas salaattibuffet ja päivän keitto", "Runsas salaattibuffet ja päivän keitto alkuruokana", "Trattoria Aukiossa on kello 10:30-14:00 tarjolla runsas salaattibuffet sekä päivittäin vaihtuvat lounasannokset. Lisäksi tarjoamme viikoittain vaihtuvan kasvisannoksen.")
                 .withSpaceables("\\t", "\\s\\s*")
                 .fullProcess().trim();
