@@ -7,8 +7,6 @@ import com.soikea.hiplunch.util.FeedCutter;
 import com.soikea.hiplunch.util.StringHelper;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
-
 @MenuProvider
 public class SohwitarProvider extends Provider {
 
@@ -25,11 +23,11 @@ public class SohwitarProvider extends Provider {
         feed = FeedCutter.builder(feed)
             .withStartPoints(today, "Viikon lounaslista", "Seniorilounas klo 13-14 9€ eläkeläiskorttia näyttämällä")
             .withEndPoints(tomorrow, "LOUNAAN HINTA", "LÄMPIMÄSTI TERVETULOA!")
-            .withSpaceables("\\s\\s+?", "\\(.+?\\)")
-            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\*" , "\\d+\\.\\d+")
+            .withSpaceables("\\s\\s+?", "\\(.+?\\)", "\\*")
+            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+")
             .startProcess()
             .cleanUp()
-            .toString();
+            .toString().trim();
 
         return feed;
     }
