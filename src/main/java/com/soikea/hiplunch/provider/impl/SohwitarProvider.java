@@ -26,7 +26,7 @@ public class SohwitarProvider extends Provider {
             .withStartPoints(today, "Viikon lounaslista", "Seniorilounas klo 13-14 9€ eläkeläiskorttia näyttämällä")
             .withEndPoints(tomorrow, "LOUNAAN HINTA", "LÄMPIMÄSTI TERVETULOA!")
             .withSpaceables("\\s\\s+?", "\\(.+?\\)")
-            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\*" , "\\d+\\.\\d+.")
+            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\*" , "\\d+\\.\\d+")
             .startProcess()
             .cleanUp()
             .toString();
