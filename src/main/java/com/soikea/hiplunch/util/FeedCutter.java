@@ -95,7 +95,7 @@ public class FeedCutter {
                 }
                 feed = feed.replaceAll(cutString, "");
                 if (CUTMODE_START.equals(mode)) {
-                    feed = feed.substring(cutPoint, feed.length());
+                    feed = feed.substring(cutPoint);
                 } else if (CUTMODE_END.equals(mode)) {
                     feed = feed.substring(0, cutPoint);
                 }

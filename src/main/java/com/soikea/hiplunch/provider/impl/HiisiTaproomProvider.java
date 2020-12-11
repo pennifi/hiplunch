@@ -21,8 +21,8 @@ public class HiisiTaproomProvider extends Provider {
         log.debug(today + " " + tomorrow);
 
         feed = FeedCutter.builder(feed)
-            .withStartPoints("Lounas Ke-Pe 10.30-14.00", today)
-            .withEndPoints(tomorrow, "Bottleshop: Aukioloajat")
+            .withStartPoints("<b>" + today + "</b>", "<h2 class=\"has-text-align-center\">Taproom: Aukioloajat</h2>")
+            .withEndPoints("<h2 class=\"has-text-align-center\">Bottleshop: Aukioloajat</h2>", "<b>" + tomorrow + "</b>")
             .withSpaceables("\\s\\s+?", "\\(.+?\\)", "\\*")
             .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+")
             .startProcess()
