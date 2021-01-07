@@ -15,8 +15,8 @@ public class HiisiTaproomProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.upperCase(StringHelper.getWeekdayName(1)).substring(0, 2);
-        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(2)).substring(0, 2);
+        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0)).substring(0, 2);
+        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1)).substring(0, 2);
 
         log.debug(today + " " + tomorrow);
 
