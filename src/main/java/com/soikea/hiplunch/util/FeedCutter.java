@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FeedCutter {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -87,8 +89,10 @@ public class FeedCutter {
         if (list.size() > 0) {
             String cutString = list.get(0);
 
-            if (feed.contains(cutString)) {
-                int cutPoint = feed.indexOf(cutString);
+            Matcher matcher = Pattern.compile(".*"+cutString+".*").matcher(feed);
+
+            if (matcher.find()) {
+                int cutPoint = matcher.start();
 
                 if (cutPoint >= feed.length() || cutPoint < 0) {
                     cutPoint = feed.length();

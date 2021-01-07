@@ -15,15 +15,15 @@ public class HiisiTaproomProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0)).substring(0, 2);
-        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1)).substring(0, 2);
+        String today = StringUtils.upperCase(StringHelper.getWeekdayName(1)).substring(0, 2);
+        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(2)).substring(0, 2);
 
         log.debug(today + " " + tomorrow);
 
         feed = FeedCutter.builder(feed)
-            .withStartPoints("<b>" + today + "</b>", "<h2 class=\"has-text-align-center\">Taproom: Aukioloajat</h2>")
-            .withEndPoints("<h2 class=\"has-text-align-center\">Bottleshop: Aukioloajat</h2>", "<b>" + tomorrow + "</b>")
-            .withSpaceables("\\s\\s+?", "\\(.+?\\)", "\\*")
+            .withStartPoints("<b>" + today + " \\d+?\\.\\d+?\\.\\d+</b>", "<strong>VKO \\d+</strong>")
+            .withEndPoints("<h2 class=\"has-text-align-center\">Bottleshop: Aukioloajat</h2>", "<b>" + tomorrow + " \\d+\\.\\d+\\.\\d+</b>")
+            .withSpaceables("<strong>.*</strong>", "\\s\\s+?", "\\(.+?\\)", "\\*")
             .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+")
             .startProcess()
             .cleanUp()
