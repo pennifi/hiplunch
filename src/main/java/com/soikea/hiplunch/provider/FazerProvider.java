@@ -17,8 +17,7 @@ public abstract class FazerProvider extends Provider {
 
     private String getUrl() {
         return String
-            .format("https://www.fazerfoodco.fi/api/restaurant/menu/day?date=%s&language=fi&restaurantPageId=%s",
-                    new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()),
+            .format("https://www.foodandco.fi/modules/json/json/Index?costNumber=%s&language=fi",
                     getFazerId());
     }
 
@@ -27,20 +26,33 @@ public abstract class FazerProvider extends Provider {
 
         try {
             JSONArray menus = new JSONObject(ContentUtil.getUrlContents(getUrl()))
-                    .getJSONObject("LunchMenu")
-                    .getJSONArray("SetMenus");
+                    .getJSONArray("MenusForDays");
             for (int i = 0; i < menus.length(); i++) {
-
                 JSONObject menu = (JSONObject) menus.get(i);
-                String cat = menu.getString("Name");
+                if (menu.getString("Date")
+                        .startsWith(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()))
+                ){
+                    JSONArray setMenus = menu.getJSONArray("SetMenus");
+                    for (int k = 0; k < setMenus.length(); k++) {
+                        JSONObject setMenu = (JSONObject) setMenus.get(k);
 
-                List<String> mealStrings = new ArrayList<>();
-                JSONArray meals = menu.getJSONArray("Meals");
-                for (int j = 0; j < meals.length(); j++) {
-                    JSONObject meal = (JSONObject) meals.get(j);
-                    mealStrings.add(meal.getString("Name"));
+                        String cat = setMenu.getString("Name");
+
+                        List<String> mealStrings = new ArrayList<>();
+                        JSONArray meals = setMenu.getJSONArray("Components");
+                        for (int j = 0; j < meals.length(); j++) {
+                            String meal = (String) meals.get(j);
+                            mealStrings.add(meal.replaceAll("\\(.+?\\)", "").trim());
+                        }
+                        if (StringUtils.isBlank(cat) || "null".equals(cat)) {
+                            cat = null;
+                        }
+                        if (cat != null && !mealStrings.isEmpty()) {
+                            String toAppend = String.format("%s: %s. ", cat, StringUtils.join(mealStrings, ", "));
+                            stringBuilder.append(toAppend);
+                        }
+                    }
                 }
-                stringBuilder.append(String.format("%s: %s. ", cat, StringUtils.join(mealStrings, ", ")));
             }
 
         } catch (JSONException e) {

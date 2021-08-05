@@ -13,7 +13,7 @@ public class FiiluProvider extends FazerProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "https://www.fazerfoodco.fi/fiilu";
+        return "https://www.foodandco.fi/ravintolat/Ravintolat-kaupungeittain/jyvaskyla/fiilu/";
     }
 
     @Override
@@ -23,7 +23,7 @@ public class FiiluProvider extends FazerProvider {
 
     @Override
     protected String getFazerId() {
-        return "231260";
+        return "3364";
     }
 
     @Override
