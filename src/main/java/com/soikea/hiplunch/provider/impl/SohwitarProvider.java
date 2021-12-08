@@ -5,7 +5,6 @@ import com.soikea.hiplunch.provider.Provider;
 import com.soikea.hiplunch.util.ContentUtil;
 import com.soikea.hiplunch.util.FeedCutter;
 import com.soikea.hiplunch.util.StringHelper;
-import org.apache.commons.lang3.StringUtils;
 
 @MenuProvider
 public class SohwitarProvider extends Provider {
@@ -15,8 +14,11 @@ public class SohwitarProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.lowerCase(StringHelper.getWeekdayName(0) + "na"); // maanantaina
-        String tomorrow = StringUtils.lowerCase(StringHelper.getWeekdayName(1) + "na"); // tiistaina
+        String origfeed = new String(feed);
+
+
+        String today = StringHelper.getWeekdayName(0) + "na"; // Maanantaina
+        String tomorrow = StringHelper.getWeekdayName(1) + "na"; // Tiistaina
 
         System.out.println(today + "  " + tomorrow);
 
@@ -24,12 +26,21 @@ public class SohwitarProvider extends Provider {
             .withStartPoints(today, "Viikon lounaslista", "Seniorilounas klo 13-14 9€ eläkeläiskorttia näyttämällä")
             .withEndPoints(tomorrow, "LOUNAAN HINTA", "LÄMPIMÄSTI TERVETULOA!")
             .withSpaceables("\\s\\s+?", "\\(.+?\\)", "\\*")
-            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+")
+            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+\\.?")
             .startProcess()
             .cleanUp()
             .toString().trim();
 
-        return feed;
+        String vegeAdd = FeedCutter.builder(origfeed)
+                .withStartPoints("vaihtoehdot:")
+                .withEndPoints("Sohwitar &#8211; Bar &amp; Bistro", "LOUNAAN HINTA", "LÄMPIMÄSTI TERVETULOA!")
+                .withSpaceables("\\s\\s+?", "\\(.+?\\)", "\\*")
+                .withRemovables("Viikon \\d+? kasvisruoka", "\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+\\.?")
+                .startProcess()
+                .cleanUp()
+                .toString().trim();
+
+        return feed + ", " + vegeAdd;
     }
 
     @Override
