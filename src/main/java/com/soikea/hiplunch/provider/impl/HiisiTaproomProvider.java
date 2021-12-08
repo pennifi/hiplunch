@@ -18,13 +18,11 @@ public class HiisiTaproomProvider extends Provider {
         String today = StringUtils.upperCase(StringHelper.getWeekdayName(0)).substring(0, 2);
         String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1)).substring(0, 2);
 
-        log.debug(today + " " + tomorrow);
-
         feed = FeedCutter.builder(feed)
-            .withStartPoints("<b>" + today + " \\d+?\\.\\d+?\\.\\d+?</b>", "<b>" + today + " \\d+?</b>",  "<strong>VKO \\d+</strong>")
-            .withEndPoints("<b>" + tomorrow + " \\d+?\\.\\d+?\\.\\d+?</b>", "<b>" + tomorrow + " \\d+?</b>", "<h2 class=\"has-text-align-center\">Bottleshop: Aukioloajat</h2>")
+            .withStartPoints(today, "VKO \\d+")
+            .withEndPoints(tomorrow, "Bottleshop: Aukioloajat")
             .withSpaceables("<strong>.*</strong>", "\\s\\s+?", "\\(.+?\\)", "\\*")
-            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+")
+            .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+?\\.?\\d+\\.?", "V?L G")
             .startProcess()
             .cleanUp()
             .toString().trim();
