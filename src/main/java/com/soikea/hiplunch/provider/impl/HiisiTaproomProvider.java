@@ -21,7 +21,7 @@ public class HiisiTaproomProvider extends Provider {
         feed = FeedCutter.builder(feed)
             .withStartPoints(today, "VKO \\d+")
             .withEndPoints(tomorrow, "Bottleshop: Aukioloajat")
-            .withSpaceables("<strong>.*</strong>", "\\s\\s+?", "\\(.+?\\)", "\\*")
+            .withSpaceables("<strong>.*</strong>", "\\(.*?\\)", "\\*", "\\s\\s+?")
             .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+?\\.?\\d+\\.?", "V?L G")
             .startProcess()
             .cleanUp()
