@@ -1,10 +1,10 @@
 package com.soikea.hiplunch.provider.impl;
 
-import com.soikea.hiplunch.provider.FazerProvider;
+import com.soikea.hiplunch.provider.FoodandcoProvider;
 import com.soikea.hiplunch.provider.MenuProvider;
 
 @MenuProvider
-public class FiiluProvider extends FazerProvider {
+public class FiiluProvider extends FoodandcoProvider {
 
     @Override
     public String getId() {
@@ -18,7 +18,7 @@ public class FiiluProvider extends FazerProvider {
 
     @Override
     public String getName() {
-        return "Fazer Fiilu";
+        return "Food & Co Fiilu";
     }
 
     @Override

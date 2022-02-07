@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public abstract class FazerProvider extends Provider {
+public abstract class FoodandcoProvider extends Provider {
 
     protected abstract String getFazerId();
 
