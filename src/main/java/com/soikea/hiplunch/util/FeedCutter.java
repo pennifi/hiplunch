@@ -1,5 +1,6 @@
 package com.soikea.hiplunch.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,10 +87,13 @@ public class FeedCutter {
     }
 
     private String cut(String mode, List<String> list) {
+        if (StringUtils.isBlank(feed)) {
+            return "ERROR: blank feed.";
+        }
         if (list.size() > 0) {
             String cutString = list.get(0);
 
-            Matcher matcher = Pattern.compile(".*"+cutString+".*").matcher(feed);
+            Matcher matcher = Pattern.compile(cutString).matcher(feed);
 
             if (matcher.find()) {
                 int cutPoint = matcher.start();
@@ -100,10 +104,10 @@ public class FeedCutter {
                 feed = feed.replaceAll(cutString, "");
                 if (CUTMODE_START.equals(mode)) {
                     feed = feed.substring(cutPoint);
-                    log.debug("cut " + cutString + " -> ");
+                    log.debug("cut " + cutString + " -> " + feed);
                 } else if (CUTMODE_END.equals(mode)) {
                     feed = feed.substring(0, cutPoint);
-                    log.debug("cut " + cutString + " -> ");
+                    log.debug("cut " + cutString + " -> " + feed);
                 }
             }
             return cut(mode, list.subList(1, list.size()));

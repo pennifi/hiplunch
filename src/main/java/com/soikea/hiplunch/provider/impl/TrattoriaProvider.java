@@ -15,15 +15,24 @@ public class TrattoriaProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.capitalize(StringHelper.getWeekdayName(0));
-        String tomorrow = StringUtils.capitalize(StringHelper.getWeekdayName(1));
+        String today = StringUtils.lowerCase(StringHelper.getWeekdayName(0));
+        String tomorrow = StringUtils.lowerCase(StringHelper.getWeekdayName(1));
+
+        log.debug(feed);
 
         String result = FeedCutter.builder(feed)
-                .withStartPoints(today + "</h2>",
-                        "Trattoria Aukiossa on kello 11:00-14:00 tarjolla runsas salaattibuffet sekä päivittäin vaihtuvat lounasannokset. Lisäksi tarjoamme viikoittain vaihtuvan kasvisannoksen.",
-                        "VL = vähälaktoosinen, L = laktoositon, G = Gluteeniton, VE = vegaaninen, T = tulinen, M = maidoton, K = kasviruoka, PÄ = sisältää pähkinää")
-                .withEndPoints(tomorrow + "</h2>", "<div class=\"portlet-boundary portlet-boundary_slidingcrossselling_WAR_raflaamoliferayportlets")
-                .withRemovables("\\n", "&nbsp;", "<.+?>", "&euro;", "\\d\\d?\\,\\d\\d?", "\\(.*?\\)", "Runsas salaattibuffet ja päivän keitto", "Runsas salaattibuffet ja päivän keitto alkuruokana", "Trattoria Aukiossa on kello 10:30-14:00 tarjolla runsas salaattibuffet sekä päivittäin vaihtuvat lounasannokset. Lisäksi tarjoamme viikoittain vaihtuvan kasvisannoksen.")
+                .withStartPoints(today, "\\<main\\>")
+                .withEndPoints(tomorrow, "Tarjolla koko viikon lounasaikoihin", "\\<article class=\"MenuGroupStyles__AllergensInfo-sc", "\\<\\/main\\>")
+                .withRemovables("\\<h3 class\\=\"MenuGroupStyles\\_\\_MenuDescription\\-sc.*\\<\\/h3\\>",
+                        "\\<div class\\=\"PortionHeaderStyles\\_\\_InlineWrapper.*?\\<\\/div\\>",
+
+                        "\\n",
+                        "&nbsp;",
+                        "<.+?>",
+                        "&euro;", "€",
+                        "\\d\\d?\\,\\d\\d?",
+                        "\\(.*?\\)",
+                        "Runsas salaattibuffet ja päivän keitto alkuruokana", "Runsas salaattibuffet ja päivän keitto")
                 .withSpaceables("\\t", "\\s\\s*")
                 .fullProcess().trim();
 
@@ -37,7 +46,7 @@ public class TrattoriaProvider extends Provider {
 
     @Override
     protected String getMessageUrl() {
-        return "https://www.raflaamo.fi/fi/jyvaskyla/trattoria-aukio-jyvaskyla/menu";
+        return "https://www.raflaamo.fi/fi/ravintola/jyvaskyla/trattoria-aukio-jyvaskyla/menu/lounas";
     }
 
     @Override
