@@ -15,8 +15,8 @@ public class HiisiTaproomProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0)).substring(0, 2);
-        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1)).substring(0, 2);
+        String today = StringUtils.capitalize(StringHelper.getWeekdayName(0));
+        String tomorrow = StringUtils.capitalize(StringHelper.getWeekdayName(1));
 
         feed = FeedCutter.builder(feed)
             .withStartPoints(today, "VKO \\d+")
