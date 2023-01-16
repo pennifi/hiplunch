@@ -13,7 +13,7 @@ public class FiiluProvider extends FoodandcoProvider {
 
     @Override
     protected String getMessageUrl() {
-        return "https://www.foodandco.fi/ravintolat/Ravintolat-kaupungeittain/jyvaskyla/fiilu/";
+        return "https://www.compass-group.fi/ravintolat-ja-ruokalistat/foodco/kaupungit/jyvaskyla/fiilu/";
     }
 
     @Override
