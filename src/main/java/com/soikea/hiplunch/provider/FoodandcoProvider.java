@@ -17,7 +17,7 @@ public abstract class FoodandcoProvider extends Provider {
 
     private String getUrl() {
         return String
-            .format("https://www.foodandco.fi/modules/json/json/Index?costNumber=%s&language=fi",
+            .format("https://www.compass-group.fi/menuapi/feed/json?costNumber=%s&language=fi",
                     getFazerId());
     }
 
