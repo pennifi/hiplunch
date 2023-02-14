@@ -5,6 +5,7 @@ import com.soikea.hiplunch.provider.Provider;
 import com.soikea.hiplunch.util.ContentUtil;
 import com.soikea.hiplunch.util.FeedCutter;
 import com.soikea.hiplunch.util.StringHelper;
+import org.apache.commons.lang3.StringUtils;
 
 @MenuProvider
 public class SohwitarProvider extends Provider {
@@ -17,8 +18,8 @@ public class SohwitarProvider extends Provider {
         String origfeed = new String(feed);
 
 
-        String today = StringHelper.getWeekdayName(0) + "na"; // Maanantaina
-        String tomorrow = StringHelper.getWeekdayName(1) + "na"; // Tiistaina
+        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0)); // MAANANTAI
+        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1)); // TIISTAI
 
         System.out.println(today + "  " + tomorrow);
 
