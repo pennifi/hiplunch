@@ -15,13 +15,10 @@ public class SohwitarProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String origfeed = new String(feed);
-
-
         String today = StringUtils.upperCase(StringHelper.getWeekdayName(0)); // MAANANTAI
         String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1)); // TIISTAI
 
-        System.out.println(today + "  " + tomorrow);
+        feed = feed.replaceAll("<p style=\"text-align: center;\">tai</p>", " | ");
 
         feed = FeedCutter.builder(feed)
             .withStartPoints(today, "Viikon lounaslista", "Seniorilounas klo 13-14 9€ eläkeläiskorttia näyttämällä")
@@ -32,16 +29,7 @@ public class SohwitarProvider extends Provider {
             .cleanUp()
             .toString().trim();
 
-        String vegeAdd = FeedCutter.builder(origfeed)
-                .withStartPoints("vaihtoehdot:")
-                .withEndPoints("Sohwitar &#8211; Bar &amp; Bistro", "LOUNAAN HINTA", "LÄMPIMÄSTI TERVETULOA!")
-                .withSpaceables("\\s\\s+?", "\\(.+?\\)", "\\*")
-                .withRemovables("Viikon \\d+? kasvisruoka", "\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+\\.?")
-                .startProcess()
-                .cleanUp()
-                .toString().trim();
-
-        return feed + ", " + vegeAdd;
+        return feed;
     }
 
     @Override
