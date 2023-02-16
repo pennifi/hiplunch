@@ -22,7 +22,7 @@ public class SohwitarProvider extends Provider {
 
         feed = FeedCutter.builder(feed)
             .withStartPoints(today, "Viikon lounaslista", "Seniorilounas klo 13-14 9€ eläkeläiskorttia näyttämällä")
-            .withEndPoints(tomorrow, "LOUNAAN HINTA", "LÄMPIMÄSTI TERVETULOA!")
+            .withEndPoints(tomorrow, "PEJANTAI", "LOUNAS SISÄLTÄÄ", "LÄMPIMÄSTI TERVETULOA!")
             .withSpaceables("\\s\\s+?", "\\(.+?\\)", "\\*")
             .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+\\.?")
             .startProcess()
