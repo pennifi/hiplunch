@@ -15,18 +15,18 @@ public class TrattoriaProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.lowerCase(StringHelper.getWeekdayName(0));
-        String tomorrow = StringUtils.lowerCase(StringHelper.getWeekdayName(1));
+        String today = StringUtils.capitalize(StringHelper.getWeekdayName(0));
+        String tomorrow = StringUtils.capitalize(StringHelper.getWeekdayName(1));
 
-        log.debug(feed);
+//        log.debug(feed);
 
         String result = FeedCutter.builder(feed)
-                .withStartPoints(today, "\\<main\\>")
-                .withEndPoints(tomorrow, "Tarjolla koko viikon lounasaikoihin", "\\<article class=\"MenuGroupStyles__AllergensInfo-sc", "\\<\\/main\\>")
+                .withStartPoints(today, "Lounas vko", "\\<main\\>")
+                .withEndPoints(tomorrow, "VL = vähälaktoosinen", "Tarjolla koko viikon lounasaikoihin", "\\<article class=\"MenuGroupStyles__AllergensInfo-sc", "\\<\\/main\\>")
                 .withRemovables("\\<h3 class\\=\"MenuGroupStyles\\_\\_MenuDescription\\-sc.*\\<\\/h3\\>",
                         "\\<div class\\=\"PortionHeaderStyles\\_\\_InlineWrapper.*?\\<\\/div\\>",
-
                         "\\n",
+                        "Lounas: 11:00-14:00.",
                         "&nbsp;",
                         "<.+?>",
                         "&euro;", "€",
