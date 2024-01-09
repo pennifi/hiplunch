@@ -15,14 +15,17 @@ public class SohwitarProvider extends Provider {
 
         String feed = ContentUtil.getUrlContents(getMessageUrl());
 
-        String today = StringUtils.upperCase(StringHelper.getWeekdayName(0)); // MAANANTAI
-        String tomorrow = StringUtils.upperCase(StringHelper.getWeekdayName(1)); // TIISTAI
+        String todayUPPER = StringUtils.upperCase(StringHelper.getWeekdayName(0)); // MAANANTAI
+        String tomorrowUPPER = StringUtils.upperCase(StringHelper.getWeekdayName(1)); // TIISTAI
+
+        String today = StringHelper.getWeekdayName(0); // Maanantai
+        String tomorrow = StringHelper.getWeekdayName(1); // tiistai
 
         feed = feed.replaceAll("<p style=\"text-align: center;\">tai</p>", " | ");
 
         feed = FeedCutter.builder(feed)
-            .withStartPoints(today, "Viikon lounaslista", "Seniorilounas klo 13-14 9€ eläkeläiskorttia näyttämällä")
-            .withEndPoints(tomorrow, "PEJANTAI", "LOUNAS SISÄLTÄÄ", "LÄMPIMÄSTI TERVETULOA!")
+            .withStartPoints(today, todayUPPER, "Viikon lounaslista", "Seniorilounas klo 13-14 9€ eläkeläiskorttia näyttämällä")
+            .withEndPoints(tomorrow, tomorrowUPPER, "PEJANTAI", "LOUNAS SISÄLTÄÄ", "LÄMPIMÄSTI TERVETULOA!")
             .withSpaceables("\\s\\s+?", "\\(.+?\\)", "\\*")
             .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+\\.\\d+\\.?")
             .startProcess()
