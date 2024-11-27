@@ -22,7 +22,7 @@ public class TrattoriaProvider extends Provider {
 
         String result = FeedCutter.builder(feed)
                 .withStartPoints(today, "Lounas vko", "\\<main\\>")
-                .withEndPoints(tomorrow, "VL = vähälaktoosinen", "Tarjolla koko viikon lounasaikoihin", "\\<article class=\"MenuGroupStyles__AllergensInfo-sc", "\\<\\/main\\>")
+                .withEndPoints(tomorrow, "Katso joka päivä tarjolla olevat annokset", "VL = vähälaktoosinen", "Tarjolla koko viikon lounasaikoihin", "\\<article class=\"MenuGroupStyles__AllergensInfo-sc", "\\<\\/main\\>")
                 .withRemovables("\\<h3 class\\=\"MenuGroupStyles\\_\\_MenuDescription\\-sc.*\\<\\/h3\\>",
                         "\\<div class\\=\"PortionHeaderStyles\\_\\_InlineWrapper.*?\\<\\/div\\>",
                         "\\n",
@@ -35,7 +35,9 @@ public class TrattoriaProvider extends Provider {
                         "Runsas salaattibuffet ja päivän keitto alkuruokana", "Runsas salaattibuffet ja päivän keitto")
                 .withSpaceables("\\t", "\\s\\s*")
                 .fullProcess().trim();
-
+        if (result.length() > 600) {
+            result = "ERROR parsing: " + result.substring(0, 200) + " ... ";
+        }
         return result;
     }
 
