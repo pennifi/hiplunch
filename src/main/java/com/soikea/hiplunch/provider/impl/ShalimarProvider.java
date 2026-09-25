@@ -37,7 +37,7 @@ public class ShalimarProvider extends Provider {
 
     @Override
     protected String getMessageUrl() {
-        return "https://ravintolashalimar.fi/matkakeskus/lounas/";
+        return "https://shalimar.fi/jyvaskyla/matkakeskus/lunchmenu/";
     }
 
     @Override
