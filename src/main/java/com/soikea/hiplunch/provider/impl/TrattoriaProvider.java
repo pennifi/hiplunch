@@ -32,7 +32,7 @@ public class TrattoriaProvider extends Provider {
                         "&euro;", "€",
                         "\\d\\d?\\,\\d\\d?",
                         "\\(.*?\\)",
-                        "Runsas salaattibuffet ja päivän keitto alkuruokana", "Runsas salaattibuffet ja päivän keitto")
+                        "Runsas salaattibuffet ja päivän keitto alkuruokana", "Runsas salaattibuffet ja päivän keitto", "Hinta:")
                 .withSpaceables("\\t", "\\s\\s*")
                 .fullProcess().trim();
         if (result.length() > 600) {
