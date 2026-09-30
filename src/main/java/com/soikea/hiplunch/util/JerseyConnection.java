@@ -18,9 +18,6 @@ public class JerseyConnection {
 
     public static void sendMessage(String message, String url) {
         try {
-
-            log.debug(message);
-
             ClientConfig clientConfig = new DefaultClientConfig();
             clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
@@ -30,7 +27,6 @@ public class JerseyConnection {
 
             ClientResponse response = webResource.accept(HIP_HEADER_MIME).type(HIP_HEADER_MIME)
                     .post(ClientResponse.class, message);
-            log.debug(response.toString());
         } catch (Exception e) {
             log.error("Error sending message: {}", e.getMessage());
         }

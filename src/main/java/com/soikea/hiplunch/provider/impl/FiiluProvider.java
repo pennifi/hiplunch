@@ -28,6 +28,7 @@ public class FiiluProvider extends FoodandcoProvider {
 
     @Override
     protected String processFeed() {
-        return readRawFeed();
+        return readRawFeed()
+                .replace("(sis. lisäkesalaatin, leivän, juoman ja jälkiruuan)", "");
     }
 }

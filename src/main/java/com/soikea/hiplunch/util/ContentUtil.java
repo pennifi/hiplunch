@@ -147,10 +147,7 @@ public class ContentUtil {
 
         try {
             HttpURLConnection urlConnection;
-
-
             if (theUrl.startsWith("https")) {
-
                 urlConnection = openHttpsConnection(theUrl);
             } else {
                 urlConnection = openHttpConnection(theUrl);

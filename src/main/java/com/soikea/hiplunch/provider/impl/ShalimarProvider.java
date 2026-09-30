@@ -13,21 +13,7 @@ public class ShalimarProvider extends Provider {
     @Override
     protected String processFeed() {
 
-        String feed = ContentUtil.getUrlContents(getMessageUrl());
-
-        String today = StringUtils.capitalize(StringHelper.getWeekdayName(0));
-        String tomorrow = StringUtils.capitalize(StringHelper.getWeekdayName(1));
-
-        feed = FeedCutter.builder(feed)
-                .withStartPoints(today, "Lounas viikko \\d+")
-                .withEndPoints(tomorrow, "<!-- .entry-content -->")
-                .withSpaceables("<strong>.*</strong>", "\\(.*?\\)", "\\*", "€", "\\s\\s+?")
-                .withRemovables("\\n", "&nbsp;", "<.+?>", "\\d+?\\.?\\d+\\.?", "V?L G")
-                .startProcess()
-                .cleanUp()
-                .toString().trim();
-
-        return feed;
+        return "Tarkista menu verkkosivuilta.";
     }
 
     @Override

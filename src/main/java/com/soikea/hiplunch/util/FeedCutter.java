@@ -104,10 +104,8 @@ public class FeedCutter {
                 feed = feed.replaceAll(cutString, "");
                 if (CUTMODE_START.equals(mode)) {
                     feed = feed.substring(cutPoint);
-                    log.debug("cut " + cutString + " -> " + feed);
                 } else if (CUTMODE_END.equals(mode)) {
                     feed = feed.substring(0, cutPoint);
-                    log.debug("cut " + cutString + " -> " + feed);
                 }
             }
             return cut(mode, list.subList(1, list.size()));
@@ -133,7 +131,6 @@ public class FeedCutter {
     public FeedCutter replace(String the, List<String> targets) {
         for (String target : targets) {
             this.feed = feed.replaceAll(target, the);
-            log.debug("replace " + target + " -> " + this.feed);
         }
         return this;
     }
